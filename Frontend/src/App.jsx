@@ -1,12 +1,21 @@
-import React from './ReactCount/React'
+import OnboardingModal from "./components/OnboardingModal/OnboardingModal";
+
+import { movies } from "./data/movies";
+
 import './App.css'
+
 
 function App() {
 
   return (
-    <>
-      <React/>
-    </>
+    <div>
+      {showOnboarding && (
+        <OnboardingModal
+          onClose={() => setShowOnboarding(false)}
+        />
+      )}
+
+    </div>
   )
 }
 
