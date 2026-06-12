@@ -4,7 +4,7 @@ import Navbar from './components/Navbar/Navbar'
 import { movies } from "./data/movies";
 
 import './App.css'
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 
 function App() {
