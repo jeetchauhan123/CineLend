@@ -5,6 +5,7 @@ import { movies } from "./data/movies";
 
 import './App.css'
 import { useEffect, useState } from "react";
+import HeroSlider from "./components/HeroSlider/HeroSlider";
 
 
 function App() {
@@ -35,6 +36,8 @@ function App() {
         darkMode={darkMode}
         setDarkMode={setDarkMode}
       />
+
+      <HeroSlider />
 
     </div>
   )
