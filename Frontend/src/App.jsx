@@ -6,6 +6,7 @@ import { movies } from "./data/movies";
 import './App.css'
 import { useEffect, useState } from "react";
 import HeroSlider from "./components/HeroSlider/HeroSlider";
+import Home from "./components/homemovie/HomeMovies";
 
 
 function App() {
@@ -39,6 +40,7 @@ function App() {
 
       <HeroSlider />
 
+      <Home />
     </div>
   )
 }
