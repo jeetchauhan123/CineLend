@@ -7,6 +7,7 @@ import './App.css'
 import { useEffect, useState } from "react";
 import HeroSlider from "./components/HeroSlider/HeroSlider";
 import Home from "./components/homemovie/HomeMovies";
+import Footer from "./components/Footer/Footer";
 
 
 function App() {
@@ -41,6 +42,8 @@ function App() {
       <HeroSlider />
 
       <Home />
+
+      <Footer />
     </div>
   )
 }
