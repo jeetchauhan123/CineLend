@@ -1,20 +1,29 @@
 import { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import "./Navbar.css";
 
-
 function Navbar({ darkMode, setDarkMode }) {
+  const location = useLocation();
+
+  const isHomePage = location.pathname === "/";
 
   return (
-    <nav className="navbar">
-      <div className="navbar-logo">
-        🎬 CineLend
-      </div>
+    <nav className={`navbar ${isHomePage ? "navbar-home" : "navbar-page"}`}>
+      <div className="navbar-logo">🎬 CineLend</div>
 
       <ul className="navbar-links">
-        <li>Home</li>
-        <li>Movies</li>
-        <li>TV Shows</li>
-        <li>Discover</li>
+        <li>
+          <Link to="/">Home</Link>
+        </li>
+        <li>
+          <Link to="/movies">Movies</Link>
+        </li>
+        <li>
+          <Link to="/discover">Discover</Link>
+        </li>
+        <li>
+          <Link to="/about">About</Link>
+        </li>
       </ul>
 
       <div className="navbar-actions">
@@ -33,10 +42,7 @@ function Navbar({ darkMode, setDarkMode }) {
           </svg>
         </button>
 
-        <button
-          className="icon-btn"
-          onClick={() => setDarkMode(!darkMode)}
-        >
+        <button className="icon-btn" onClick={() => setDarkMode(!darkMode)}>
           {darkMode ? (
             /* Moon */
             <svg
@@ -78,9 +84,7 @@ function Navbar({ darkMode, setDarkMode }) {
           )}
         </button>
 
-        <button className="login-btn">
-          Login
-        </button>
+        <button className="login-btn">Login</button>
       </div>
     </nav>
   );

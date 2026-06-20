@@ -1,18 +1,17 @@
 import OnboardingModal from "./components/OnboardingModal/OnboardingModal";
 import Navbar from './components/Navbar/Navbar'
-
+import Footer from './components/Footer/Footer';
 import { movies } from "./data/movies";
 
+import { useEffect, useState } from 'react';
+
 import './App.css'
-import { useEffect, useState } from "react";
-import HeroSlider from "./components/HeroSlider/HeroSlider";
-import Home from "./components/homemovie/HomeMovies";
-import Footer from "./components/Footer/Footer";
+import { Outlet } from "react-router-dom";
 
 
 function App() {
   const [showOnboarding, setShowOnboarding] = useState(true);
-
+  
   const [darkMode, setDarkMode] = useState(
     localStorage.getItem("theme") !== "light"
   );
@@ -39,9 +38,7 @@ function App() {
         setDarkMode={setDarkMode}
       />
 
-      <HeroSlider />
-
-      <Home />
+      <Outlet />
 
       <Footer />
     </div>
