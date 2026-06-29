@@ -6,9 +6,10 @@ function Navbar({ darkMode, setDarkMode }) {
   const location = useLocation();
 
   const isHomePage = location.pathname === "/";
+  const isMovieDetails = location.pathname.startsWith("/movie/");
 
   return (
-    <nav className={`navbar ${isHomePage ? "navbar-home" : "navbar-page"}`}>
+    <nav className={`navbar ${isHomePage || isMovieDetails ? "navbar-home" : "navbar-page"}`}>
       <div className="navbar-logo">🎬 CineLend</div>
 
       <ul className="navbar-links">

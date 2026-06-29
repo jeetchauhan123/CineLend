@@ -2,7 +2,7 @@
   width: fit-content;
   height: 58px;
 
-  z-index: 100;
+  z-index: 1000;
 
   display: flex;
   align-items: center;
