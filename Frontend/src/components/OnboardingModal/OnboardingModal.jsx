@@ -1,6 +1,8 @@
 import { useState } from "react";
 import "./OnboardingModal.css";
-import { genres } from "../../data/genres";
+// import { genres } from "../../data/genres";
+import axios from 'axios'
+import { useEffect } from "react";
 
 const ageRanges = [
   "Under 18",
@@ -14,8 +16,22 @@ const ageRanges = [
 function OnboardingModal({ onClose }) {
   const [step, setStep] = useState(1);
   const [age, setAge] = useState("");
+  const [genres, setGenres] = useState([]);
   const [selectedGenres, setSelectedGenres] = useState([]);
   const [selectedAge, setSelectedAge] = useState("");
+
+
+  useEffect(() => {
+    const fetchgenre = async ()=>{
+      try {
+        const res = await axios.get("http://localhost:3000/getgenres");
+        setGenres(res.data.genres);
+      } catch (error) {
+        console.log("no genre gound");
+      }
+    }
+    fetchgenre();
+  }, [])
 
   const toggleGenre = (genre) => {
     if (selectedGenres.includes(genre)) {

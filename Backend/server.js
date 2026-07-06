@@ -1,25 +1,28 @@
 const express = require('express');
 const mongoose = require('mongoose');
-
+const cors = require('cors');
+const genres = require('./data/genres.js');
+const movies = require('./data/movies.js');
 // const con=mongoose.
 
 const app = express();
 
 app.use(express.json());
 
-let arr = [1,2,3,4,5,6,7,8,9,10];
+app.use(cors({
+  origin: "http://localhost:5173", // your frontend's port
+  credentials: true,
+  allowedHeaders: ["Content-Type", "Authorization"]
+}));
 
-app.get('/',(req,res)=>{
-    res.send(arr);
+
+app.get('/getgenres',(req,res)=>{
+    res.send(genres);
 });
 
-app.post('/',(req,res)=>{
-    const data=req.body;
-    const pos=data.pos;
-    const val=data.val;
-    arr[pos]=val;
-    res.send('Updated');
-});
+app.get('/getmovie',(req,res)=>{
+    res.send(movies);
+})
 
 app.listen(3000,()=>{
     console.log('server running');

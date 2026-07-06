@@ -9,10 +9,25 @@ import "swiper/css/effect-fade";
 
 import "./HeroSlider.css";
 
-import { movies } from "../../data/movies";
+// import { movies } from "../../data/movies";
+import axios from 'axios';
 
 function HeroSlider() {
   const [loaded, setLoaded] = useState(false);
+  const [movies, setMovies] = useState([]);
+  
+  useEffect(() => {
+    const getmovie = async () => {
+      try {
+        const res = await axios.get('http://localhost:3000/getmovie');
+        setMovies(res.data.movies);
+        console.log('Movies loded', res.data.movies);
+      } catch (error) {
+        console.log('Error Loading Data');
+      }
+    }
+    getmovie();
+  }, []);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -22,6 +37,10 @@ function HeroSlider() {
     return () => clearTimeout(timer);
   }, []);
 
+  if (movies.length === 0) {
+    return null; // pending loading skeleton
+  }
+
   return (
     <section className="hero-slider">
       <Swiper
@@ -29,7 +48,7 @@ function HeroSlider() {
         modules={[Autoplay, Pagination, Navigation, EffectFade]}
         effect="fade"
         fadeEffect={{ crossFade: true }}
-        loop
+        loop={movies.length > 1}
         autoplay={{
           delay: 4000,
           disableOnInteraction: false,
