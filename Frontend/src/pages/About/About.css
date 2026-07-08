@@ -13,6 +13,10 @@
   margin-bottom: 4rem;
 }
 
+.about-header img {
+  height: 300px;
+}
+
 .about-header h1 {
   font-size: 4rem;
   font-weight: 800;

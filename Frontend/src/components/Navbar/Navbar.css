@@ -60,13 +60,14 @@
   border: 1px solid rgba(255,255,255,0.12);
 }
 
-.navbar-logo {
-  color: white;
+.navbar-logo{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-  font-size: 1.15rem;
-  font-weight: 700;
-
-  white-space: nowrap;
+.navbar-logo img {
+  height: 40px;
 }
 
 .navbar-links {

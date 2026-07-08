@@ -10,7 +10,7 @@ function Navbar({ darkMode, setDarkMode }) {
 
   return (
     <nav className={`navbar ${isHomePage || isMovieDetails ? "navbar-home" : "navbar-page"}`}>
-      <div className="navbar-logo">🎬 CineLend</div>
+      <div className="navbar-logo"><img src="./Logo2_WB.PNG" alt="Logo" /></div>
 
       <ul className="navbar-links">
         <li>

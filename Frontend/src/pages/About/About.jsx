@@ -5,11 +5,12 @@ const About = () => {
   return (
     <section className="about-page">
       <div className="about-header">
-        <h1>CineLend</h1>
+        {/* <h1>CineLend</h1>
 
         <p>
           Modern Movie Discovery & Rental Platform
-        </p>
+        </p> */}
+        <img src="./Logo1_WB.png" alt="Logo" />
       </div>
 
       <div className="about-grid">
