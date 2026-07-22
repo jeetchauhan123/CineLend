@@ -1,0 +1,16 @@
+import "./Skeleton.css";
+
+const Skeleton = ({ width="100%", height="100%", borderRadius = "8px", className = "" }) => {
+  return (
+    <div
+      className={`skeleton ${className}`}
+      style={{
+        width,
+        height,
+        borderRadius,
+      }}
+    />
+  );
+};
+
+export default Skeleton;

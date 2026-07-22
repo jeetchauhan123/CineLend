@@ -70,6 +70,8 @@
 .about-card li {
   color: var(--text-secondary);
 
+  font-weight: bold;
+
   line-height: 1.8;
 }
 
