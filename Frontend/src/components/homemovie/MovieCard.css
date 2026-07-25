@@ -94,7 +94,7 @@
 }
 
 .movie-card:hover .movie-info h3 {
-   color: #b81a1a;
+   color: var(--text-red2);
    font-weight: 900;
 }
 

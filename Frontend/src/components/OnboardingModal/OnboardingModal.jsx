@@ -1,6 +1,5 @@
 import { useState } from "react";
 import "./OnboardingModal.css";
-// import { genres } from "../../data/genres";
 import axios from 'axios'
 import { useEffect } from "react";
 
@@ -15,7 +14,6 @@ const ageRanges = [
 
 function OnboardingModal({ onClose }) {
   const [step, setStep] = useState(1);
-  const [age, setAge] = useState("");
   const [genres, setGenres] = useState([]);
   const [selectedGenres, setSelectedGenres] = useState([]);
   const [selectedAge, setSelectedAge] = useState("");
@@ -24,8 +22,8 @@ function OnboardingModal({ onClose }) {
   useEffect(() => {
     const fetchgenre = async ()=>{
       try {
-        const res = await axios.get("http://localhost:3000/getgenres");
-        setGenres(res.data.genres);
+        const res = await axios.get("http://localhost:3000/movies/genres");
+        setGenres(res.data);
       } catch (error) {
         console.log("no genre gound");
       }
@@ -88,7 +86,7 @@ function OnboardingModal({ onClose }) {
               ))}
             </div>
 
-            <div className="buttons">
+            <div className="onboard-buttons">
               <button className="secondary-btn" onClick={() => setStep(1)}>
                 Back
               </button>
@@ -118,12 +116,14 @@ function OnboardingModal({ onClose }) {
               ))}
             </div>
 
-            <div className="buttons">
+            <div className="onboard-buttons">
               <button className="secondary-btn" onClick={() => setStep(2)}>
                 Back
               </button>
 
-              <button className="primary-btn" onClick={onClose}>Explore</button>
+              <button className="primary-btn" onClick={onClose}>
+                Explore
+              </button>
             </div>
           </div>
         )}

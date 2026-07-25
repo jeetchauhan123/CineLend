@@ -1,6 +1,14 @@
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Pagination, Navigation, EffectFade } from "swiper/modules";
+import {
+  Autoplay,
+  Pagination,
+  Navigation,
+  EffectFade,
+} from "swiper/modules";
+
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
 
 import "swiper/css";
 import "swiper/css/pagination";
@@ -9,45 +17,45 @@ import "swiper/css/effect-fade";
 
 import "./HeroSlider.css";
 
-// import { movies } from "../../data/movies";
-import axios from 'axios';
-
 function HeroSlider() {
-  const [loaded, setLoaded] = useState(false);
   const [movies, setMovies] = useState([]);
-  
+
   useEffect(() => {
-    const getmovie = async () => {
+    const getMovies = async () => {
       try {
-        const res = await axios.get('http://localhost:3000/getmovie');
-        setMovies(res.data.movies);
-        console.log('Movies loded', res.data.movies);
+        const res = await axios.get(
+          "http://localhost:3000/movies/recent"
+        );
+
+        setMovies(res.data);
+
+        console.log("Movies loaded", res.data);
       } catch (error) {
-        console.log('Error Loading Data');
+        console.error("Error loading movies:", error);
       }
-    }
-    getmovie();
-  }, []);
+    };
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoaded(true);
-    }, 100);
-
-    return () => clearTimeout(timer);
+    getMovies();
   }, []);
 
   if (movies.length === 0) {
-    return null; // pending loading skeleton
+    return null;
   }
 
   return (
     <section className="hero-slider">
       <Swiper
-        className={`movie-swiper ${loaded ? "loaded" : ""}`}
-        modules={[Autoplay, Pagination, Navigation, EffectFade]}
+        className="movie-swiper"
+        modules={[
+          Autoplay,
+          Pagination,
+          Navigation,
+          EffectFade,
+        ]}
         effect="fade"
-        fadeEffect={{ crossFade: true }}
+        fadeEffect={{
+          crossFade: true,
+        }}
         loop={movies.length > 1}
         autoplay={{
           delay: 4000,
@@ -62,44 +70,66 @@ function HeroSlider() {
           prevEl: ".custom-prev",
         }}
         speed={1200}
-        className="movie-swiper"
       >
         {movies.map((movie) => (
-          <SwiperSlide key={movie.id}>
+          <SwiperSlide key={movie._id}>
             <div className="slide">
+
               <div
                 className="slide-bg"
                 style={{
                   backgroundImage: `
                     linear-gradient(
-                    rgba(0,0,0,0.45),
-                    rgba(0,0,0,0.8)
+                      rgba(0, 0, 0, 0.45),
+                      rgba(0, 0, 0, 0.8)
                     ),
-                    url(${movie.image})
+                    url(${movie.poster})
                   `,
                 }}
               />
+
               <div className="slide-content">
-                <h1>{movie.title}</h1>
+                {/* left side */}
+                <div className="slider-movie-info">
+                  <h1>{movie.title}</h1>
 
-                <p>{movie.description}</p>
+                  <p>{movie.plot}</p>
 
-                <div className="button-group">
-                  <button className="play-btn">▶ Play</button>
+                  <div className="button-group">
+                    <button className="play-btn">
+                      <Link to={`/movie/${movie._id}`}>
+                        ▶ Rent
+                      </Link>
+                    </button>
 
-                  <button className="info-btn">ⓘ More Info</button>
+                    <button className="info-btn">
+                      <Link to={`/movie/${movie._id}`}>
+                        ⓘ More Info
+                      </Link>
+                    </button>
+                  </div>
                 </div>
+
+                {/* right side */}
+                <div className="slider-movie-poster">
+                  <img
+                    src={movie.poster}
+                    alt={movie.title}
+                  />
+                </div>
+
               </div>
             </div>
           </SwiperSlide>
         ))}
-
-        <div className="custom-prev">❮</div>
-
-        <div className="custom-next">❯</div>
-
-        <div className="custom-pagination"></div>
       </Swiper>
+
+      {/* Navigation */}
+      <div className="custom-prev">❮</div>
+      <div className="custom-next">❯</div>
+
+      {/* Pagination */}
+      <div className="custom-pagination"></div>
     </section>
   );
 }
