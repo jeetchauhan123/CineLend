@@ -61,7 +61,7 @@ const MovieDetails = () => {
         </div>
 
         <div className="movie-main">
-          <h1>
+          <h1 className="movie-title">
             {loading ? (
               <Skeleton width="320px" height="48px" />
             ) : (

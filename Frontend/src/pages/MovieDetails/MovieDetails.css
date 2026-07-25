@@ -72,7 +72,7 @@
 /* POSTER */
 .poster-box {
     width: 100%;
-    height: 370px;
+    height: 410px;
 }
 
 .poster-box img {
@@ -102,8 +102,9 @@
 
 .movie-main h1 {
     font-size: 3.2rem;
-
+    color: #ec2630;
     margin-bottom: 18px;
+    font-weight: 700;
 }
 
 .meta {
@@ -198,6 +199,8 @@
     color: var(--text-secondary);
 
     line-height: 1.9;
+
+    font-weight: 700;
 }
 
 .details-grid {
@@ -251,6 +254,7 @@
 }
 
 .info-row span {
+    font-weight: 600;
     color: var(--text-secondary);
 }
 
