@@ -2,29 +2,43 @@ import "./MovieCard.css";
 import { Link } from "react-router-dom";
 
 function MovieCard({ movie }) {
+  const releaseYear = movie.released
+    ? new Date(movie.released).getFullYear()
+    : "N/A";
+
+  const rating = movie.imdb?.rating ?? "N/A";
+
   return (
-    <Link to={`/movie/${movie.id}`}>
+    <Link
+      to={`/movie/${movie._id}`}
+      className="movie-card-link"
+      draggable="false"
+    >
       <div className="movie-card">
         <div className="poster-wrapper">
-          <img
-            src={movie.image}
-            alt={movie.title}
-            className="movie-poster"
-            draggable="false"
-          />
+          {movie.poster ? (
+            <img
+              src={movie.poster}
+              alt={movie.title}
+              className="movie-poster"
+              draggable="false"
+            />
+          ) : (
+            <div className="movie-poster-placeholder">
+              No Poster
+            </div>
+          )}
 
           <div className="rating-badge">
-            {/* ⭐ {movie.rating} */}
-            {movie.rating}
+            ⭐ {rating}
           </div>
         </div>
 
         <div className="movie-info">
           <h3>{movie.title}</h3>
 
-          <p>{movie.year}</p>
+          <p>{releaseYear}</p>
         </div>
-
       </div>
     </Link>
   );

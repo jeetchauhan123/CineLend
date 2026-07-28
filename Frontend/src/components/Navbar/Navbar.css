@@ -93,6 +93,7 @@
 .navbar-links li:hover {
   font-weight: 800;
   color: #e50914;
+  text-shadow: 0 0 2px;
 }
 
 .navbar-links a {

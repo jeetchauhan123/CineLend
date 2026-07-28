@@ -1,6 +1,7 @@
 const express = require("express");
 
 const {
+  getMovies,
   getMovieById,
   getGenres,
   getRecentMovies,
@@ -8,16 +9,16 @@ const {
 
 const router = express.Router();
 
-router.get("/", (req, res) => {
-  res.json({
-    message: "routing is working",
-  });
-})
+// Flexible movie API
+router.get("/", getMovies);
 
+// Get all unique genres
 router.get("/genres", getGenres);
 
+// Hero Slider API
 router.get("/recent", getRecentMovies);
 
+// Get one movie by ID
 router.get("/:id", getMovieById);
 
 module.exports = router;

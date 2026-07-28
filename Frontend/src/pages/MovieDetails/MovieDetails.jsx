@@ -14,7 +14,7 @@ const MovieDetails = () => {
   useEffect(() => {
     const getdetail = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/moviepage");
+        const res = await axios.get(`http://localhost:3000/movies/${id}`);
 
         console.log("RESPONSE DATA:", res.data);
         console.log("POSTER:", res.data.poster);

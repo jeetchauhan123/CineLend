@@ -12,6 +12,12 @@ function MovieRow({ title, movies, subtitle }) {
   const startX = useRef(0);
   const scrollLeftRef = useRef(0);
 
+  // Keeps track of dragging immediately
+  const isDraggingRef = useRef(false);
+
+  // Detects whether the mouse moved enough to count as a drag
+  const hasDraggedRef = useRef(false);
+
   const smoothScroll = (distance) => {
     const container = rowRef.current;
 
@@ -38,7 +44,8 @@ function MovieRow({ title, movies, subtitle }) {
           ? 2 * progress * progress
           : 1 - Math.pow(-2 * progress + 2, 2) / 2;
 
-      container.scrollLeft = start + (target - start) * ease;
+      container.scrollLeft =
+        start + (target - start) * ease;
 
       if (progress < 1) {
         requestAnimationFrame(animate);
@@ -59,29 +66,54 @@ function MovieRow({ title, movies, subtitle }) {
   const handleMouseDown = (e) => {
     const container = rowRef.current;
 
+    if (!container) return;
+
+    isDraggingRef.current = true;
+    hasDraggedRef.current = false;
+
     setIsDragging(true);
 
     startX.current = e.pageX;
-
     scrollLeftRef.current = container.scrollLeft;
   };
 
   const handleMouseMove = (e) => {
-    if (!isDragging) return;
+    if (!isDraggingRef.current) return;
 
     const container = rowRef.current;
 
-    const walk = (e.pageX - startX.current) * 1.5;
+    if (!container) return;
 
-    container.scrollLeft = scrollLeftRef.current - walk;
+    const distance = e.pageX - startX.current;
+
+    // Small movement is still treated as a click
+    if (Math.abs(distance) > 5) {
+      hasDraggedRef.current = true;
+    }
+
+    const walk = distance * 1.5;
+
+    container.scrollLeft =
+      scrollLeftRef.current - walk;
   };
 
-  const handleMouseUp = () => {
+  const stopDragging = () => {
+    isDraggingRef.current = false;
+
     setIsDragging(false);
+
+    // Reset after the click event has finished
+    setTimeout(() => {
+      hasDraggedRef.current = false;
+    }, 0);
   };
 
-  const handleMouseLeave = () => {
-    setIsDragging(false);
+  const handleClickCapture = (e) => {
+    // Do not open a movie when the user dragged the row
+    if (hasDraggedRef.current) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
   };
 
   const updateFades = () => {
@@ -101,14 +133,32 @@ function MovieRow({ title, movies, subtitle }) {
 
   useEffect(() => {
     updateFades();
+
+    // Stops dragging even when the mouse is released
+    // outside the movie row
+    window.addEventListener(
+      "mouseup",
+      stopDragging
+    );
+
+    return () => {
+      window.removeEventListener(
+        "mouseup",
+        stopDragging
+      );
+    };
   }, []);
 
   return (
     <section className="movie-row">
       <div className="movie-row-header">
         <div>
-          <span className="section-tag">Collection</span>
+          <span className="section-tag">
+            Collection
+          </span>
+
           <h2>{title}</h2>
+
           <p>{subtitle}</p>
         </div>
 
@@ -117,30 +167,46 @@ function MovieRow({ title, movies, subtitle }) {
         </button>
       </div>
 
-      <div className={`movie-row-wrapper
+      <div
+        className={`movie-row-wrapper
           ${showLeftFade ? "show-left-fade" : ""}
           ${showRightFade ? "show-right-fade" : ""}
         `}
       >
-        <button className="nav-btn left" onClick={scrollLeft}>
+        <button
+          className="nav-btn left"
+          onClick={scrollLeft}
+        >
           ❮
         </button>
 
         <div
           ref={rowRef}
-          className={`movie-row-container ${isDragging ? "dragging" : ""}`}
+          className={`movie-row-container ${
+            isDragging ? "dragging" : ""
+          }`}
           onScroll={updateFades}
           onMouseDown={handleMouseDown}
           onMouseMove={handleMouseMove}
-          onMouseUp={handleMouseUp}
-          onMouseLeave={handleMouseLeave}
+          onMouseUp={stopDragging}
+          onMouseLeave={stopDragging}
+          onClickCapture={handleClickCapture}
+          onDragStart={(e) =>
+            e.preventDefault()
+          }
         >
           {movies.map((movie) => (
-            <MovieCard key={movie.id} movie={movie} />
+            <MovieCard
+              key={movie._id}
+              movie={movie}
+            />
           ))}
         </div>
 
-        <button className="nav-btn right" onClick={scrollRight}>
+        <button
+          className="nav-btn right"
+          onClick={scrollRight}
+        >
           ❯
         </button>
       </div>
