@@ -1,0 +1,69 @@
+.filter-section {
+  margin-top: 28px;
+}
+
+.filter-section h3 {
+  margin-bottom: 16px;
+
+  font-size: 0.95rem;
+
+  font-weight: 700;
+}
+
+.filter-list {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 10px;
+
+  max-height: 280px;
+
+  overflow-y: auto;
+}
+
+.filter-checkbox {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  cursor: pointer;
+
+  color: var(--text-secondary);
+
+  font-size: 0.9rem;
+}
+
+.filter-checkbox input {
+  accent-color: var(--text-red);
+
+  cursor: pointer;
+}
+
+.filter-empty {
+  color: var(--text-secondary);
+
+  font-size: 0.85rem;
+}
+
+.show-more-btn {
+  margin-top: 12px;
+
+  border: none;
+
+  background: transparent;
+
+  color: var(--text-red);
+
+  font-size: 0.82rem;
+
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.show-more-btn:hover {
+  text-decoration: underline;
+}

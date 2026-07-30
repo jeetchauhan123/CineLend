@@ -103,6 +103,7 @@
 .movie-main h1 {
     font-size: 3.2rem;
     color: #ec2630;
+    text-shadow: 0 -5px 25px rgb(78, 15, 15);
     margin-bottom: 18px;
     font-weight: 700;
 }

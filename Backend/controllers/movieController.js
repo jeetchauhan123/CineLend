@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const Movie = require("../models/Movie");
 
-
 // Api to get movie by id
 const getMovieById = async (req, res) => {
   try {
@@ -14,7 +13,7 @@ const getMovieById = async (req, res) => {
     }
 
     const movie = await Movie.findById(id);
-    
+
     if (!movie) {
       return res.status(404).json({
         message: "Movie not found",
@@ -62,6 +61,149 @@ const getGenres = async (req, res) => {
   }
 };
 
+// API to get all discover page filters
+const getFilters = async (req, res) => {
+  try {
+    const [filters] = await Movie.aggregate([
+      {
+        $facet: {
+          genres: [
+            { $unwind: "$genres" },
+            {
+              $group: {
+                _id: "$genres",
+              },
+            },
+            {
+              $sort: {
+                _id: 1,
+              },
+            },
+          ],
+
+          languages: [
+            { $unwind: "$languages" },
+            {
+              $group: {
+                _id: "$languages",
+              },
+            },
+            {
+              $sort: {
+                _id: 1,
+              },
+            },
+          ],
+
+          countries: [
+            { $unwind: "$countries" },
+            {
+              $group: {
+                _id: "$countries",
+              },
+            },
+            {
+              $sort: {
+                _id: 1,
+              },
+            },
+          ],
+
+          rated: [
+            {
+              $match: {
+                rated: {
+                  $exists: true,
+                  $nin: ["", null],
+                },
+              },
+            },
+            {
+              $group: {
+                _id: "$rated",
+              },
+            },
+            {
+              $sort: {
+                _id: 1,
+              },
+            },
+          ],
+        },
+      },
+    ]);
+
+    res.status(200).json({
+      genres: filters.genres.map((item) => item._id),
+
+      languages: filters.languages.map((item) => item._id),
+
+      countries: filters.countries.map((item) => item._id),
+
+      rated: filters.rated.map((item) => item._id),
+    });
+  } catch (error) {
+    console.error("Error fetching filters:", error.message);
+
+    res.status(500).json({
+      message: "Failed to fetch filters",
+    });
+  }
+};
+
+// API to search cast, directors and writers
+const getPeople = async (req, res) => {
+  try {
+    const { type, search = "", limit = 10 } = req.query;
+
+    const allowedTypes = ["cast", "directors", "writers"];
+
+    if (!allowedTypes.includes(type)) {
+      return res.status(400).json({
+        message: "Invalid people type",
+      });
+    }
+
+    const people = await Movie.aggregate([
+      {
+        $unwind: `$${type}`,
+      },
+
+      {
+        $match: {
+          [type]: {
+            $regex: search,
+            $options: "i",
+          },
+        },
+      },
+
+      {
+        $group: {
+          _id: `$${type}`,
+        },
+      },
+
+      {
+        $sort: {
+          _id: 1,
+        },
+      },
+
+      {
+        $limit: Number(limit),
+      },
+    ]);
+
+    res.status(200).json(people.map((person) => person._id));
+  } catch (error) {
+    console.error("Error fetching people:", error.message);
+
+    res.status(500).json({
+      message: "Failed to fetch people",
+    });
+  }
+};
 
 // movie slider 10 movies(top 10 recent movies)
 const getRecentMovies = async (req, res) => {
@@ -90,14 +232,29 @@ const getMovies = async (req, res) => {
   try {
     const {
       search,
+
       genres,
+      languages,
+      countries,
+      rated,
+
       yearFrom,
       yearTo,
+
       minRating,
       maxRating,
-      rated,
+
+      runtimeMin,
+      runtimeMax,
+
+      cast,
+      director,
+      writer,
+
       hasPoster,
+
       sort = "default",
+
       page = 1,
       limit = 10,
     } = req.query;
@@ -111,13 +268,23 @@ const getMovies = async (req, res) => {
         $nin: [null, ""],
       };
     }
-    
+
     // Search by movie title
     if (search) {
-      query.title = {
-        $regex: search,
-        $options: "i",
-      };
+      query.$or = [
+        {
+          title: {
+            $regex: search,
+            $options: "i",
+          },
+        },
+        {
+          fullplot: {
+            $regex: search,
+            $options: "i",
+          },
+        },
+      ];
     }
 
     // Filter by one or multiple genres
@@ -129,7 +296,35 @@ const getMovies = async (req, res) => {
 
       if (genreList.length > 0) {
         query.genres = {
-          $in: genreList,
+          $all: genreList,
+        };
+      }
+    }
+
+    // Filter by languages
+    if (languages) {
+      const languageList = languages
+        .split(",")
+        .map((language) => language.trim())
+        .filter(Boolean);
+
+      if (languageList.length > 0) {
+        query.languages = {
+          $all: languageList,
+        };
+      }
+    }
+
+    // Filter by countries
+    if (countries) {
+      const countryList = countries
+        .split(",")
+        .map((country) => country.trim())
+        .filter(Boolean);
+
+      if (countryList.length > 0) {
+        query.countries = {
+          $all: countryList,
         };
       }
     }
@@ -139,15 +334,11 @@ const getMovies = async (req, res) => {
       query.released = {};
 
       if (yearFrom) {
-        query.released.$gte = new Date(
-          `${yearFrom}-01-01`
-        );
+        query.released.$gte = new Date(`${yearFrom}-01-01`);
       }
 
       if (yearTo) {
-        query.released.$lte = new Date(
-          `${yearTo}-12-31`
-        );
+        query.released.$lte = new Date(`${yearTo}-12-31`);
       }
     }
 
@@ -156,39 +347,90 @@ const getMovies = async (req, res) => {
       query["imdb.rating"] = {};
 
       if (minRating) {
-        query["imdb.rating"].$gte =
-          Number(minRating);
+        query["imdb.rating"].$gte = Number(minRating);
       }
 
       if (maxRating) {
-        query["imdb.rating"].$lte =
-          Number(maxRating);
+        query["imdb.rating"].$lte = Number(maxRating);
       }
+    }
+
+    // Filter by runtime
+    if (runtimeMin || runtimeMax) {
+      query.runtime = {};
+
+      if (runtimeMin) {
+        query.runtime.$gte = Number(runtimeMin);
+      }
+
+      if (runtimeMax) {
+        query.runtime.$lte = Number(runtimeMax);
+      }
+    }
+
+    // Filter by actor
+    if (cast) {
+      query.cast = {
+        $elemMatch: {
+          $regex: cast,
+          $options: "i",
+        },
+      };
+    }
+
+    // Filter by director
+    if (director) {
+      query.directors = {
+        $elemMatch: {
+          $regex: director,
+          $options: "i",
+        },
+      };
+    }
+
+    // Filter by writer
+    if (writer) {
+      query.writers = {
+        $elemMatch: {
+          $regex: writer,
+          $options: "i",
+        },
+      };
     }
 
     // Filter by movie certification
     if (rated) {
-      query.rated = rated;
+      const ratedList = rated
+        .split(",")
+        .map((item) => item.trim())
+        .filter(Boolean);
+
+      if (ratedList.length > 0) {
+        query.rated = {
+          $all: ratedList,
+        };
+      }
     }
 
     // Convert query values to numbers
-    const currentPage = Math.max(
-      Number(page) || 1,
-      1
-    );
+    const currentPage = Math.max(Number(page) || 1, 1);
 
-    const movieLimit = Math.min(
-      Math.max(Number(limit) || 10, 1),
-      100
-    );
+    const movieLimit = Math.min(Math.max(Number(limit) || 10, 1), 100);
 
-    const skip =
-      (currentPage - 1) * movieLimit;
+    const skip = (currentPage - 1) * movieLimit;
 
     // Sorting options
     const sortOptions = {
+      default: {
+        _id: -1,
+      },
+
       recent: {
         released: -1,
+      },
+
+      oldest: {
+        released: 1,
       },
 
       updated: {
@@ -199,12 +441,20 @@ const getMovies = async (req, res) => {
         "imdb.rating": -1,
       },
 
+      ratingAsc: {
+        "imdb.rating": 1,
+      },
+
       title: {
         title: 1,
       },
 
-      default: {
-        _id: -1,
+      titleDesc: {
+        title: -1,
+      },
+
+      runtime: {
+        runtime: -1,
       },
     };
 
@@ -233,16 +483,11 @@ const getMovies = async (req, res) => {
     }
 
     // Get total number of matching movies
-    const total = await Movie.countDocuments(
-      query
-    );
+    const total = await Movie.countDocuments(query);
 
     // Get movies
     const movies = await Movie.find(query)
-      .sort(
-        sortOptions[sort] ||
-          sortOptions.default
-      )
+      .sort(sortOptions[sort] || sortOptions.default)
       .skip(skip)
       .limit(movieLimit);
 
@@ -253,16 +498,11 @@ const getMovies = async (req, res) => {
         page: currentPage,
         limit: movieLimit,
         total,
-        totalPages: Math.ceil(
-          total / movieLimit
-        ),
+        totalPages: Math.ceil(total / movieLimit),
       },
     });
   } catch (error) {
-    console.error(
-      "Error fetching movies:",
-      error.message
-    );
+    console.error("Error fetching movies:", error.message);
 
     res.status(500).json({
       message: "Failed to fetch movies",
@@ -270,4 +510,11 @@ const getMovies = async (req, res) => {
   }
 };
 
-module.exports = {getMovies,getMovieById,getGenres,getRecentMovies,};
+module.exports = {
+  getMovies,
+  getMovieById,
+  getGenres,
+  getFilters,
+  getPeople,
+  getRecentMovies,
+};

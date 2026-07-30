@@ -4,6 +4,7 @@ import App from "../App";
 import Home from "../pages/Home";
 import MovieDetails from "../pages/MovieDetails/MovieDetails";
 import About from "../pages/About/About";
+import Discover from "../pages/Discover/Discover";
 
 const router = createBrowserRouter([
   {
@@ -13,6 +14,10 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Home />,
+      },
+      {
+        path: "discover",
+        element: <Discover />,
       },
       {
         path: "movie/:id",

@@ -44,16 +44,23 @@
   /* skeleton */
   --skeleton-bg: #9f8989;
   --skeleton-shimmer: rgba(255, 255, 255, 0.65);
+
+  /* Discover dropdown */
+  --dropdown-bg: rgba(245, 236, 236, 0.97);
+  --dropdown-border: rgba(74, 49, 49, 0.14);
+  --dropdown-hover: rgba(46, 32, 32, 0.07);
+  --dropdown-active: rgba(236, 38, 48, 0.11);
+  --dropdown-shadow: rgba(46, 32, 32, 0.18);
 }
 
 body.dark {
-
   --bg-primary: rgb(20, 16, 16);
   --bg-secondary: #201818;
 
   --text-primary: #ffe6e6;
   --text-secondary: rgba(255, 236, 236, 0.7);
 
+  /* glass */
   --glass-bg: rgba(255,255,255,0.08);
   --glass-border: rgba(255,255,255,0.08);
 
@@ -79,6 +86,13 @@ body.dark {
   /* skeleton */
   --skeleton-bg: #271e1e;
   --skeleton-shimmer: rgba(255, 255, 255, 0.12);
+
+  /* Discover dropdown */
+  --dropdown-bg: rgba(31, 24, 24, 0.98);
+  --dropdown-border: rgba(255, 230, 230, 0.1);
+  --dropdown-hover: rgba(255, 230, 230, 0.07);
+  --dropdown-active: rgba(236, 38, 48, 0.16);
+  --dropdown-shadow: rgba(0, 0, 0, 0.45);
 }
 
 

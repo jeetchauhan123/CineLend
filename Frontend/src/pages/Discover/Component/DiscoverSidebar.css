@@ -1,0 +1,95 @@
+.discover-filters {
+  position: sticky;
+
+  top: 95px;
+
+  padding: 22px;
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  border-radius: 20px;
+
+  background: rgba(255, 255, 255, 0.035);
+
+  backdrop-filter: blur(16px);
+}
+
+.filter-header {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  margin-bottom: 24px;
+}
+
+.filter-header h2 {
+  font-size: 1.15rem;
+}
+
+.filter-header button {
+  border: none;
+
+  background: transparent;
+
+  color: var(--text-red);
+
+  cursor: pointer;
+
+  font-size: 0.85rem;
+
+  font-weight: 600;
+}
+
+.filter-section {
+  margin-top: 28px;
+}
+
+.filter-section h3 {
+  margin-bottom: 16px;
+
+  font-size: 0.95rem;
+
+  font-weight: 700;
+}
+
+.filter-list {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 10px;
+
+  max-height: 280px;
+
+  overflow-y: auto;
+}
+
+.filter-checkbox {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  cursor: pointer;
+
+  color: var(--text-secondary);
+
+  font-size: 0.9rem;
+}
+
+.filter-checkbox input {
+  accent-color: var(--text-red);
+
+  cursor: pointer;
+}
+
+.filter-coming-soon {
+  color: var(--text-secondary);
+
+  font-size: 0.85rem;
+
+  line-height: 1.6;
+}
