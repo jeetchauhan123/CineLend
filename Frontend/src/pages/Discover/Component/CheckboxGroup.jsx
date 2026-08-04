@@ -10,7 +10,7 @@ function CheckboxGroup({
 }) {
   const [expanded, setExpanded] = useState(false);
 
-  const visibleCount = 6;
+  const visibleCount = 5;
 
   const visibleOptions = expanded
     ? options
@@ -33,7 +33,7 @@ function CheckboxGroup({
                 onChange(category, option)
               }
             />
-
+            <span className="checkbox"/>
             <span>{option}</span>
           </label>
         ))}

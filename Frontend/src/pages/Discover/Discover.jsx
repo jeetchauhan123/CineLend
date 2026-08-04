@@ -4,6 +4,8 @@ import axios from "axios";
 import "./Discover.css";
 import MovieCard from "../../components/homemovie/MovieCard";
 import DiscoverSidebar from "./Component/DiscoverSidebar";
+import FilterChips from "./Component/FilterChips";
+import Icon from "../../components/Icon";
 
 function Discover() {
   const [movies, setMovies] = useState([]);
@@ -17,7 +19,6 @@ function Discover() {
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-
 
   const [filters, setFilters] = useState({
     genres: [],
@@ -45,7 +46,9 @@ function Discover() {
     director: "",
     writer: "",
   };
-  const [selectedFilters, setSelectedFilters] = useState(defaultFilters);
+  const [draftFilters, setDraftFilters] = useState(defaultFilters);
+
+  const [appliedFilters, setAppliedFilters] = useState(defaultFilters);
 
   const sortOptions = [
     {
@@ -69,9 +72,8 @@ function Discover() {
       label: "Surprise Me",
     },
   ];
-  
+
   const [debouncedSearch, setDebouncedSearch] = useState(search);
-  const [debouncedFilters, setDebouncedFilters] = useState(selectedFilters);
 
   const selectedSort =
     sortOptions.find((option) => option.value === sort) || sortOptions[0];
@@ -83,14 +85,6 @@ function Discover() {
 
     return () => clearTimeout(timer);
   }, [search]);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setDebouncedFilters(selectedFilters);
-    }, 400);
-
-    return () => clearTimeout(timer);
-  }, [selectedFilters]);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -132,23 +126,23 @@ function Discover() {
           params: {
             search: debouncedSearch,
 
-            genres: selectedFilters.genres.join(","),
-            languages: selectedFilters.languages.join(","),
-            countries: selectedFilters.countries.join(","),
-            rated: selectedFilters.rated.join(","),
+            genres: appliedFilters.genres.join(","),
+            languages: appliedFilters.languages.join(","),
+            countries: appliedFilters.countries.join(","),
+            rated: appliedFilters.rated.join(","),
 
-            minRating: selectedFilters.minRating,
-            maxRating: selectedFilters.maxRating,
+            minRating: appliedFilters.minRating,
+            maxRating: appliedFilters.maxRating,
 
-            yearFrom: selectedFilters.yearFrom,
-            yearTo: selectedFilters.yearTo,
+            yearFrom: appliedFilters.yearFrom,
+            yearTo: appliedFilters.yearTo,
 
-            runtimeMin: selectedFilters.runtimeMin,
-            runtimeMax: selectedFilters.runtimeMax,
+            runtimeMin: appliedFilters.runtimeMin,
+            runtimeMax: appliedFilters.runtimeMax,
 
-            cast: debouncedFilters.cast,
-            director: debouncedFilters.director,
-            writer: debouncedFilters.writer,
+            cast: appliedFilters.cast,
+            director: appliedFilters.director,
+            writer: appliedFilters.writer,
 
             hasPoster: true,
 
@@ -173,10 +167,10 @@ function Discover() {
     };
 
     fetchMovies();
-  }, [sort, debouncedSearch, selectedFilters]);
+  }, [sort, debouncedSearch, appliedFilters]);
 
   const handleFilterChange = (category, value) => {
-    setSelectedFilters((previous) => {
+    setDraftFilters((previous) => {
       const exists = previous[category].includes(value);
 
       return {
@@ -190,7 +184,7 @@ function Discover() {
   };
 
   const clearFilters = () => {
-    setSelectedFilters(defaultFilters);
+    setDraftFilters(defaultFilters);
   };
 
   return (
@@ -207,7 +201,8 @@ function Discover() {
         </div>
 
         <div className="discover-search">
-          <span className="search-icon">🔍</span>
+          <span className="search-icon"><Icon name="search-icon" /></span>
+          
 
           <input
             type="text"
@@ -221,18 +216,17 @@ function Discover() {
       <section className="discover-content">
         <DiscoverSidebar
           filters={filters}
-          selectedFilters={selectedFilters}
-          setSelectedFilters={setSelectedFilters}
+          draftFilters={draftFilters}
+          setDraftFilters={setDraftFilters}
           onFilterChange={handleFilterChange}
           onClear={clearFilters}
+          onApply={() => setAppliedFilters(draftFilters)}
         />
 
         <div className="discover-results">
           <div className="results-header">
             <div>
               <h2>Explore Movies</h2>
-
-              {!loading && <p>{totalMovies.toLocaleString()} movies found</p>}
             </div>
 
             <div
@@ -281,6 +275,20 @@ function Discover() {
               )}
             </div>
           </div>
+
+          <div className="results-info">
+            {!loading && (
+              <p>
+                Showing {movies.length} of {totalMovies.toLocaleString()} movies
+              </p>
+            )}
+          </div>
+
+          <FilterChips
+            appliedFilters={appliedFilters}
+            setAppliedFilters={setAppliedFilters}
+            setDraftFilters={setDraftFilters}
+          />
 
           {loading && <div className="discover-status">Loading movies...</div>}
 

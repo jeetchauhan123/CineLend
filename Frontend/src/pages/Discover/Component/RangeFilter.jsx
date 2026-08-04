@@ -8,11 +8,11 @@ function RangeFilter({
   maxPlaceholder,
   minKey,
   maxKey,
-  selectedFilters,
-  setSelectedFilters,
+  draftFilters,
+  setDraftFilters,
 }) {
   const updateValue = (key, value) => {
-    setSelectedFilters((previous) => ({
+    setDraftFilters((previous) => ({
       ...previous,
       [key]: value,
     }));
@@ -26,7 +26,7 @@ function RangeFilter({
         <input
           type="number"
           placeholder={minPlaceholder}
-          value={selectedFilters[minKey]}
+          value={draftFilters[minKey]}
           min={minValue}
           max={maxValue}
           onChange={(e) =>
@@ -39,7 +39,7 @@ function RangeFilter({
         <input
           type="number"
           placeholder={maxPlaceholder}
-          value={selectedFilters[maxKey]}
+          value={draftFilters[maxKey]}
           min={minValue}
           max={maxValue}
           onChange={(e) =>

@@ -1,25 +1,31 @@
 .filter-section {
-  margin-top: 28px;
+  padding-top:12px;
+
+  border-top: 2px solid rgba(193, 0, 0, 0.46);
+}
+
+.filter-section:first-child{
+
+    border-top:none;
+
+    padding-top:0;
 }
 
 .filter-section h3 {
-  margin-bottom: 16px;
+  margin-bottom: 8px;
 
-  font-size: 0.95rem;
+  font-size: 1.05rem;
 
   font-weight: 700;
 }
 
 .filter-list {
   display: flex;
-
   flex-direction: column;
+  gap: 0px;
 
-  gap: 10px;
-
-  max-height: 280px;
-
-  overflow-y: auto;
+  overflow-y:auto;
+  max-height:240px;
 }
 
 .filter-checkbox {
@@ -33,13 +39,36 @@
 
   color: var(--text-secondary);
 
-  font-size: 0.9rem;
+  font-size: 0.92rem;
+
+  padding:7px 10px;
+
+  border-radius:10px;
+
+  transition:.2s;
+}
+
+.filter-checkbox:hover{
+
+    background:rgba(255,255,255,.05);
 }
 
 .filter-checkbox input {
   accent-color: var(--text-red);
-
+  display: none;
   cursor: pointer;
+}
+
+.filter-checkbox input:checked + .checkbox{
+
+    background:#e50914;
+
+    border-color:#e50914;
+}
+
+.filter-checkbox input:checked + .checkbox::after{
+
+    transform:rotate(45deg) scale(1);
 }
 
 .filter-empty {
@@ -50,6 +79,7 @@
 
 .show-more-btn {
   margin-top: 12px;
+  margin-bottom: 12px;
 
   border: none;
 
@@ -66,4 +96,53 @@
 
 .show-more-btn:hover {
   text-decoration: underline;
+}
+
+.checkbox {
+  position:relative;
+
+  width: 18px;
+  height: 18px;
+
+  border-radius: 6px;
+
+  border: 2px solid rgba(255, 255, 255, 0.18);
+
+  transition: 0.2s;
+
+  flex-shrink:0;
+}
+
+.checkbox::after{
+
+    content:"";
+
+    position:absolute;
+
+    left:4px;
+    top:1px;
+
+    width:5px;
+    height:9px;
+
+    border-right:2px solid white;
+    border-bottom:2px solid white;
+
+    transform:rotate(45deg) scale(0);
+
+    transition:.2s;
+}
+
+.filter-list::-webkit-scrollbar {
+  width: 7px;
+}
+.filter-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+.filter-list::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+}
+.filter-list::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.25);
 }
