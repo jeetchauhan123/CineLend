@@ -63,7 +63,7 @@
 }
 
 .footer-column a:hover { 
-  color: var(--text-red2); 
+  color: var(--red2); 
 }
 
 /* 3. Call To Action (CTA) Section */
@@ -90,7 +90,7 @@
   border: none; 
   padding: 0.9rem 1.6rem; 
   border-radius: 999px; 
-  background: var(--text-red2); 
+  background: var(--red2); 
   color: white; 
   font-weight: 700; 
   cursor: pointer; 

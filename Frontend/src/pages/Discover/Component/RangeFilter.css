@@ -1,12 +1,10 @@
 .range-filter {
   display: flex;
-
   align-items: center;
-
   gap: 10px;
 
-  margin-top: 17px;
-  margin-bottom: 17px;
+  margin:17px 0;
+  padding:4px;
 }
 
 .range-filter input {

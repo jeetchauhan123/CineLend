@@ -46,9 +46,16 @@ function Discover() {
     director: "",
     writer: "",
   };
-  const [draftFilters, setDraftFilters] = useState(defaultFilters);
+  const [filterState, setFilterState] = useState(defaultFilters);
+  const [debouncedFilters, setDebouncedFilters] = useState(filterState);
 
-  const [appliedFilters, setAppliedFilters] = useState(defaultFilters);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedFilters(filterState);
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [filterState]);
 
   const sortOptions = [
     {
@@ -126,23 +133,23 @@ function Discover() {
           params: {
             search: debouncedSearch,
 
-            genres: appliedFilters.genres.join(","),
-            languages: appliedFilters.languages.join(","),
-            countries: appliedFilters.countries.join(","),
-            rated: appliedFilters.rated.join(","),
+            genres: filterState.genres.join(","),
+            languages: filterState.languages.join(","),
+            countries: filterState.countries.join(","),
+            rated: filterState.rated.join(","),
 
-            minRating: appliedFilters.minRating,
-            maxRating: appliedFilters.maxRating,
+            minRating: filterState.minRating,
+            maxRating: filterState.maxRating,
 
-            yearFrom: appliedFilters.yearFrom,
-            yearTo: appliedFilters.yearTo,
+            yearFrom: debouncedFilters.yearFrom,
+            yearTo: debouncedFilters.yearTo,
 
-            runtimeMin: appliedFilters.runtimeMin,
-            runtimeMax: appliedFilters.runtimeMax,
+            runtimeMin: debouncedFilters.runtimeMin,
+            runtimeMax: debouncedFilters.runtimeMax,
 
-            cast: appliedFilters.cast,
-            director: appliedFilters.director,
-            writer: appliedFilters.writer,
+            cast: filterState.cast,
+            director: filterState.director,
+            writer: filterState.writer,
 
             hasPoster: true,
 
@@ -167,10 +174,10 @@ function Discover() {
     };
 
     fetchMovies();
-  }, [sort, debouncedSearch, appliedFilters]);
+  }, [sort, debouncedSearch, debouncedFilters]);
 
   const handleFilterChange = (category, value) => {
-    setDraftFilters((previous) => {
+    setFilterState((previous) => {
       const exists = previous[category].includes(value);
 
       return {
@@ -184,7 +191,7 @@ function Discover() {
   };
 
   const clearFilters = () => {
-    setDraftFilters(defaultFilters);
+    setFilterState(defaultFilters);
   };
 
   return (
@@ -201,8 +208,9 @@ function Discover() {
         </div>
 
         <div className="discover-search">
-          <span className="search-icon"><Icon name="search-icon" /></span>
-          
+          <span className="search-icon">
+            <Icon name="search-icon" />
+          </span>
 
           <input
             type="text"
@@ -216,11 +224,10 @@ function Discover() {
       <section className="discover-content">
         <DiscoverSidebar
           filters={filters}
-          draftFilters={draftFilters}
-          setDraftFilters={setDraftFilters}
+          filterState={filterState}
+          setFilterState={setFilterState}
           onFilterChange={handleFilterChange}
           onClear={clearFilters}
-          onApply={() => setAppliedFilters(draftFilters)}
         />
 
         <div className="discover-results">
@@ -283,12 +290,6 @@ function Discover() {
               </p>
             )}
           </div>
-
-          <FilterChips
-            appliedFilters={appliedFilters}
-            setAppliedFilters={setAppliedFilters}
-            setDraftFilters={setDraftFilters}
-          />
 
           {loading && <div className="discover-status">Loading movies...</div>}
 

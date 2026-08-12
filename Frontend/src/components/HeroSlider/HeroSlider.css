@@ -139,7 +139,7 @@
   cursor: pointer;
 
   background: white;
-  color: var(--text-red2);
+  color: var(--red2);
 }
 
 .info-btn {

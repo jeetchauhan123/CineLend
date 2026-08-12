@@ -4,15 +4,15 @@ import "./DiscoverSidebar.css";
 import FilterGroup from "./FilterGroup";
 import PersonSearch from "./PersonSearch";
 import RangeFilter from "./RangeFilter";
-
+import FilterChips from "./FilterChips";
+import RatingSlider from "./RatingSlider";
 
 function DiscoverSidebar({
   filters,
-  draftFilters,
-  setDraftFilters,
+  filterState,
+  setFilterState,
   onFilterChange,
   onClear,
-  onApply,
 }) {
   const [openGroup, setOpenGroup] = useState("categories");
 
@@ -26,6 +26,10 @@ function DiscoverSidebar({
             Clear All
           </button>
         </div>
+        <FilterChips
+          filterState={filterState}
+          setFilterState={setFilterState}
+        />
       </div>
 
       <div className="filter-content">
@@ -42,7 +46,7 @@ function DiscoverSidebar({
             title="Genres"
             category="genres"
             options={filters.genres}
-            selectedValues={draftFilters.genres}
+            selectedValues={filterState.genres}
             onChange={onFilterChange}
           />
 
@@ -50,7 +54,7 @@ function DiscoverSidebar({
             title="Languages"
             category="languages"
             options={filters.languages}
-            selectedValues={draftFilters.languages}
+            selectedValues={filterState.languages}
             onChange={onFilterChange}
           />
 
@@ -58,7 +62,7 @@ function DiscoverSidebar({
             title="Countries"
             category="countries"
             options={filters.countries}
-            selectedValues={draftFilters.countries}
+            selectedValues={filterState.countries}
             onChange={onFilterChange}
           />
 
@@ -66,7 +70,7 @@ function DiscoverSidebar({
             title="Rated"
             category="rated"
             options={filters.rated}
-            selectedValues={draftFilters.rated}
+            selectedValues={filterState.rated}
             onChange={onFilterChange}
           />
         </FilterGroup>
@@ -78,16 +82,10 @@ function DiscoverSidebar({
             setOpenGroup((prev) => (prev === "numbers" ? null : "numbers"))
           }
         >
-          <RangeFilter
-            title="IMDb Rating"
-            minValue={0}
-            maxValue={10}
-            minPlaceholder="Min"
-            maxPlaceholder="Max"
-            minKey="minRating"
-            maxKey="maxRating"
-            draftFilters={draftFilters}
-            setDraftFilters={setDraftFilters}
+          
+          <RatingSlider
+            filterState={filterState}
+            setFilterState={setFilterState}
           />
 
           <RangeFilter
@@ -98,8 +96,8 @@ function DiscoverSidebar({
             maxPlaceholder="To"
             minKey="yearFrom"
             maxKey="yearTo"
-            draftFilters={draftFilters}
-            setDraftFilters={setDraftFilters}
+            filterState={filterState}
+            setFilterState={setFilterState}
           />
 
           <RangeFilter
@@ -110,8 +108,8 @@ function DiscoverSidebar({
             maxPlaceholder="Max"
             minKey="runtimeMin"
             maxKey="runtimeMax"
-            draftFilters={draftFilters}
-            setDraftFilters={setDraftFilters}
+            filterState={filterState}
+            setFilterState={setFilterState}
           />
         </FilterGroup>
 
@@ -126,32 +124,26 @@ function DiscoverSidebar({
             title="Actor"
             placeholder="Search actor..."
             filterKey="cast"
-            draftFilters={draftFilters}
-            setDraftFilters={setDraftFilters}
+            filterState={filterState}
+            setFilterState={setFilterState}
           />
 
           <PersonSearch
             title="Director"
             placeholder="Search director..."
             filterKey="director"
-            draftFilters={draftFilters}
-            setDraftFilters={setDraftFilters}
+            filterState={filterState}
+            setFilterState={setFilterState}
           />
 
           <PersonSearch
             title="Writer"
             placeholder="Search writer..."
             filterKey="writer"
-            draftFilters={draftFilters}
-            setDraftFilters={setDraftFilters}
+            filterState={filterState}
+            setFilterState={setFilterState}
           />
         </FilterGroup>
-      </div>
-
-      <div className="filter-actions">
-        <button className="apply-filter-btn" onClick={onApply}>
-          Apply Filters
-        </button>
       </div>
     </aside>
   );

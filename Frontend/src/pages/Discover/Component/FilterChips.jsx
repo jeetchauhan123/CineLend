@@ -1,11 +1,13 @@
 import "./FilterChips.css";
 
-function FilterChips({ appliedFilters, setAppliedFilters, setDraftFilters }) {
+function FilterChips({ filterState, setFilterState }) {
   const chips = [];
 
   const remove = (key, value = null) => {
-    setAppliedFilters((prev) => {
-      const updated = { ...prev };
+    setFilterState((prev) => {
+      const updated = {
+        ...prev,
+      };
 
       if (Array.isArray(updated[key])) {
         updated[key] = updated[key].filter((item) => item !== value);
@@ -13,14 +15,12 @@ function FilterChips({ appliedFilters, setAppliedFilters, setDraftFilters }) {
         updated[key] = "";
       }
 
-      setDraftFilters(updated);
-
       return updated;
     });
   };
 
   ["genres", "languages", "countries", "rated"].forEach((key) => {
-    appliedFilters[key].forEach((item) =>
+    filterState[key].forEach((item) =>
       chips.push({
         label: item,
         key,
@@ -29,21 +29,21 @@ function FilterChips({ appliedFilters, setAppliedFilters, setDraftFilters }) {
     );
   });
 
-  if (appliedFilters.cast)
+  if (filterState.cast)
     chips.push({
-      label: appliedFilters.cast,
+      label: filterState.cast,
       key: "cast",
     });
 
-  if (appliedFilters.director)
+  if (filterState.director)
     chips.push({
-      label: appliedFilters.director,
+      label: filterState.director,
       key: "director",
     });
 
-  if (appliedFilters.writer)
+  if (filterState.writer)
     chips.push({
-      label: appliedFilters.writer,
+      label: filterState.writer,
       key: "writer",
     });
 

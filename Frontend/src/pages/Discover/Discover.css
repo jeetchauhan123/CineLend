@@ -36,7 +36,7 @@
 
   letter-spacing: 0.18em;
 
-  color: var(--accent-color);
+  color: var(--accent);
 }
 
 .discover-heading h1 {
@@ -343,10 +343,7 @@
 .sort-option-active {
   background: var(--dropdown-active);
 
-  color: var(
-      --text-red,
-      #ec2630
-    );;
+  color: var(--red, #ec2630);
 }
 
 .sort-option-active:hover {

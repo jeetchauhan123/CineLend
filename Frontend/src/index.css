@@ -7,8 +7,9 @@
 }
 
 :root {
-  --text-red: #ec2630;
-  --text-red2: #ca2121;
+  --red: #ec2630;
+  --red2: #ca2121;
+  --red3: #e50914;
 
   /* backgrounds */
   --bg-primary: rgb(177, 161, 161);

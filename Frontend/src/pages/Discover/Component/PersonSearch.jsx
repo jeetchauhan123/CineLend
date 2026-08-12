@@ -6,35 +6,33 @@ function PersonSearch({
   title,
   placeholder,
   filterKey,
-  draftFilters,
-  setDraftFilters,
+  filterState,
+  setFilterState,
 }) {
   const [results, setResults] = useState([]);
   const [open, setOpen] = useState(false);
+  const [input, setInput] = useState("");
 
   const wrapperRef = useRef(null);
 
   useEffect(() => {
     const close = (e) => {
-      if (
-        wrapperRef.current &&
-        !wrapperRef.current.contains(e.target)
-      ) {
+      if (wrapperRef.current && !wrapperRef.current.contains(e.target)) {
         setOpen(false);
       }
     };
 
     document.addEventListener("mousedown", close);
 
-    return () =>
-      document.removeEventListener("mousedown", close);
+    return () => document.removeEventListener("mousedown", close);
   }, []);
 
   useEffect(() => {
-    const value = draftFilters[filterKey];
+    const value = input;
 
-    if (value.length < 2) {
+    if (value.trim().length < 2) {
       setResults([]);
+      setOpen(false);
       return;
     }
 
@@ -44,18 +42,15 @@ function PersonSearch({
           filterKey === "cast"
             ? "cast"
             : filterKey === "director"
-            ? "directors"
-            : "writers";
+              ? "directors"
+              : "writers";
 
-        const res = await axios.get(
-          "http://localhost:3000/movies/people",
-          {
-            params: {
-              type,
-              search: value,
-            },
-          }
-        );
+        const res = await axios.get("http://localhost:3000/movies/people", {
+          params: {
+            type,
+            search: value,
+          },
+        });
 
         setResults(res.data);
         setOpen(true);
@@ -65,15 +60,16 @@ function PersonSearch({
     }, 300);
 
     return () => clearTimeout(timer);
-  }, [draftFilters, filterKey]);
+  }, [input, filterKey]);
 
   const choose = (person) => {
-    setDraftFilters((prev) => ({
+    setInput(person);
+
+    setFilterState((prev) => ({
       ...prev,
       [filterKey]: person,
     }));
 
-    setResults([]);
     setOpen(false);
   };
 
@@ -81,21 +77,30 @@ function PersonSearch({
     <section className="filter-section">
       <h3>{title}</h3>
 
-      <div
-        className="person-search-wrapper"
-        ref={wrapperRef}
-      >
+      <div className="person-search-wrapper" ref={wrapperRef}>
         <input
           className="person-search"
           type="text"
           placeholder={placeholder}
-          value={draftFilters[filterKey]}
-          onChange={(e) =>
-            setDraftFilters((prev) => ({
-              ...prev,
-              [filterKey]: e.target.value,
-            }))
-          }
+          value={input}
+          onChange={(e) => {
+            setInput(e.target.value);
+
+            if (!e.target.value.trim()) {
+              setResults([]);
+              setOpen(false);
+
+              setFilterState((prev) => ({
+                ...prev,
+                [filterKey]: "",
+              }));
+            }
+          }}
+          onFocus={() => {
+            if (results.length) {
+              setOpen(true);
+            }
+          }}
         />
 
         {open && results.length > 0 && (

@@ -20,4 +20,9 @@ If you are developing a production application, we recommend using TypeScript wi
 
 ##BUGS
 1. Navbar logo not working on movie detail pages
-2. 
+2. in filter bar in people group the writer bar suggeston cause scrolling, instead the dropdown should appear above
+3. currently in people you can only select filter from the drop down if you want to apply filter for only 'rob' there is no method to do it 
+4. in people if i write and dont apply it as a filter and click clear all the text written in text box remain as it is
+5. no filter applied in the range group appear as the filter chip
+6. filter chips just show the text of filter applied but its sometime difficult which type of filter it is (rated, people, time)
+

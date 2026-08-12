@@ -30,7 +30,7 @@
 
   border-radius: 99px;
 
-  background: var(--text-red2);
+  background: var(--red2);
 
   vertical-align: middle;
 }
@@ -81,7 +81,7 @@
   letter-spacing: 1px;
   text-transform: uppercase;
 
-  color: var(--text-red2);
+  color: var(--red2);
 }
 
 .view-all-btn {

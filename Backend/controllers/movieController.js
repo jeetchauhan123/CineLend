@@ -154,7 +154,7 @@ const getFilters = async (req, res) => {
 // API to search cast, directors and writers
 const getPeople = async (req, res) => {
   try {
-    const { type, search = "", limit = 10 } = req.query;
+    const { type, search = "", } = req.query;
 
     const allowedTypes = ["cast", "directors", "writers"];
 
@@ -188,10 +188,6 @@ const getPeople = async (req, res) => {
         $sort: {
           _id: 1,
         },
-      },
-
-      {
-        $limit: Number(limit),
       },
     ]);
 

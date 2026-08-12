@@ -13,6 +13,7 @@
     "axios": "^1.18.1",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
+    "react-range": "^1.10.0",
     "react-router-dom": "^7.18.0",
     "swiper": "^12.2.0"
   },
