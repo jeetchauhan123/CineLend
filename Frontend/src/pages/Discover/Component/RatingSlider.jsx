@@ -25,7 +25,7 @@ function RatingSlider({ filterState, setFilterState }) {
   };
 
   return (
-    <section className="filter-section">
+    <section className="filter-slider">
       <h3>IMDb Rating</h3>
 
       <div className="rating-header">

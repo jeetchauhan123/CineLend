@@ -124,6 +124,23 @@
   margin: 0 auto;
 }
 
+/* =========================
+MOVIE GRID SKELETON
+========================= */
+
+.discover-grid-skeleton {
+  align-items: start;
+}
+
+.movie-skeleton-card {
+  min-width: 0;
+}
+
+.movie-skeleton-title {
+  margin-top: 14px;
+  margin-bottom: 8px;
+}
+
 
 /* =========================
    RESULTS
@@ -414,6 +431,126 @@
   color: #ff7b7b;
 }
 
+
+/* =========================
+   PAGINATION
+========================= */
+
+.pagination {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 10px;
+
+  margin-top: 50px;
+  padding-top: 30px;
+
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.pagination-pages {
+  display: flex;
+
+  align-items: center;
+
+  gap: 6px;
+}
+
+.pagination-page,
+.pagination-arrow {
+  display: grid;
+
+  /* width: 40px; */
+  height: 40px;
+
+  padding: 0px 10px;
+
+  place-items: center;
+
+  border: 1px solid var(--glass-border);
+
+  border-radius: 11px;
+
+  background: var(--button-bg);
+
+  color: var(--text-secondary);
+
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 800;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.pagination-page:hover:not(:disabled),
+.pagination-arrow:hover:not(:disabled) {
+  border-color: rgba(236, 38, 48, 0.45);
+
+  background: rgba(236, 38, 48, 0.08);
+
+  color: var(--text-primary);
+
+  transform: translateY(-1px);
+}
+
+.pagination-page-active {
+  border-color: var(--accent);
+
+  background: var(--accent);
+
+  color: #ffffff;
+
+  box-shadow:
+    0 6px 18px rgba(229, 9, 20, 0.18);
+}
+
+.pagination-page-active:hover {
+  border-color: var(--accent);
+
+  background: var(--accent);
+
+  color: #ffffff;
+
+  transform: none;
+}
+
+.pagination-page:disabled,
+.pagination-arrow:disabled {
+  opacity: 0.55;
+
+  cursor: default;
+
+  transform: none;
+}
+
+.pagination-ellipsis {
+  display: grid;
+
+  width: 32px;
+  height: 40px;
+
+  place-items: center;
+
+  color: var(--text-secondary);
+
+  font-size: 0.9rem;
+
+  user-select: none;
+}
+
+.pagination-arrow {
+  font-size: 1.05rem;
+}
+
+
 /* =========================
    RESPONSIVE
 ========================= */
@@ -457,3 +594,36 @@
     flex-direction: column;
   }
 }
+
+
+/* =========================
+   PAGINATION RESPONSIVE
+========================= */
+
+@media (max-width: 600px) {
+  .pagination {
+    gap: 5px;
+
+    margin-top: 35px;
+    padding-top: 24px;
+  }
+
+  .pagination-pages {
+    gap: 4px;
+  }
+
+  .pagination-page,
+  .pagination-arrow {
+    width: 36px;
+    height: 36px;
+
+    border-radius: 9px;
+
+    font-size: 0.8rem;
+  }
+
+  .pagination-ellipsis {
+    width: 24px;
+  }
+}
+

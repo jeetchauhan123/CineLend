@@ -25,4 +25,7 @@ If you are developing a production application, we recommend using TypeScript wi
 4. in people if i write and dont apply it as a filter and click clear all the text written in text box remain as it is
 5. no filter applied in the range group appear as the filter chip
 6. filter chips just show the text of filter applied but its sometime difficult which type of filter it is (rated, people, time)
+7. in the people search in filter bar the scroll bar when at the end gets out of the drop box
 
+
+#f6121d
