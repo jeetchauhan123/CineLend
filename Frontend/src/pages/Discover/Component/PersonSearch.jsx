@@ -1,5 +1,9 @@
 import { useEffect, useRef, useState } from "react";
-import axios from "axios";
+
+import useDebounce from "../../../hooks/useDebounce";
+import { searchDiscoverPeople } from "../../../services/discoverService";
+import { PERSON_TYPES } from "../../../constants/discover";
+
 import "./PersonSearch.css";
 
 function PersonSearch({
@@ -11,66 +15,85 @@ function PersonSearch({
 }) {
   const [results, setResults] = useState([]);
   const [open, setOpen] = useState(false);
-  const [input, setInput] = useState("");
+
+  const [input, setInput] = useState(filterState[filterKey] || "");
 
   const wrapperRef = useRef(null);
 
+  const debouncedInput = useDebounce(input, 300);
+
   useEffect(() => {
-    const close = (e) => {
-      if (wrapperRef.current && !wrapperRef.current.contains(e.target)) {
+    setInput(filterState[filterKey] || "");
+  }, [filterState, filterKey]);
+
+  useEffect(() => {
+    const close = (event) => {
+      if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
         setOpen(false);
       }
     };
 
     document.addEventListener("mousedown", close);
 
-    return () => document.removeEventListener("mousedown", close);
+    return () => {
+      document.removeEventListener("mousedown", close);
+    };
   }, []);
 
   useEffect(() => {
-    const value = input;
+    const value = debouncedInput.trim();
 
-    if (value.trim().length < 2) {
+    if (value.length < 2) {
       setResults([]);
       setOpen(false);
       return;
     }
 
-    const timer = setTimeout(async () => {
+    const fetchPeople = async () => {
       try {
-        const type =
-          filterKey === "cast"
-            ? "cast"
-            : filterKey === "director"
-              ? "directors"
-              : "writers";
+        const response = await searchDiscoverPeople(
+          PERSON_TYPES[filterKey],
+          value,
+        );
 
-        const res = await axios.get("http://localhost:3000/movies/people", {
-          params: {
-            type,
-            search: value,
-          },
-        });
-
-        setResults(res.data);
+        setResults(response.data);
         setOpen(true);
-      } catch (err) {
-        console.error(err);
-      }
-    }, 300);
+      } catch (error) {
+        console.error("Error loading people:", error);
 
-    return () => clearTimeout(timer);
-  }, [input, filterKey]);
+        setResults([]);
+        setOpen(false);
+      }
+    };
+
+    fetchPeople();
+  }, [debouncedInput, filterKey]);
 
   const choose = (person) => {
     setInput(person);
 
-    setFilterState((prev) => ({
-      ...prev,
+    setFilterState((previous) => ({
+      ...previous,
       [filterKey]: person,
     }));
 
     setOpen(false);
+  };
+
+  const handleInputChange = (event) => {
+    const value = event.target.value;
+
+    setInput(value);
+
+    if (!value.trim()) {
+      setResults([]);
+      setOpen(false);
+
+      setFilterState((previous) => ({
+        ...previous,
+        [filterKey]: "",
+      }));
+    }
   };
 
   return (
@@ -83,19 +106,7 @@ function PersonSearch({
           type="text"
           placeholder={placeholder}
           value={input}
-          onChange={(e) => {
-            setInput(e.target.value);
-
-            if (!e.target.value.trim()) {
-              setResults([]);
-              setOpen(false);
-
-              setFilterState((prev) => ({
-                ...prev,
-                [filterKey]: "",
-              }));
-            }
-          }}
+          onChange={handleInputChange}
           onFocus={() => {
             if (results.length) {
               setOpen(true);

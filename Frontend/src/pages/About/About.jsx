@@ -1,15 +1,9 @@
-import React from 'react'
 import "./About.css";
 
 const About = () => {
   return (
     <section className="about-page">
       <div className="about-header">
-        {/* <h1>CineLend</h1>
-
-        <p>
-          Modern Movie Discovery & Rental Platform
-        </p> */}
         <img src="./Logo1_WB.png" alt="Logo" />
       </div>
 

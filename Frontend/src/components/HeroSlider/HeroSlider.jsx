@@ -28,8 +28,6 @@ function HeroSlider() {
         );
 
         setMovies(res.data);
-
-        console.log("Movies loaded", res.data);
       } catch (error) {
         console.error("Error loading movies:", error);
       }

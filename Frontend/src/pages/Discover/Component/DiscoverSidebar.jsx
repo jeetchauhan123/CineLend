@@ -77,9 +77,9 @@ function DiscoverSidebar({
 
         <FilterGroup
           title="Range"
-          isOpen={openGroup === "numbers"}
+          isOpen={openGroup === "range"}
           onToggle={() =>
-            setOpenGroup((prev) => (prev === "numbers" ? null : "numbers"))
+            setOpenGroup((prev) => (prev === "range" ? null : "range"))
           }
         >
           

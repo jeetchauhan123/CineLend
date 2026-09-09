@@ -25,6 +25,14 @@ function App() {
     );
   }, [darkMode]);
 
+  useEffect(() => {
+    const pref = localStorage.getItem('pref');
+    if(pref){
+      setShowOnboarding(false);
+    }
+  }, []);
+  
+
   return (
     <div>
       {showOnboarding && (
@@ -36,6 +44,7 @@ function App() {
       <Navbar 
         darkMode={darkMode}
         setDarkMode={setDarkMode}
+        onClose={() => setShowOnboarding(true)}
       />
 
       <Outlet />

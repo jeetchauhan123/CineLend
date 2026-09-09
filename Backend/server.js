@@ -15,7 +15,6 @@
 //   allowedHeaders: ["Content-Type", "Authorization"]
 // }));
 
-
 // const MoviePageData= {
 //   "_id": {
 //     "$oid": "573a13c3f29313caabd6ae04"
@@ -96,7 +95,6 @@
 //   "runtime": 103
 // }
 
-
 // app.get('/getgenres',(req,res)=>{
 //     res.send(genres);
 // });
@@ -108,29 +106,25 @@
 // app.get('/moviepage',(req,res)=>{
 //   setTimeout(() => {
 //     res.send(MoviePageData);
-//   }, 1000);  
+//   }, 1000);
 // })
 
 // app.listen(3000,()=>{
 //     console.log('server running');
 // });
 
-
 const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
 
-const connectDB = require("./config/db");
-const movieRoutes = require("./routes/movieRoutes");
-
 dotenv.config();
 
+const { connectDB } = require("./config/db");
+const movieRoutes = require("./routes/movieRoutes");
+
+
 const app = express();
-
 const PORT = process.env.PORT || 3000;
-
-// Connect to MongoDB
-connectDB();
 
 // Middleware
 app.use(express.json());
@@ -139,7 +133,7 @@ app.use(
   cors({
     origin: "http://localhost:5173",
     credentials: true,
-  })
+  }),
 );
 
 // Routes
@@ -153,6 +147,13 @@ app.get("/", (req, res) => {
 });
 
 // Start server
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+const startServer = async () => {
+  // Connect to MongoDB
+  await connectDB();
+
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+};
+
+startServer();

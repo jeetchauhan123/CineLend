@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { sampleDB } = require("../config/db");
 
 const movieSchema = new mongoose.Schema(
   {
@@ -88,6 +89,6 @@ const movieSchema = new mongoose.Schema(
   }
 );
 
-const Movie = mongoose.model("Movie", movieSchema);
+const Movie = sampleDB.model("Movie", movieSchema);
 
 module.exports = Movie;

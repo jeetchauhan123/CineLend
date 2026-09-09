@@ -1,7 +1,6 @@
-import { useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
+import axios from "axios";
 import "./OnboardingModal.css";
-import axios from 'axios'
-import { useEffect } from "react";
 
 const ageRanges = [
   "Under 18",
@@ -15,21 +14,58 @@ const ageRanges = [
 function OnboardingModal({ onClose }) {
   const [step, setStep] = useState(1);
   const [genres, setGenres] = useState([]);
-  const [selectedGenres, setSelectedGenres] = useState([]);
   const [selectedAge, setSelectedAge] = useState("");
-
+  const [selectedGenres, setSelectedGenres] = useState([]);
+  const [storage, setStorage] = useState({
+    age: "",
+    genres: [],
+  });
+  const [showError, setShowError] = useState(false);
 
   useEffect(() => {
-    const fetchgenre = async ()=>{
+    const fetchGenres = async () => {
       try {
         const res = await axios.get("http://localhost:3000/movies/genres");
+
         setGenres(res.data);
       } catch (error) {
-        console.log("no genre gound");
+        console.error("Error loading genres:", error);
       }
+    };
+    fetchGenres();
+  }, []);
+
+  useEffect(() => {
+    if (!showError) return;
+
+    const timer = setTimeout(() => {
+      setShowError(false);
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, [showError]);
+
+  function navigation(ch) {
+    let updatedPrefs = {};
+    switch (ch) {
+      case 2:
+        if (!selectedAge) {
+          setShowError(true);
+          return;
+        }
+        updatedPrefs = { ...storage, age: selectedAge };
+        setStorage(updatedPrefs);
+        localStorage.setItem("pref", JSON.stringify(updatedPrefs));
+        setStep(3)
+        break;
+      case 3:
+        updatedPrefs = { ...storage, genres: selectedGenres };
+        setStorage(updatedPrefs);
+        localStorage.setItem("pref", JSON.stringify(updatedPrefs));
+        onClose();
+        break;
     }
-    fetchgenre();
-  }, [])
+  }
 
   const toggleGenre = (genre) => {
     if (selectedGenres.includes(genre)) {
@@ -42,7 +78,9 @@ function OnboardingModal({ onClose }) {
   return (
     <div className="modal-overlay">
       <div className="modal-card">
-        <button className="close-btn" onClick={onClose}>✕</button>
+        <button className="close-btn" onClick={onClose}>
+          ✕
+        </button>
         <div className="progress-dots">
           <span className={step === 1 ? "active" : ""}></span>
           <span className={step === 2 ? "active" : ""}></span>
@@ -56,7 +94,7 @@ function OnboardingModal({ onClose }) {
             <h2>Welcome to CineLend</h2>
 
             <p>
-              Discover movies you'll love, <br/>
+              Discover movies you'll love, <br />
               not just what's trending.
             </p>
 
@@ -68,6 +106,7 @@ function OnboardingModal({ onClose }) {
 
         {step === 2 && (
           <div className="step-content">
+            {showError && <p style={{ color: 'red' }}>Please select age</p>}
             <h2>Choose Your Age Group</h2>
 
             <p>This helps us recommend movies that match your interests.</p>
@@ -91,7 +130,7 @@ function OnboardingModal({ onClose }) {
                 Back
               </button>
 
-              <button className="primary-btn" onClick={() => setStep(3)}>
+              <button className="primary-btn" onClick={() => navigation(step)}>
                 Next
               </button>
             </div>
@@ -121,7 +160,7 @@ function OnboardingModal({ onClose }) {
                 Back
               </button>
 
-              <button className="primary-btn" onClick={onClose}>
+              <button className="primary-btn" onClick={() => navigation(step)}>
                 Explore
               </button>
             </div>

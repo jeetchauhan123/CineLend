@@ -1,19 +1,15 @@
 import { Range, getTrackBackground } from "react-range";
+import { RATING_CONFIG } from "../../../constants/discover";
 import "./RatingSlider.css";
-
-const MIN = 0;
-const MAX = 10;
-const STEP = 0.1;
-const MIN_DISTANCE = 0.1;
 
 function RatingSlider({ filterState, setFilterState }) {
   const values = [
-    Number(filterState.minRating || MIN),
-    Number(filterState.maxRating || MAX),
+    Number(filterState.minRating || RATING_CONFIG.min),
+    Number(filterState.maxRating || RATING_CONFIG.max),
   ];
 
   const handleChange = ([min, max]) => {
-    if (max - min < MIN_DISTANCE) {
+    if (max - min < RATING_CONFIG.minDistance) {
       return;
     }
 
@@ -38,9 +34,9 @@ function RatingSlider({ filterState, setFilterState }) {
 
       <Range
         values={values}
-        min={MIN}
-        max={MAX}
-        step={STEP}
+        min={RATING_CONFIG.min}
+        max={RATING_CONFIG.max}
+        step={RATING_CONFIG.step}
         allowOverlap={false}
         onChange={handleChange}
         renderTrack={({ props, children }) => (
@@ -51,8 +47,8 @@ function RatingSlider({ filterState, setFilterState }) {
               ...props.style,
               background: getTrackBackground({
                 values,
-                min: MIN,
-                max: MAX,
+                min: RATING_CONFIG.min,
+                max: RATING_CONFIG.max,
                 colors: [
                   "var(--button-bg)",
                   "var(--accent)",
@@ -65,10 +61,7 @@ function RatingSlider({ filterState, setFilterState }) {
           </div>
         )}
         renderThumb={({ props }) => (
-          <div
-            {...props}
-            className="rating-thumb"
-          >
+          <div {...props} className="rating-thumb">
             <div className="rating-thumb-inner" />
           </div>
         )}

@@ -2,7 +2,7 @@ import { Link, useLocation } from "react-router-dom";
 import "./Navbar.css";
 import Icon from "../Icon";
 
-function Navbar({ darkMode, setDarkMode }) {
+function Navbar({ darkMode, setDarkMode, onClose }) {
   const location = useLocation();
 
   const isHomePage = location.pathname === "/";
@@ -19,10 +19,10 @@ function Navbar({ darkMode, setDarkMode }) {
           <Link to="/">Home</Link>
         </li>
         <li>
-          <Link to="/movies">Movies</Link>
+          <Link to="/discover">Discover</Link>
         </li>
         <li>
-          <Link to="/discover">Discover</Link>
+          <Link onClick={onClose}>Preference</Link>
         </li>
         <li>
           <Link to="/about">About</Link>
@@ -36,10 +36,8 @@ function Navbar({ darkMode, setDarkMode }) {
 
         <button className="icon-btn" onClick={() => setDarkMode(!darkMode)}>
           {darkMode ? (
-            /* Moon */
             <Icon name="moon-icon" />
           ) : (
-            /* Sun */
             <Icon name="sun-icon" />
           )}
         </button>

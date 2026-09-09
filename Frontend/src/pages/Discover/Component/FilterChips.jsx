@@ -53,7 +53,7 @@ function FilterChips({ filterState, setFilterState }) {
     <div className="filter-chips">
       {chips.map((chip) => (
         <button
-          key={chip.label}
+          key={`${chip.key}-${chip.value ?? chip.label}`}
           className="filter-chip"
           onClick={() => remove(chip.key, chip.value)}
         >

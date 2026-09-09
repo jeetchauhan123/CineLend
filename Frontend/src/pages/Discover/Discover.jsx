@@ -1,6 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import axios from "axios";
+
+import useDebounce from "../../hooks/useDebounce";
+import {
+  getDiscoverFilters,
+  fetchDiscoverResults,
+} from "../../services/discoverService";
 
 import "./Discover.css";
 import MovieCard from "../../components/homemovie/MovieCard";
@@ -8,16 +13,14 @@ import DiscoverSidebar from "./Component/DiscoverSidebar";
 import Icon from "../../components/Icon";
 import Skeleton from "../../components/Skeleton/Skeleton";
 
+import { DEFAULT_FILTERS, SORT_OPTIONS } from "../../constants/discover";
+
 function MovieGridSkeleton() {
   return (
     <div className="discover-grid discover-grid-skeleton">
       {Array.from({ length: 24 }).map((_, index) => (
         <div className="movie-skeleton-card" key={index}>
-          <Skeleton
-            width="100%"
-            height="315px"
-            borderRadius="12px"
-          />
+          <Skeleton width="100%" height="315px" borderRadius="12px" />
 
           <Skeleton
             width="75%"
@@ -26,61 +29,15 @@ function MovieGridSkeleton() {
             className="movie-skeleton-title"
           />
 
-          <Skeleton
-            width="45%"
-            height="14px"
-            borderRadius="6px"
-          />
+          <Skeleton width="45%" height="14px" borderRadius="6px" />
         </div>
       ))}
     </div>
   );
 }
 
-function Discover() {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [movies, setMovies] = useState([]);
-  const [totalMovies, setTotalMovies] = useState(0);
-  const [page, setPage] = useState(Number(searchParams.get("page")) || 1);
-
-  const LIMIT = 24;
-
-  const [search, setSearch] = useState(searchParams.get("search") || "");
-  const [sort, setSort] = useState(searchParams.get("sort") || "default");
-
-  const [isSortOpen, setIsSortOpen] = useState(false);
-  const sortRef = useRef(null);
-
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-
-  const [filters, setFilters] = useState({
-    genres: [],
-    languages: [],
-    countries: [],
-    rated: [],
-  });
-
-  const defaultFilters = {
-    genres: [],
-    languages: [],
-    countries: [],
-    rated: [],
-
-    minRating: "",
-    maxRating: "",
-
-    yearFrom: "",
-    yearTo: "",
-
-    runtimeMin: "",
-    runtimeMax: "",
-
-    cast: "",
-    director: "",
-    writer: "",
-  };
-  const [filterState, setFilterState] = useState(() => ({
+function getFiltersFromURL(searchParams) {
+  return {
     genres: searchParams.get("genres")
       ? searchParams.get("genres").split(",")
       : [],
@@ -109,53 +66,47 @@ function Discover() {
     cast: searchParams.get("cast") || "",
     director: searchParams.get("director") || "",
     writer: searchParams.get("writer") || "",
-  }));
-  const [debouncedFilters, setDebouncedFilters] = useState(filterState);
+  };
+}
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setDebouncedFilters(filterState);
-    }, 300);
+function Discover() {
+  const [searchParams, setSearchParams] = useSearchParams();
 
-    return () => clearTimeout(timer);
-  }, [filterState]);
+  const [movies, setMovies] = useState([]);
+  const [totalMovies, setTotalMovies] = useState(0);
 
-  const sortOptions = [
-    {
-      value: "default",
-      label: "Default",
-    },
-    {
-      value: "recent",
-      label: "Recently Released",
-    },
-    {
-      value: "rating",
-      label: "Highest Rated",
-    },
-    {
-      value: "title",
-      label: "Title: A–Z",
-    },
-    {
-      value: "random",
-      label: "Surprise Me",
-    },
-  ];
+  const LIMIT = 24;
 
-  const [debouncedSearch, setDebouncedSearch] = useState(search);
+  const [page, setPage] = useState(Number(searchParams.get("page")) || 1);
+
+  const [search, setSearch] = useState(searchParams.get("search") || "");
+
+  const [sort, setSort] = useState(searchParams.get("sort") || "default");
+
+  const [isSortOpen, setIsSortOpen] = useState(false);
+  const sortRef = useRef(null);
+
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  const [filters, setFilters] = useState({
+    genres: [],
+    languages: [],
+    countries: [],
+    rated: [],
+  });
+
+  const [filterState, setFilterState] = useState(() =>
+    getFiltersFromURL(searchParams),
+  );
+
+  const debouncedSearch = useDebounce(search, 400);
+  const debouncedFilters = useDebounce(filterState, 300);
 
   const selectedSort =
-    sortOptions.find((option) => option.value === sort) || sortOptions[0];
+    SORT_OPTIONS.find((option) => option.value === sort) || SORT_OPTIONS[0];
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setDebouncedSearch(search);
-    }, 400);
-
-    return () => clearTimeout(timer);
-  }, [search]);
-
+  // Close sort menu when clicking outside it.
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (sortRef.current && !sortRef.current.contains(event.target)) {
@@ -170,22 +121,25 @@ function Discover() {
     };
   }, []);
 
+  // Fetch available filter options once.
   useEffect(() => {
     const fetchFilters = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:3000/movies/filters",
-        );
+        const response = await getDiscoverFilters();
 
         setFilters(response.data);
       } catch (error) {
-        console.error(error);
+        console.error("Error loading discover filters:", error);
       }
     };
 
     fetchFilters();
   }, []);
 
+  /*
+   * Fetch movies whenever the debounced search,
+   * debounced filters, sort or page changes.
+   */
   useEffect(() => {
     const fetchMovies = async () => {
       try {
@@ -195,36 +149,12 @@ function Discover() {
         // TEMPORARY: delay response to test skeleton
         // await new Promise((resolve) => setTimeout(resolve, 5000));
 
-        const response = await axios.get("http://localhost:3000/movies", {
-          params: {
-            search: debouncedSearch,
-
-            genres: filterState.genres.join(","),
-            languages: filterState.languages.join(","),
-            countries: filterState.countries.join(","),
-            rated: filterState.rated.join(","),
-
-            minRating: filterState.minRating,
-            maxRating: filterState.maxRating,
-
-            yearFrom: debouncedFilters.yearFrom,
-            yearTo: debouncedFilters.yearTo,
-
-            runtimeMin: debouncedFilters.runtimeMin,
-            runtimeMax: debouncedFilters.runtimeMax,
-
-            cast: filterState.cast,
-            director: filterState.director,
-            writer: filterState.writer,
-
-            hasPoster: true,
-
-            sort,
-
-            page,
-
-            limit: LIMIT,
-          },
+        const response = await fetchDiscoverResults({
+          search: debouncedSearch,
+          filters: debouncedFilters,
+          sort,
+          page,
+          limit: LIMIT,
         });
 
         setMovies(response.data.movies);
@@ -240,7 +170,7 @@ function Discover() {
     };
 
     fetchMovies();
-  }, [sort, debouncedSearch, debouncedFilters, page]);
+  }, [debouncedSearch, debouncedFilters, sort, page]);
 
   useEffect(() => {
     const params = {};
@@ -314,6 +244,7 @@ function Discover() {
 
   const handleFilterChange = (category, value) => {
     setPage(1);
+
     setFilterState((previous) => {
       const exists = previous[category].includes(value);
 
@@ -328,7 +259,7 @@ function Discover() {
   };
 
   const clearFilters = () => {
-    setFilterState(defaultFilters);
+    setFilterState(DEFAULT_FILTERS);
     setSearch("");
     setSort("default");
     setPage(1);
@@ -428,7 +359,7 @@ function Discover() {
 
               {isSortOpen && (
                 <div className="sort-menu" role="listbox">
-                  {sortOptions.map((option) => (
+                  {SORT_OPTIONS.map((option) => (
                     <button
                       key={option.value}
                       type="button"
@@ -458,7 +389,12 @@ function Discover() {
           <div className="results-info">
             {!loading && (
               <p>
-                {movies.length * page - movies.length} - {movies.length * page}{" "}
+                {totalMovies === 0
+                  ? "0"
+                  : `${(page - 1) * LIMIT + 1} - ${Math.min(
+                      page * LIMIT,
+                      totalMovies,
+                    )}`}{" "}
                 of {totalMovies.toLocaleString()} movies
               </p>
             )}
@@ -586,7 +522,6 @@ function Discover() {
           )}
         </div>
       </section>
-      
     </main>
   );
 }
