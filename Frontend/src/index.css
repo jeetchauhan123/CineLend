@@ -52,6 +52,9 @@
   --dropdown-shadow: rgba(46, 32, 32, 0.18);
 
   --panel-bg: rgba(255, 255, 255, 0.20);
+
+  /* Login/register */
+  --authh-bg: rgba(255, 255, 255, 0.75);
 }
 
 body.dark {
@@ -94,6 +97,9 @@ body.dark {
   --dropdown-shadow: rgba(0, 0, 0, 0.45);
 
   --panel-bg: rgba(255, 255, 255, .04);
+  
+  /* Login/register */
+  --authf-bg: rgba(32, 24, 24, 0.85);
 }
 
 

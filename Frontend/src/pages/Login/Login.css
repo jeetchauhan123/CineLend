@@ -1,0 +1,5 @@
+/* LOGIN-SPECIFIC STYLES */
+
+.login-card {
+width: min(430px, 100%);
+}
