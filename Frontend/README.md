@@ -38,6 +38,7 @@ If you are developing a production application, we recommend using TypeScript wi
 5. filter chip does not show filter of - minRating, maxRating, yearFrom, yearTo, runtimeMin, runtimeMax
 6. filter chips just show the text of filter applied but its sometime difficult which type of filter it is (rated, people, time)
 7. in the people search in filter bar the scroll bar when at the end gets out of the drop box
+in moviedetail page in facts section in genre block multiple genres display below each other but from the movie from the second place adds prefix in front of them 
 
 
 #f6121d

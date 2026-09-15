@@ -8,6 +8,12 @@ const commentSchema = new mongoose.Schema(
       required: true,
     },
 
+    name: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+
     movieId: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,

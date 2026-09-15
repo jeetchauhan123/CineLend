@@ -121,6 +121,7 @@ dotenv.config();
 
 const { connectDB } = require("./config/db");
 const movieRoutes = require("./routes/movieRoutes");
+const commentRoutes = require("./routes/commentRoutes");
 
 
 const app = express();
@@ -138,6 +139,7 @@ app.use(
 
 // Routes
 app.use("/movies", movieRoutes);
+app.use("/comments", commentRoutes);
 
 // Health check
 app.get("/", (req, res) => {

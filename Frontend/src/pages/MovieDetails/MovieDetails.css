@@ -1015,6 +1015,48 @@
   color: var(--red);
 }
 
+.movie-comments__more {
+  display: block;
+
+  margin: 24px auto 0;
+  padding: 9px 20px;
+
+  border: 1px solid var(--glass-border);
+  border-radius: 999px;
+
+  background: var(--button-bg);
+  color: var(--text-primary);
+
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.movie-comments__more:hover {
+  background: var(--red);
+  border-color: var(--red);
+  color: #fff;
+
+  transform: translateY(-1px);
+}
+
+.movie-comments__more:active {
+  transform: translateY(0);
+}
+
+.movie-comments__more:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 3px;
+}
+
 /* =========================================================
    RELATED
 ========================================================= */
