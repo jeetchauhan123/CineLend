@@ -28,6 +28,9 @@ If you are developing a production application, we recommend using TypeScript wi
 9. use of onboarding model to store and use user preference
 10. a ui where the user can see its selected preference and change/update it
 11. Updating details in the about page
+12. Adding Bar to show imdb rating out of 10 in moviedetail page
+13. Comments currently doesnt have links in their model so it is not getting stored.
+14. 
 
 
 ##BUGS

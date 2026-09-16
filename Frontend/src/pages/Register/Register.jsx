@@ -1,11 +1,78 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+
 import "./Register.css";
 import "../Auth.css";
 
 const Register = () => {
+  const navigate = useNavigate();
+
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+
+    // Remove error while user is correcting the form
+    if (error) {
+      setError("");
+    }
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    const { name, email, password, confirmPassword } = formData;
+
+    // Frontend validation
+    if (!name || !email || !password || !confirmPassword) {
+      setError("Please fill in all fields.");
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      setError("Passwords do not match.");
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      setError("");
+
+      await axios.post("http://localhost:3000/users", {
+        name,
+        email,
+        password,
+      });
+
+      // Registration successful
+      navigate("/login");
+    } catch (error) {
+      const message =
+        error.response?.data?.message ||
+        "Something went wrong. Please try again.";
+
+      setError(message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className="auth-page register-page">
@@ -17,7 +84,7 @@ const Register = () => {
         <div className="auth-card register-card">
           {/* Brand */}
           <div className="auth-brand">
-            <Link to={'/'} >
+            <Link to="/">
               <img src="/Logo2_WB.PNG" alt="CineLend" />
             </Link>
           </div>
@@ -29,7 +96,7 @@ const Register = () => {
           </div>
 
           {/* Form */}
-          <form className="auth-form">
+          <form className="auth-form" onSubmit={handleSubmit}>
             {/* Name */}
             <div className="auth-field">
               <label htmlFor="register-name">Name</label>
@@ -37,8 +104,11 @@ const Register = () => {
               <input
                 type="text"
                 id="register-name"
+                name="name"
                 placeholder="Your name"
                 autoComplete="name"
+                value={formData.name}
+                onChange={handleChange}
               />
             </div>
 
@@ -49,8 +119,11 @@ const Register = () => {
               <input
                 type="email"
                 id="register-email"
+                name="email"
                 placeholder="Your email"
                 autoComplete="email"
+                value={formData.email}
+                onChange={handleChange}
               />
             </div>
 
@@ -63,8 +136,11 @@ const Register = () => {
                   <input
                     type={showPassword ? "text" : "password"}
                     id="register-password"
+                    name="password"
                     placeholder="Create password"
                     autoComplete="new-password"
+                    value={formData.password}
+                    onChange={handleChange}
                   />
 
                   <button
@@ -90,8 +166,11 @@ const Register = () => {
                   <input
                     type={showConfirmPassword ? "text" : "password"}
                     id="register-confirm-password"
+                    name="confirmPassword"
                     placeholder="Confirm password"
                     autoComplete="new-password"
+                    value={formData.confirmPassword}
+                    onChange={handleChange}
                   />
 
                   <button
@@ -108,9 +187,12 @@ const Register = () => {
               </div>
             </div>
 
+            {/* Error */}
+            {error && <p className="auth-error">{error}</p>}
+
             {/* Submit */}
-            <button type="submit" className="auth-submit">
-              Create Account
+            <button type="submit" className="auth-submit" disabled={isLoading}>
+              {isLoading ? "Creating account..." : "Create Account"}
             </button>
           </form>
 
@@ -119,7 +201,7 @@ const Register = () => {
             <span>or continue with</span>
           </div>
 
-          {/* Google */}
+          {/* Social */}
           <div className="auth-socials">
             <button type="button" aria-label="Continue with Google">
               <svg aria-hidden="true">

@@ -328,6 +328,13 @@
   text-decoration: underline;
 }
 
+.auth-error {
+  margin-top: -4px;
+  color: #ff5a62;
+  font-size: 13px;
+  text-align: center;
+}
+
 /* RESPONSIVE */
 @media (max-width: 600px) {
   .auth-container {
