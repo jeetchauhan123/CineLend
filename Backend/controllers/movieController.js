@@ -506,6 +506,145 @@ const getMovies = async (req, res) => {
   }
 };
 
+// API to get movies related to a movie
+const getRelatedMovies = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({
+        message: "Invalid movie ID",
+      });
+    }
+
+    // Number of recommendations to return
+    const recommendationLimit = 5;
+
+    // Get the current movie
+    const movie = await Movie.findById(id).select("genres");
+
+    if (!movie) {
+      return res.status(404).json({
+        message: "Movie not found",
+      });
+    }
+
+    const genres = movie.genres || [];
+
+    // If the movie has no genres, there is nothing to match
+    if (!genres.length) {
+      return res.status(200).json([]);
+    }
+
+    // Find movies that have at least one matching genre
+    const relatedMovies = await Movie.aggregate([
+      {
+        $match: {
+          _id: {
+            $ne: new mongoose.Types.ObjectId(id),
+          },
+
+          genres: {
+            $in: genres,
+          },
+
+          poster: {
+            $exists: true,
+            $nin: [null, ""],
+          },
+        },
+      },
+
+      // Find how many genres each movie shares
+      {
+        $addFields: {
+          genreMatchCount: {
+            $size: {
+              $setIntersection: ["$genres", genres],
+            },
+          },
+        },
+      },
+
+      // Stronger genre matches come first
+      {
+        $sort: {
+          genreMatchCount: -1,
+        },
+      },
+    ]);
+
+    /*
+      Group movies by the number of matching genres.
+
+      Example:
+
+      5 matching genres
+      ├── Movie A
+      ├── Movie B
+
+      4 matching genres
+      ├── Movie C
+      ├── Movie D
+      └── Movie E
+
+      3 matching genres
+      └── Movie F
+    */
+
+    const groupedMovies = {};
+
+    relatedMovies.forEach((movie) => {
+      const matchCount = movie.genreMatchCount;
+
+      if (!groupedMovies[matchCount]) {
+        groupedMovies[matchCount] = [];
+      }
+
+      groupedMovies[matchCount].push(movie);
+    });
+
+    const recommendations = [];
+
+    // Start with highest possible genre match
+    for (let matchCount = genres.length; matchCount >= 1; matchCount--) {
+      const movies = groupedMovies[matchCount];
+
+      if (!movies) {
+        continue;
+      }
+
+      // Randomize movies within the same match level
+      const shuffledMovies = [...movies].sort(
+        () => Math.random() - 0.5
+      );
+
+      for (const movie of shuffledMovies) {
+        if (recommendations.length >= recommendationLimit) {
+          break;
+        }
+
+        recommendations.push(movie);
+      }
+
+      if (recommendations.length >= recommendationLimit) {
+        break;
+      }
+    }
+
+    res.status(200).json(recommendations);
+  } catch (error) {
+    console.error(
+      "Error fetching related movies:",
+      error.message
+    );
+
+    res.status(500).json({
+      message: "Failed to fetch related movies",
+    });
+  }
+};
+
 module.exports = {
   getMovies,
   getMovieById,
@@ -513,4 +652,5 @@ module.exports = {
   getFilters,
   getPeople,
   getRecentMovies,
+  getRelatedMovies,
 };

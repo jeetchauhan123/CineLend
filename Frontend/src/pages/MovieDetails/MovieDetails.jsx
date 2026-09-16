@@ -26,6 +26,9 @@ const MovieDetails = () => {
   const [overviewExpanded, setOverviewExpanded] = useState(false);
   const [commentsVisible, setCommentsVisible] = useState(COMMENTS_PER_LOAD);
 
+  const [relatedMovies, setRelatedMovies] = useState([]);
+  const [relatedLoading, setRelatedLoading] = useState(true);
+
   useEffect(() => {
     const getDetail = async () => {
       setLoading(true);
@@ -67,6 +70,28 @@ const MovieDetails = () => {
 
   useEffect(() => {
     setCommentsVisible(COMMENTS_PER_LOAD);
+  }, [id]);
+
+  // suggestion movie fetch
+  useEffect(() => {
+    const getRelatedMovies = async () => {
+      setRelatedLoading(true);
+
+      try {
+        const res = await axios.get(
+          `http://localhost:3000/movies/related/${id}`,
+        );
+
+        setRelatedMovies(res.data);
+      } catch (error) {
+        console.log("Error loading related movies:", error);
+        setRelatedMovies([]);
+      } finally {
+        setRelatedLoading(false);
+      }
+    };
+
+    getRelatedMovies();
   }, [id]);
 
   const poster =
@@ -827,7 +852,9 @@ const MovieDetails = () => {
           <button
             type="button"
             className="movie-comments__more"
-            onClick={() => setCommentsVisible((previous) => previous + COMMENTS_PER_LOAD)}
+            onClick={() =>
+              setCommentsVisible((previous) => previous + COMMENTS_PER_LOAD)
+            }
           >
             Read more
           </button>
@@ -841,12 +868,11 @@ const MovieDetails = () => {
       <section className="movie-section movie-related">
         <div className="movie-section__heading">
           <span className="movie-section__eyebrow">KEEP EXPLORING</span>
-
           <h2>You May Also Like</h2>
         </div>
 
         <div className="movie-related__slider">
-          {loading ? (
+          {relatedLoading ? (
             Array.from({ length: 5 }).map((_, index) => (
               <Skeleton
                 key={index}
@@ -855,14 +881,12 @@ const MovieDetails = () => {
                 borderRadius="18px"
               />
             ))
+          ) : relatedMovies.length ? (
+            relatedMovies.map((movie) => (
+              <MovieCard key={movie._id} movie={movie} />
+            ))
           ) : (
-            <>
-              <MovieCard movie={movieData} />
-              <MovieCard movie={movieData} />
-              <MovieCard movie={movieData} />
-              <MovieCard movie={movieData} />
-              <MovieCard movie={movieData} />
-            </>
+            <p className="movie-related__empty">No similar movies found.</p>
           )}
         </div>
       </section>

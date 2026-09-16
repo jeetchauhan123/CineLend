@@ -7,6 +7,7 @@ const {
   getFilters,
   getPeople,
   getRecentMovies,
+  getRelatedMovies,
 } = require("../controllers/movieController");
 
 const router = express.Router();
@@ -25,6 +26,9 @@ router.get("/genres", getGenres);
 
 // Hero Slider
 router.get("/recent", getRecentMovies);
+
+// Movie detail bottom suggestion
+router.get("/related/:id", getRelatedMovies);
 
 // Movie details
 router.get("/:id", getMovieById);
