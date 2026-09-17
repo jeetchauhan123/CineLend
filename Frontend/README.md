@@ -30,7 +30,8 @@ If you are developing a production application, we recommend using TypeScript wi
 11. Updating details in the about page
 12. Adding Bar to show imdb rating out of 10 in moviedetail page
 13. Comments currently doesnt have links in their model so it is not getting stored.
-14. 
+14. Opening a moviedetail page adds that movie to a visited movies in loalstorage to later display it in user profile in continue exploring
+15. 
 
 
 ##BUGS
@@ -46,3 +47,47 @@ in moviedetail page in facts section in genre block multiple genres display belo
 9. Clicking the preference button in the navbar redirects to the home page whereas it sshould open the onboarding panel in the already open page only
 10. 
 
+
+
+
+
+
+What we're building first
+
+I suggest we proceed in this order:
+
+Phase 1 — Profile shell
+
+Persistent Profile Header
+Profile navigation
+Overview
+In-page section switching
+Back navigation
+
+Phase 2 — Overview
+6. Real rental/collection/comment counts
+7. Continue Exploring
+8. Recently Rented
+
+Phase 3 — Rented Movies
+9. Rental cards
+10. Rental details
+11. Return
+12. Cancel where applicable
+
+Phase 4 — Collections
+13. Collection list
+14. Create
+15. Rename
+16. Delete
+17. Open collection
+18. Add/remove movies
+
+Phase 5 — Comments
+19. User's comments
+20. Edit/delete
+
+Phase 6 — Account
+21. Edit profile
+22. Change password
+23. Profile image

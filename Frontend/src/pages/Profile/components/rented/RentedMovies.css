@@ -1,0 +1,118 @@
+.rented-movies {
+  min-height: 420px;
+}
+
+.rented-back-btn {
+  display: inline-flex;
+  align-items: center;
+
+  gap: 7px;
+
+  padding: 0;
+
+  border: none;
+
+  background: transparent;
+  color: inherit;
+
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 600;
+
+  opacity: 0.48;
+
+  cursor: pointer;
+
+  transition: opacity 0.2s ease;
+}
+
+.rented-back-btn:hover {
+  opacity: 1;
+}
+
+.rented-back-btn span {
+  font-size: 16px;
+}
+
+.rented-header {
+  margin-top: 23px;
+}
+
+.rented-header > div > span {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+
+  opacity: 0.48;
+}
+
+.rented-header h2 {
+  margin: 7px 0 6px;
+
+  font-size: 26px;
+
+  letter-spacing: -0.03em;
+}
+
+.rented-header p {
+  margin: 0;
+
+  font-size: 13px;
+
+  opacity: 0.5;
+}
+
+.rented-empty-state {
+  min-height: 260px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  margin-top: 28px;
+
+  padding: 35px;
+
+  border: 1px dashed rgba(255, 255, 255, 0.1);
+  border-radius: 18px;
+
+  text-align: center;
+}
+
+.rented-empty-icon {
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 12px;
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+
+  background: rgba(255, 255, 255, 0.03);
+
+  font-size: 18px;
+
+  opacity: 0.5;
+}
+
+.rented-empty-state h3 {
+  margin: 0;
+
+  font-size: 15px;
+}
+
+.rented-empty-state p {
+  max-width: 390px;
+
+  margin: 7px 0 0;
+
+  font-size: 12px;
+  line-height: 1.6;
+
+  opacity: 0.45;
+}

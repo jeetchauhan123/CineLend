@@ -1,0 +1,129 @@
+.profile-page {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  margin-top: -100px; 
+  padding: 130px 0 80px; 
+  color: var(--text-primary);
+  font-family: "Manrope", sans-serif;
+  overflow-x: hidden;
+}
+
+/* --------------------------------------------------
+   Ultra-Lightweight Lag-Free Fluid Background
+-------------------------------------------------- */
+
+.profile-fluid-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 400px;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.fluid-mesh-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  /* A rich multi-stop gradient scaled up to allow seamless smooth panning */
+  background: linear-gradient(
+    120deg,
+    var(--bg-primary) 0%,
+    var(--red) 25%,
+    var(--bg-secondary) 50%,
+    var(--red2) 75%,
+    var(--bg-primary) 100%
+  );
+  background-size: 300% 300%;
+  opacity: 0.15;
+  /* Pure hardware-accelerated movement with zero layout repainting blur */
+  animation: smooth-gradient-flow 25s ease infinite;
+  will-change: background-position;
+}
+
+@keyframes smooth-gradient-flow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* --------------------------------------------------
+   Profile Hero Area
+-------------------------------------------------- */
+
+.profile-hero-section {
+  position: relative;
+  z-index: 1;
+  width: min(1120px, calc(100% - 48px));
+  margin: 0 auto;
+}
+
+.profile-hero-inner {
+  width: 100%;
+}
+
+/* --------------------------------------------------
+   Main Profile Content Area
+-------------------------------------------------- */
+
+.profile-main {
+  position: relative;
+  z-index: 1;
+  width: min(1120px, calc(100% - 48px));
+  margin: 40px auto 0;
+}
+
+.profile-content {
+  margin-top: 30px;
+  animation: profile-content-in 0.35s ease-out;
+}
+
+@keyframes profile-content-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* --------------------------------------------------
+   Responsive Layouts
+-------------------------------------------------- */
+
+@media (max-width: 800px) {
+  .profile-page {
+    margin-top: -80px;
+    padding-top: 110px;
+  }
+
+  .profile-hero-section,
+  .profile-main {
+    width: min(100% - 32px, 1120px);
+  }
+}
+
+@media (max-width: 520px) {
+  .profile-page {
+    margin-top: -70px;
+    padding-top: 95px;
+    padding-bottom: 50px;
+  }
+
+  .profile-hero-section,
+  .profile-main {
+    width: calc(100% - 20px);
+  }
+}
