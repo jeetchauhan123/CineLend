@@ -31,7 +31,8 @@ If you are developing a production application, we recommend using TypeScript wi
 12. Adding Bar to show imdb rating out of 10 in moviedetail page
 13. Comments currently doesnt have links in their model so it is not getting stored.
 14. Opening a moviedetail page adds that movie to a visited movies in loalstorage to later display it in user profile in continue exploring
-15. 
+15. In movie detail page, when clicking the post comment button without login it redirects directly to login page rather than that we will show cant past without login
+16. 
 
 
 ##BUGS

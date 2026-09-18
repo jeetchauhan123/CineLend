@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 
 const User = require("../models/User");
 
+// User Register
 const createUser = async (req, res) => {
   try {
     const { name, email, password } = req.body;
@@ -51,11 +52,12 @@ const createUser = async (req, res) => {
   }
 };
 
+// User Login
 const loginUser = async (req, res) => {
   try {
     console.log("Login request received");
     const { email, password } = req.body;
-console.log("Login email:", email);
+    console.log("Login email:", email);
     // Validate required fields
     if (!email || !password) {
       return res.status(400).json({
@@ -82,7 +84,7 @@ console.log("Login email:", email);
     }
 
     console.log("Creating JWT...");
-console.log("JWT_SECRET exists:", !!process.env.JWT_SECRET);
+    console.log("JWT_SECRET exists:", !!process.env.JWT_SECRET);
 
     // Create JWT
     const token = jwt.sign(
@@ -117,7 +119,39 @@ console.log("JWT_SECRET exists:", !!process.env.JWT_SECRET);
   }
 };
 
+const getCurrentUser = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.userId).select(
+      "-password"
+    );
+
+    if (!user) {
+      return res.status(404).json({
+        message: "User not found",
+      });
+    }
+
+    res.json({
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        profileImage: user.profileImage,
+        createdAt: user.createdAt,
+      },
+    });
+  } catch (error) {
+    console.error("Get current user error:", error);
+
+    res.status(500).json({
+      message: "Failed to fetch user",
+    });
+  }
+};
+
+
 module.exports = {
   createUser,
   loginUser,
+  getCurrentUser,
 };

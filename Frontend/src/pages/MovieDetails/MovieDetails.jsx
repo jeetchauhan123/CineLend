@@ -3,10 +3,13 @@ import MovieCard from "../../components/homemovie/MovieCard";
 import Skeleton from "../../components/Skeleton/Skeleton";
 import "./MovieDetails.css";
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 
 const MovieDetails = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
+  const { token, user } = useAuth();
 
   const discoverLink = (param, value) =>
     `/discover?${new URLSearchParams({ [param]: value }).toString()}`;
@@ -23,6 +26,12 @@ const MovieDetails = () => {
   const [loading, setLoading] = useState(true);
   const [comments, setComments] = useState([]);
   const [commentsLoading, setCommentsLoading] = useState(true);
+
+  const [commentText, setCommentText] = useState("");
+  const [commentRating, setCommentRating] = useState("");
+  const [commentSubmitting, setCommentSubmitting] = useState(false);
+  const [commentError, setCommentError] = useState("");
+
   const [overviewExpanded, setOverviewExpanded] = useState(false);
   const [commentsVisible, setCommentsVisible] = useState(COMMENTS_PER_LOAD);
 
@@ -134,6 +143,54 @@ const MovieDetails = () => {
     Boolean(fullPlot) || (!fullPlot && shortPlot.length > 420);
 
   const plot = shortPlot || "No story description is available for this title.";
+
+  const handlePostComment = async () => {
+    setCommentError("");
+
+    if (!token) {
+      navigate("/login");
+      return;
+    }
+
+    if (!commentText.trim()) {
+      setCommentError("Please write something before posting.");
+      return;
+    }
+
+    try {
+      setCommentSubmitting(true);
+
+      const response = await axios.post(
+        "http://localhost:3000/comments",
+        {
+          movieId: id,
+          text: commentText.trim(),
+          rating: commentRating === "" ? null : Number(commentRating),
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+
+      const newComment = response.data.comment || response.data;
+
+      setComments((previous) => [newComment, ...previous]);
+
+      setCommentText("");
+      setCommentRating("");
+    } catch (error) {
+      console.error("Error posting comment:", error);
+
+      setCommentError(
+        error.response?.data?.message ||
+          "Failed to post comment. Please try again.",
+      );
+    } finally {
+      setCommentSubmitting(false);
+    }
+  };
 
   return (
     <div className="movie-page">
@@ -779,9 +836,59 @@ const MovieDetails = () => {
         </div>
 
         <div className="movie-comments__composer">
-          <textarea placeholder="Write your thoughts..." rows="3" />
+          <textarea
+            placeholder={
+              token
+                ? "Write your thoughts..."
+                : "Sign in to share your thoughts..."
+            }
+            rows="3"
+            value={commentText}
+            onChange={(event) => {
+              setCommentText(event.target.value);
+              setCommentError("");
+            }}
+            disabled={!token || commentSubmitting}
+          />
 
-          <button type="button">Post Comment</button>
+          <div className="movie-comments__composer-footer">
+            <div className="movie-comments__rating">
+              <span className="movie-comments__rating-label">
+                Rate this movie
+              </span>
+
+              <div className="movie-comments__rating-input">
+                {[1, 2, 3, 4, 5].map((star) => (
+                  <button
+                    key={star}
+                    type="button"
+                    className={star <= Number(commentRating) ? "active" : ""}
+                    onClick={() =>
+                      setCommentRating(
+                        star === Number(commentRating) ? "" : String(star),
+                      )
+                    }
+                    disabled={!token || commentSubmitting}
+                    aria-label={`Rate ${star} out of 5`}
+                  >
+                    ★
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {commentError && (
+              <span className="movie-comments__error">{commentError}</span>
+            )}
+
+            <button
+              type="button"
+              onClick={token ? handlePostComment : () => navigate("/login")}
+              disabled={commentSubmitting}
+            >
+              {commentSubmitting ? "Posting..." : "Post Comment"}
+            </button>
+          </div>
         </div>
 
         <div className="movie-comments__list">
@@ -824,7 +931,7 @@ const MovieDetails = () => {
 
                   {comment.rating && (
                     <span className="movie-comment__rating">
-                      ★ {comment.rating}/10
+                      ★ {comment.rating}/5
                     </span>
                   )}
 

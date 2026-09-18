@@ -1,12 +1,7 @@
-import { useAuth } from "../../../context/AuthContext";
-
 import "./ProfileHeader.css";
 
-function ProfileHeader() {
-  const { user } = useAuth();
-
-  const initial =
-    user?.name?.trim()?.charAt(0).toUpperCase() || "U";
+function ProfileHeader({ user }) {
+  const initial = user?.name?.trim()?.charAt(0).toUpperCase() || "U";
 
   return (
     <section className="profile-header">
@@ -14,10 +9,7 @@ function ProfileHeader() {
         <div className="profile-avatar-frame">
           <div className="profile-avatar">
             {user?.profileImage ? (
-              <img
-                src={user.profileImage}
-                alt={`${user.name}'s profile`}
-              />
+              <img src={user.profileImage} alt={`${user.name}'s profile`} />
             ) : (
               <span>{initial}</span>
             )}
@@ -33,17 +25,12 @@ function ProfileHeader() {
 
           <h1>{user?.name || "Movie Lover"}</h1>
 
-          <p>
-            {user?.email || "No email available"}
-          </p>
+          <p>{user?.email || "No email available"}</p>
         </div>
       </div>
 
-      <button
-        type="button"
-        className="profile-edit-btn"
-      >
-        <span>Edit Account</span>
+      <button type="button" className="profile-edit-btn">
+        Edit Account
       </button>
     </section>
   );

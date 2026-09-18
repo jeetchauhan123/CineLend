@@ -852,6 +852,7 @@
   }
 }
 
+
 /* =========================================================
    COMMENTS
 ========================================================= */
@@ -866,16 +867,16 @@
   z-index: 2;
 
   display: flex;
-  align-items: flex-end;
-  gap: 15px;
+  flex-direction: column;
+  gap: 12px;
 
   max-width: 900px;
 }
 
 .movie-comments__composer textarea {
-  flex: 1;
-
+  width: 100%;
   min-height: 105px;
+
   resize: vertical;
 
   padding: 15px 17px;
@@ -894,7 +895,8 @@
 
   transition:
     border-color 0.2s ease,
-    background 0.2s ease;
+    background 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .movie-comments__composer textarea::placeholder {
@@ -902,34 +904,199 @@
 }
 
 .movie-comments__composer textarea:focus {
-  border-color: rgba(236, 38, 48, 0.45);
+  border-color: rgba(236, 38, 48, 0.5);
+
+  box-shadow:
+    0 0 0 3px rgba(236, 38, 48, 0.07);
 }
 
-.movie-comments__composer button {
+.movie-comments__composer textarea:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Composer footer */
+
+.movie-comments__composer-footer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Rating select */
+
+.movie-comments__composer-footer select {
+  height: 42px;
+  padding: 0 32px 0 13px;
+
+  border: 1px solid var(--glass-border);
+  border-radius: 10px;
+
+  outline: none;
+
+  background: var(--panel-bg);
+  color: var(--text-primary);
+
+  font-family: inherit;
+  font-size: 0.74rem;
+  font-weight: 650;
+
+  cursor: pointer;
+
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+
+.movie-comments__composer-footer select:hover {
+  border-color: rgba(236, 38, 48, 0.35);
+}
+
+.movie-comments__composer-footer select:focus {
+  border-color: rgba(236, 38, 48, 0.5);
+}
+
+.movie-comments__composer-footer select:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* Error */
+
+.movie-comments__error {
+  margin-left: 2px;
+
+  color: var(--red);
+
+  font-size: 0.7rem;
+  font-weight: 650;
+}
+
+/* Post button */
+
+.movie-comments__composer-footer button {
   flex: 0 0 auto;
 
-  height: 44px;
+  height: 42px;
+  margin-left: auto;
   padding: 0 19px;
 
   border: 0;
-  border-radius: 11px;
+  border-radius: 10px;
 
   background: var(--red);
 
   color: #fff;
 
   font-family: inherit;
-  font-size: 0.76rem;
+  font-size: 0.74rem;
   font-weight: 700;
 
   cursor: pointer;
 
-  transition: background 0.2s ease;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease,
+    opacity 0.2s ease;
 }
 
-.movie-comments__composer button:hover {
+.movie-comments__composer-footer button:hover:not(:disabled) {
   background: var(--red2);
+  transform: translateY(-1px);
 }
+
+.movie-comments__composer-footer button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.movie-comments__composer-footer button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+
+/* =========================================================
+   COMMENT RATING
+========================================================= */
+
+.movie-comments__rating {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.movie-comments__rating-label {
+  color: var(--text-primary);
+
+  font-size: 0.78rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.movie-comments__rating-input {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+
+  padding: 5px 7px;
+
+  border: 1px solid var(--glass-border);
+  border-radius: 10px;
+
+  background: var(--panel-bg);
+}
+
+.movie-comments__rating-input button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 28px;
+  height: 28px;
+  padding: 0;
+
+  border: 0;
+  border-radius: 7px;
+
+  background: transparent;
+
+  color: var(--text-secondary);
+
+  font-family: inherit;
+  font-size: 18px;
+  line-height: 1;
+
+  cursor: pointer;
+
+  transition:
+    background 0.15s ease,
+    color 0.15s ease,
+    transform 0.15s ease;
+}
+
+/* ONLY the hovered star changes */
+.movie-comments__rating-input button:hover:not(:disabled) {
+  background: var(--red);
+  color: #fff;
+
+  transform: scale(1.05);
+}
+
+/* Selected rating */
+.movie-comments__rating-input button.active {
+  color: var(--red);
+}
+
+.movie-comments__rating-input button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+
+
+/* =========================================================
+   COMMENT LIST
+========================================================= */
 
 .movie-comments__list {
   max-width: 900px;
@@ -993,7 +1160,20 @@
   line-height: 1.7;
 }
 
+.movie-comment__rating {
+  display: inline-block;
+
+  margin-top: 8px;
+
+  color: var(--red);
+
+  font-size: 0.68rem;
+  font-weight: 700;
+}
+
 .movie-comment__like {
+  display: block;
+
   margin-top: 9px;
   padding: 0;
 
@@ -1055,6 +1235,47 @@
 .movie-comments__more:focus-visible {
   outline: 2px solid var(--red);
   outline-offset: 3px;
+}
+
+/* =========================================================
+   RESPONSIVE — COMMENTS
+========================================================= */
+
+@media (max-width: 760px) {
+  .movie-comments__composer-footer {
+    flex-wrap: wrap;
+  }
+
+  .movie-comments__error {
+    order: 3;
+    flex-basis: 100%;
+  }
+
+  .movie-comments__composer-footer button {
+    margin-left: auto;
+  }
+}
+
+@media (max-width: 520px) {
+  .movie-comments__composer textarea {
+    min-height: 95px;
+  }
+
+  .movie-comments__composer-footer {
+    align-items: stretch;
+  }
+
+  .movie-comments__composer-footer select {
+    flex: 1;
+  }
+
+  .movie-comments__composer-footer button {
+    margin-left: 0;
+  }
+
+  .movie-comments__error {
+    order: 3;
+  }
 }
 
 /* =========================================================
