@@ -1,0 +1,34 @@
+/* =========================================================
+   RELATED
+========================================================= */
+
+.movie-related {
+  padding-top: 95px;
+  padding-bottom: 120px;
+}
+
+.movie-related__slider {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  padding: 5px 2px 20px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--glass-border) transparent;
+}
+
+.movie-related__slider::-webkit-scrollbar {
+  height: 5px;
+}
+
+.movie-related__slider::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.movie-related__slider::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: var(--glass-border);
+}
+
+.movie-related__slider > * {
+  flex: 0 0 240px;
+}

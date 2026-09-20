@@ -1,0 +1,60 @@
+/* =========================================================
+   CAST & CREW
+========================================================= */
+
+.movie-cast-crew {
+  padding-top: 95px;
+  padding-bottom: 110px;
+}
+
+.movie-cast-crew__decoration {
+  position: absolute;
+  z-index: 0;
+  width: 650px;
+  height: auto;
+  right: -245px;
+  top: 20px;
+  opacity: 0.1;
+  pointer-events: none;
+  user-select: none;
+  transform: rotate(-15deg);
+}
+
+.movie-cast-crew__group {
+  position: relative;
+  z-index: 2;
+  padding: 25px 0 28px;
+  border-top: 1px solid var(--glass-border);
+}
+
+.movie-cast-crew__group:last-child {
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.movie-cast-crew__group h3 {
+  margin-bottom: 17px;
+  color: var(--text-secondary);
+  font-size: 0.67rem;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.movie-cast-crew__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 25px;
+}
+
+.movie-person {
+  position: relative;
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: default;
+  transition: color 0.2s ease;
+}
+
+.movie-person:hover {
+  color: var(--red);
+}

@@ -32,7 +32,8 @@ If you are developing a production application, we recommend using TypeScript wi
 13. Comments currently doesnt have links in their model so it is not getting stored.
 14. Opening a moviedetail page adds that movie to a visited movies in loalstorage to later display it in user profile in continue exploring
 15. In movie detail page, when clicking the post comment button without login it redirects directly to login page rather than that we will show cant past without login
-16. 
+16. When the comment is posted it directly appears in the comment section rather than that the comment will indeed appear in comment section but it will be pale until the backend succesfully uploads the comment to the database 
+17. The user can only seens to interact form one tab, if teh user login and opens another tab then that tab will not have the user token and the user needs to login again 
 
 
 ##BUGS
@@ -46,7 +47,8 @@ If you are developing a production application, we recommend using TypeScript wi
 in moviedetail page in facts section in genre block multiple genres display below each other but from the movie from the second place adds prefix in front of them
 8. The suggestion movie in the moviedetail page lodes twice
 9. Clicking the preference button in the navbar redirects to the home page whereas it sshould open the onboarding panel in the already open page only
-10. 
+10. When the movie detail is open and we then open another movie detail by writing its id in the url and then click back button in browser, now every time you scroll it gerenates error in the browser cosole
+11. 
 
 
 
@@ -92,3 +94,95 @@ Phase 6 — Account
 21. Edit profile
 22. Change password
 23. Profile image
+
+
+
+
+
+
+
+
+
+
+
+We're ready to execute
+
+I suggest we build it in this exact order:
+
+Phase 1 — Pricing foundation
+Movie release year
+       ↓
+Pricing tier
+       ↓
+Base daily price
+       ↓
+Rental duration
+       ↓
+Package discount
+       ↓
+Final rental price
+
+We'll first decide and implement the pricing configuration.
+
+
+
+Phase 2 — Cart
+Cart Model
+→ Controller
+→ Routes
+→ Thunder Client testing
+→ Movie Details "Add to Cart"
+→ Added confirmation + View Cart
+→ Cart page
+→ Remove
+→ Clear Cart
+→ Cart access from profile dropdown
+
+
+
+
+Phase 3 — Rental
+Rental Model
+→ Rental creation
+→ Duration selection
+→ Individual Rent
+→ Rent All
+→ Price calculation
+→ Tax
+→ Checkout
+→ Dummy payment
+→ Success
+→ Cart cleanup
+
+
+
+
+Phase 4 — Rental lifecycle
+Active rental
+→ Expiration
+→ Early return
+→ Rental history
+→ Profile → Rented
+
+
+
+
+Phase 5 — Final integration
+
+We'll connect everything so the Movie Details button correctly reflects:
+
+Available
+   ↓
+Add to Cart
+
+In Cart
+   ↓
+Added / View Cart
+
+Rented
+   ↓
+Rented
+
+Expired / Returned
+   ↓
+Add to Cart

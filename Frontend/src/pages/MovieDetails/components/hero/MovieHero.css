@@ -1,0 +1,239 @@
+/* =========================================================
+   HERO
+========================================================= */
+
+.movie-hero {
+  position: relative;
+  min-height: 680px;
+  overflow: hidden;
+  color: #fff;
+  background: #090707;
+  z-index: 1;
+}
+
+.movie-hero__background {
+  position: absolute;
+  inset: -40px;
+  background-position: center;
+  background-size: cover;
+  filter: blur(24px);
+  transform: scale(1.08);
+  opacity: 0.7;
+}
+
+.movie-hero__background--loading {
+  filter: none;
+  opacity: 0.3;
+  transform: none;
+}
+
+.movie-hero__overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(8, 5, 5, 0.67) 0%,
+      rgba(8, 5, 5, 0.56) 42%,
+      rgba(8, 5, 5, 0.32) 72%,
+      rgba(8, 5, 5, 0.48) 100%
+    ),
+    linear-gradient(
+      0deg,
+      rgba(8, 5, 5, 0.76) 0%,
+      transparent 35%,
+      rgba(8, 5, 5, 0.2) 100%
+    );
+}
+
+.movie-hero__content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 48px;
+  width: min(1180px, calc(100% - 80px));
+  min-height: 680px;
+  margin: 0 auto;
+  padding: 90px 0 80px;
+}
+
+.movie-hero__poster {
+  flex: 0 0 280px;
+  width: 280px;
+  height: 400px;
+  overflow: hidden;
+  border-radius: 20px;
+  box-shadow:
+    0 30px 70px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+.movie-hero__poster img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.movie-hero__info {
+  max-width: 650px;
+}
+
+.movie-hero__heading h1 {
+  max-width: 700px;
+  color: #fff;
+  font-size: clamp(2.6rem, 5vw, 4.1rem);
+  font-weight: 700;
+  letter-spacing: -0.055em;
+  line-height: 0.98;
+}
+
+.movie-hero__meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 18px;
+  margin-top: 24px;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.movie-hero__rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #fff;
+}
+
+.movie-hero__rating-star {
+  color: #f3bd45;
+  font-size: 0.85rem;
+}
+
+.movie-hero__genres {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.movie-hero__genres span {
+  padding: 6px 11px;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.07);
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+.movie-hero__actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 30px;
+}
+
+.movie-hero__rent,
+.movie-hero__wishlist {
+  height: 46px;
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.movie-hero__rent {
+  padding: 0 25px;
+  border: 1px solid var(--red);
+  background: var(--red);
+  color: #fff;
+}
+
+.movie-hero__rent:hover {
+  background: var(--red2);
+  transform: translateY(-1px);
+}
+
+.movie-hero__wishlist {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 18px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.07);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.movie-hero__wishlist span:first-child {
+  font-size: 1.15rem;
+  line-height: 1;
+}
+
+.movie-hero__wishlist:hover {
+  background: rgba(255, 255, 255, 0.12);
+  transform: translateY(-1px);
+}
+
+.movie-hero__community {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 23px;
+}
+
+.movie-hero__community-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.72);
+  font-family: inherit;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.movie-hero__community-item:hover {
+  color: #fff;
+}
+
+.movie-hero__community-icon {
+  font-size: 1rem;
+}
+
+.movie-hero__community-count {
+  font-size: 0.76rem;
+}
+
+.movie-hero__community-divider {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.movie-hero__community-item {
+  transition:
+    opacity 0.2s ease,
+    filter 0.2s ease,
+    transform 0.2s ease;
+}
+
+.movie-hero__community-item.is-liked
+  .movie-hero__community-icon {
+  color: var(--red);
+}
+
+.movie-hero__community-item.is-processing {
+  opacity: 0.5;
+  filter: blur(0.3px);
+  cursor: wait;
+}

@@ -1,9 +1,10 @@
 const mongoose = require("mongoose");
+
 const { cineLendDB } = require("../config/db");
 
-const watchlistSchema = new mongoose.Schema(
+const collectionMovieSchema = new mongoose.Schema(
   {
-    userId: {
+    collectionId: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
     },
@@ -18,11 +19,14 @@ const watchlistSchema = new mongoose.Schema(
   }
 );
 
-watchlistSchema.index(
-  { userId: 1, movieId: 1 },
+collectionMovieSchema.index(
+  { collectionId: 1, movieId: 1 },
   { unique: true }
 );
 
-const Watchlist = cineLendDB.model("Watchlist", watchlistSchema);
+const CollectionMovie = cineLendDB.model(
+  "CollectionMovie",
+  collectionMovieSchema
+);
 
-module.exports = Watchlist;
+module.exports = CollectionMovie;

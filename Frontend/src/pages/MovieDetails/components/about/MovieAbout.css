@@ -1,0 +1,115 @@
+/* =========================================================
+   ABOUT THE FILM
+========================================================= */
+
+.movie-about {
+  padding-top: 88px;
+  padding-bottom: 105px;
+}
+
+.movie-about__decoration {
+  position: absolute;
+  z-index: 0;
+  width: 400px;
+  height: auto;
+  left: -100px;
+  top: -155px;
+  opacity: 0.07;
+  pointer-events: none;
+  user-select: none;
+  transform: rotateZ(-45deg);
+}
+
+.movie-about__layout {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: minmax(0, 1.7fr) minmax(230px, 0.8fr);
+  gap: 65px;
+}
+
+.movie-about__details {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 42px;
+}
+
+.movie-detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  min-height: 78px;
+  padding: 0 0 18px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.movie-detail-item span {
+  color: var(--text-secondary);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.movie-detail-item strong {
+  color: var(--text-primary);
+  font-size: 0.88rem;
+  font-weight: 650;
+  line-height: 1.5;
+}
+
+.movie-about__ratings {
+  display: flex;
+  flex-direction: column;
+  padding-left: 34px;
+  border-left: 1px solid var(--glass-border);
+}
+
+.movie-rating-main {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 26px;
+}
+
+.movie-rating-main__label {
+  margin-bottom: 4px;
+  color: var(--text-secondary);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.movie-rating-main strong {
+  color: var(--text-primary);
+  font-size: 3.3rem;
+  font-weight: 700;
+  letter-spacing: -0.07em;
+  line-height: 1;
+}
+
+.movie-rating-main small {
+  margin-top: 7px;
+  color: var(--text-secondary);
+  font-size: 0.7rem;
+}
+
+.movie-rating-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 0;
+  border-top: 1px solid var(--glass-border);
+}
+
+.movie-rating-row span {
+  color: var(--text-secondary);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.movie-rating-row strong {
+  color: var(--text-primary);
+  font-size: 0.95rem;
+}
