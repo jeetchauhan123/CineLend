@@ -10,6 +10,7 @@ const commentRoutes = require("./routes/commentRoutes");
 const userRoutes = require("./routes/userRoutes");
 const likeRoutes = require("./routes/likeRoutes");
 const collectionRoutes = require("./routes/collectionRoutes");
+const cartRoutes = require("./routes/cartRoutes");
 
 
 const app = express();
@@ -31,6 +32,7 @@ app.use("/comments", commentRoutes);
 app.use("/users", userRoutes);
 app.use("/likes", likeRoutes);
 app.use("/collections", collectionRoutes);
+app.use("/cart", cartRoutes);
 
 
 // Health check

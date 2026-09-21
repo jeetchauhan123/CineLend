@@ -1,5 +1,10 @@
 const mongoose = require("mongoose");
 const Movie = require("../models/Movie");
+const {
+  getPricingTier,
+  RENTAL_PACKAGES,
+  calculateRentalPrice,
+} = require("../utils/pricing");
 
 // Api to get movie by id
 const getMovieById = async (req, res) => {
@@ -154,7 +159,7 @@ const getFilters = async (req, res) => {
 // API to search cast, directors and writers
 const getPeople = async (req, res) => {
   try {
-    const { type, search = "", } = req.query;
+    const { type, search = "" } = req.query;
 
     const allowedTypes = ["cast", "directors", "writers"];
 
@@ -615,9 +620,7 @@ const getRelatedMovies = async (req, res) => {
       }
 
       // Randomize movies within the same match level
-      const shuffledMovies = [...movies].sort(
-        () => Math.random() - 0.5
-      );
+      const shuffledMovies = [...movies].sort(() => Math.random() - 0.5);
 
       for (const movie of shuffledMovies) {
         if (recommendations.length >= recommendationLimit) {
@@ -634,13 +637,75 @@ const getRelatedMovies = async (req, res) => {
 
     res.status(200).json(recommendations);
   } catch (error) {
-    console.error(
-      "Error fetching related movies:",
-      error.message
-    );
+    console.error("Error fetching related movies:", error.message);
 
     res.status(500).json({
       message: "Failed to fetch related movies",
+    });
+  }
+};
+
+const getMoviePricing = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({
+        message: "Invalid movie ID",
+      });
+    }
+
+    const movie = await Movie.findById(id).lean();
+
+    if (!movie) {
+      return res.status(404).json({
+        message: "Movie not found",
+      });
+    }
+
+    const releaseYear = movie.released
+      ? new Date(movie.released).getFullYear()
+      : Number(movie.year);
+
+    if (!releaseYear) {
+      return res.status(400).json({
+        message: "Movie release year is unavailable",
+      });
+    }
+
+    const tier = getPricingTier(releaseYear);
+
+    if (!tier) {
+      return res.status(400).json({
+        message: "Movie release year is outside the supported pricing range",
+      });
+    }
+
+    const packages = RENTAL_PACKAGES.map((rentalPackage) => {
+      const rentalPrice = calculateRentalPrice(releaseYear, {
+        type: rentalPackage.id,
+      });
+
+      return {
+        id: rentalPackage.id,
+        name: rentalPackage.name,
+        days: rentalPackage.days,
+        price: rentalPrice.price,
+      };
+    });
+
+    return res.status(200).json({
+      movieId: movie._id,
+      releaseYear,
+      tier: tier.name,
+      baseDailyPrice: tier.baseDailyPrice,
+      packages,
+    });
+  } catch (error) {
+    console.error("Get movie pricing error:", error);
+
+    return res.status(500).json({
+      message: "Failed to get movie pricing",
     });
   }
 };
@@ -653,4 +718,5 @@ module.exports = {
   getPeople,
   getRecentMovies,
   getRelatedMovies,
+  getMoviePricing,
 };

@@ -10,13 +10,20 @@ import "./MovieHero.css";
 
 const MovieHero = ({ movie, loading, movieId, commentsCount }) => {
   const navigate = useNavigate();
+
   const { token } = useAuth();
+
+  const [movieInCart, setMovieInCart] = useState(false);
+  const [addingToCart, setAddingToCart] = useState(false);
+  const [showCartConfirmation, setShowCartConfirmation] = useState(false);
 
   const [movieLiked, setMovieLiked] = useState(false);
   const [movieLikeCount, setMovieLikeCount] = useState(0);
   const [likeProcessing, setLikeProcessing] = useState(false);
 
   const [collectionModalOpen, setCollectionModalOpen] = useState(false);
+
+  const [pricing, setPricing] = useState(null);
 
   const discoverLink = (param, value) =>
     `/discover?${new URLSearchParams({
@@ -29,6 +36,73 @@ const MovieHero = ({ movie, loading, movieId, commentsCount }) => {
       yearTo: year,
     }).toString()}`;
 
+  // Cart Logic
+  useEffect(() => {
+    const checkCart = async () => {
+      if (!token || !movieId) {
+        setMovieInCart(false);
+        return;
+      }
+
+      try {
+        const response = await axios.get("http://localhost:3000/cart", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        const exists = response.data.items?.some(
+          (item) => item.movieId === movieId,
+        );
+
+        setMovieInCart(exists);
+      } catch (error) {
+        console.error("Error checking cart:", error);
+      }
+    };
+
+    checkCart();
+  }, [movieId, token]);
+
+  const handleAddToCart = async () => {
+    if (!token) {
+      navigate("/login");
+      return;
+    }
+
+    if (movieInCart || addingToCart) {
+      return;
+    }
+
+    try {
+      setAddingToCart(true);
+
+      await axios.post(
+        "http://localhost:3000/cart",
+        {
+          movieId,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+
+      setMovieInCart(true);
+      setShowCartConfirmation(true);
+
+      setTimeout(() => {
+        setShowCartConfirmation(false);
+      }, 4000);
+    } catch (error) {
+      console.error("Error adding movie to cart:", error);
+    } finally {
+      setAddingToCart(false);
+    }
+  };
+
+  // Liked Movies Logic
   useEffect(() => {
     const getLikeStatus = async () => {
       try {
@@ -44,7 +118,6 @@ const MovieHero = ({ movie, loading, movieId, commentsCount }) => {
 
           setMovieLiked(response.data.liked);
           setMovieLikeCount(response.data.likeCount);
-
           return;
         }
 
@@ -123,6 +196,24 @@ const MovieHero = ({ movie, loading, movieId, commentsCount }) => {
       setLikeProcessing(false);
     }
   };
+
+  useEffect(() => {
+    if (!movieId) return;
+
+    const fetchPricing = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:3000/movies/${movieId}/pricing`,
+        );
+
+        setPricing(response.data);
+      } catch (error) {
+        console.error("Failed to fetch movie pricing:", error);
+      }
+    };
+
+    fetchPricing();
+  }, [movieId]);
 
   const poster =
     movie?.poster ||
@@ -218,7 +309,9 @@ const MovieHero = ({ movie, loading, movieId, commentsCount }) => {
               {loading ? (
                 <>
                   <Skeleton width="70px" height="28px" borderRadius="999px" />
+
                   <Skeleton width="85px" height="28px" borderRadius="999px" />
+
                   <Skeleton width="65px" height="28px" borderRadius="999px" />
                 </>
               ) : movie?.genres?.length ? (
@@ -237,10 +330,31 @@ const MovieHero = ({ movie, loading, movieId, commentsCount }) => {
               )}
             </div>
 
+            {pricing && (
+              <div className="movie-hero__pricing">
+                <span>Starting from</span>
+                <strong>₹{pricing.baseDailyPrice}/day</strong>
+              </div>
+            )}
             <div className="movie-hero__actions">
-              <button type="button" className="movie-hero__rent">
-                Rent Movie
-              </button>
+              {movieInCart ? (
+                <button
+                  type="button"
+                  className="movie-hero__rent is-added"
+                  disabled
+                >
+                  ✓ Added to Cart
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  className="movie-hero__rent"
+                  onClick={handleAddToCart}
+                  disabled={addingToCart}
+                >
+                  {addingToCart ? "Adding..." : "Add to Cart"}
+                </button>
+              )}
 
               <button
                 type="button"
@@ -258,6 +372,20 @@ const MovieHero = ({ movie, loading, movieId, commentsCount }) => {
                 <span>Add to Collection</span>
               </button>
             </div>
+
+            {showCartConfirmation && (
+              <div className="cart-confirmation">
+                <div>
+                  <strong>Movie added to your cart</strong>
+
+                  <span>You can continue browsing or go to your cart.</span>
+                </div>
+
+                <button type="button" onClick={() => navigate("/cart")}>
+                  View Cart
+                </button>
+              </div>
+            )}
 
             <div className="movie-hero__community">
               <button

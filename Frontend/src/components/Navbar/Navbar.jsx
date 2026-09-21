@@ -27,6 +27,11 @@ function Navbar({ darkMode, setDarkMode, onClose }) {
     navigate("/profile");
   };
 
+  const handleCart = () => {
+    setShowProfileMenu(false);
+    navigate("/cart");
+  };
+
   const handleLogout = () => {
     logout();
     setShowProfileMenu(false);
@@ -66,15 +71,8 @@ function Navbar({ darkMode, setDarkMode, onClose }) {
           <Icon name="search-icon" />
         </button>
 
-        <button
-          className="icon-btn"
-          onClick={() => setDarkMode(!darkMode)}
-        >
-          {darkMode ? (
-            <Icon name="moon-icon" />
-          ) : (
-            <Icon name="sun-icon" />
-          )}
+        <button className="icon-btn" onClick={() => setDarkMode(!darkMode)}>
+          {darkMode ? <Icon name="moon-icon" /> : <Icon name="sun-icon" />}
         </button>
 
         {user ? (
@@ -90,21 +88,16 @@ function Navbar({ darkMode, setDarkMode, onClose }) {
 
             {showProfileMenu && (
               <div className="profile-menu">
-                <button onClick={handleProfile}>
-                  Profile
-                </button>
+                <button onClick={handleProfile}>Profile</button>
 
-                <button onClick={handleLogout}>
-                  Logout
-                </button>
+                <button onClick={handleCart}>Cart</button>
+
+                <button onClick={handleLogout}>Logout</button>
               </div>
             )}
           </div>
         ) : (
-          <button
-            className="login-btn"
-            onClick={() => navigate("/login")}
-          >
+          <button className="login-btn" onClick={() => navigate("/login")}>
             Login
           </button>
         )}

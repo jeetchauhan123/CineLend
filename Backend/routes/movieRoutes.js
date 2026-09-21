@@ -8,6 +8,7 @@ const {
   getPeople,
   getRecentMovies,
   getRelatedMovies,
+  getMoviePricing,
 } = require("../controllers/movieController");
 
 const router = express.Router();
@@ -29,6 +30,9 @@ router.get("/recent", getRecentMovies);
 
 // Movie detail bottom suggestion
 router.get("/related/:id", getRelatedMovies);
+
+//get pricing
+router.get("/:id/pricing", getMoviePricing);
 
 // Movie details
 router.get("/:id", getMovieById);

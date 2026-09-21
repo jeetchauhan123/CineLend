@@ -9,6 +9,8 @@ import Discover from "../pages/Discover/Discover";
 import Login from "../pages/Login/Login";
 import Register from "../pages/Register/Register";
 import Profile from "../pages/Profile/Profile";
+import Cart from "../pages/Cart/Cart";
+
 
 const router = createBrowserRouter([
   {
@@ -34,6 +36,10 @@ const router = createBrowserRouter([
       {
         path: "profile",
         element: <Profile />,
+      },
+      {
+        path: "cart",
+        element: <Cart />,
       },
     ],
   },

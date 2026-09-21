@@ -129,6 +129,24 @@
   font-weight: 600;
 }
 
+.movie-hero__pricing {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.movie-hero__pricing span {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 12px;
+}
+
+.movie-hero__pricing strong {
+  color: #fff;
+  font-size: 20px;
+  font-weight: 800;
+}
+
 .movie-hero__actions {
   display: flex;
   align-items: center;
@@ -236,4 +254,61 @@
   opacity: 0.5;
   filter: blur(0.3px);
   cursor: wait;
+}
+
+.movie-hero__rent.is-added {
+  cursor: default;
+  opacity: 0.85;
+}
+
+.movie-hero__rent:disabled {
+  cursor: default;
+}
+
+.cart-confirmation {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+
+  margin-top: 16px;
+  padding: 12px 14px;
+
+  border-radius: 12px;
+
+  background: rgba(20, 20, 20, 0.9);
+}
+
+.cart-confirmation div {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.cart-confirmation strong {
+  color: white;
+  font-size: 13px;
+}
+
+.cart-confirmation span {
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 11px;
+}
+
+.cart-confirmation button {
+  flex-shrink: 0;
+
+  padding: 8px 12px;
+
+  border: none;
+  border-radius: 8px;
+
+  background: var(--red);
+  color: white;
+
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 700;
+
+  cursor: pointer;
 }
