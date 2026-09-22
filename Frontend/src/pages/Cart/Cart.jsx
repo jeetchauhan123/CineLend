@@ -1,11 +1,13 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import RentalPanel from "./components/RentalPanel";
 import "./Cart.css";
 
 const Cart = () => {
+  const navigate = useNavigate();
+
   const { token } = useAuth();
 
   const [cartItems, setCartItems] = useState([]);
@@ -107,9 +109,7 @@ const Cart = () => {
         cartItems.map(async (item) => {
           const [movieResponse, pricingResponse] = await Promise.all([
             axios.get(`http://localhost:3000/movies/${item.movieId}`),
-            axios.get(
-              `http://localhost:3000/movies/${item.movieId}/pricing`,
-            ),
+            axios.get(`http://localhost:3000/movies/${item.movieId}/pricing`),
           ]);
 
           return {
@@ -129,9 +129,13 @@ const Cart = () => {
   };
 
   const handleContinueToCheckout = (rentalData) => {
-    console.log("Rental selected:", rentalData);
+    navigate("/checkout", {
+      state: {
+        rental: rentalData,
+      },
+    });
 
-    // Checkout will be implemented next.
+    setRentalTarget(null);
   };
 
   if (!token) {
@@ -203,9 +207,7 @@ const Cart = () => {
 
             <h2>Your cart is empty</h2>
 
-            <p>
-              Browse the collection and add movies you want to rent.
-            </p>
+            <p>Browse the collection and add movies you want to rent.</p>
 
             <Link to="/discover" className="cart-primary-button">
               Explore Movies
@@ -237,12 +239,7 @@ const Cart = () => {
   );
 };
 
-const CartItem = ({
-  movieId,
-  removing,
-  onRemove,
-  onRent,
-}) => {
+const CartItem = ({ movieId, removing, onRemove, onRent }) => {
   const [movie, setMovie] = useState(null);
   const [pricing, setPricing] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -268,11 +265,7 @@ const CartItem = ({
   }, [movieId]);
 
   if (loading) {
-    return (
-      <div className="cart-item cart-item-loading">
-        Loading movie...
-      </div>
-    );
+    return <div className="cart-item cart-item-loading">Loading movie...</div>;
   }
 
   if (!movie) {
@@ -291,16 +284,11 @@ const CartItem = ({
     );
   }
 
-  const year = movie.released
-    ? new Date(movie.released).getFullYear()
-    : "N/A";
+  const year = movie.released ? new Date(movie.released).getFullYear() : "N/A";
 
   return (
     <article className="cart-item">
-      <Link
-        to={`/movie/${movie._id}`}
-        className="cart-item-poster"
-      >
+      <Link to={`/movie/${movie._id}`} className="cart-item-poster">
         <img
           src={movie.poster || "/placeholder-poster.jpg"}
           alt={movie.title}
@@ -308,10 +296,7 @@ const CartItem = ({
       </Link>
 
       <div className="cart-item-info">
-        <Link
-          to={`/movie/${movie._id}`}
-          className="cart-item-title"
-        >
+        <Link to={`/movie/${movie._id}`} className="cart-item-title">
           {movie.title}
         </Link>
 

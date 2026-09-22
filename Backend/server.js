@@ -11,6 +11,7 @@ const userRoutes = require("./routes/userRoutes");
 const likeRoutes = require("./routes/likeRoutes");
 const collectionRoutes = require("./routes/collectionRoutes");
 const cartRoutes = require("./routes/cartRoutes");
+const rentalRoutes = require("./routes/rentalRoutes");
 
 
 const app = express();
@@ -33,6 +34,7 @@ app.use("/users", userRoutes);
 app.use("/likes", likeRoutes);
 app.use("/collections", collectionRoutes);
 app.use("/cart", cartRoutes);
+app.use("/rentals", rentalRoutes);
 
 
 // Health check

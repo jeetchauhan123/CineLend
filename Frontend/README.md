@@ -35,6 +35,7 @@ If you are developing a production application, we recommend using TypeScript wi
 16. When the comment is posted it directly appears in the comment section rather than that the comment will indeed appear in comment section but it will be pale until the backend succesfully uploads the comment to the database 
 17. The user can only seens to interact form one tab, if teh user login and opens another tab then that tab will not have the user token and the user needs to login again 
 18. Putting a limit on how much days a user can rent, and not some infinitly long number
+19. No one should go to checkout or payment page without redirecting from the rent button e.g. by url 
 
 
 ##BUGS

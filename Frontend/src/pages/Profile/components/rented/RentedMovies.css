@@ -1,118 +1,268 @@
-.rented-movies {
-  min-height: 420px;
+.rented-movies-section {
+  width: 100%;
 }
 
-.rented-back-btn {
+.rented-movies-heading {
+  margin-bottom: 28px;
+}
+
+.rented-movies-heading h2 {
+  margin: 0 0 6px;
+  color: var(--text-primary);
+  font-size: 28px;
+  font-weight: 800;
+}
+
+.rented-movies-heading p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+.rented-movies-group {
+  margin-bottom: 34px;
+}
+
+.rented-movies-group-heading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.rented-movies-group-heading h3 {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 17px;
+  font-weight: 750;
+}
+
+.rented-movies-group-heading span {
+  min-width: 24px;
+  height: 24px;
+
   display: inline-flex;
   align-items: center;
+  justify-content: center;
 
-  gap: 7px;
+  padding: 0 7px;
+  border-radius: 999px;
 
-  padding: 0;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
 
-  border: none;
-
-  background: transparent;
-  color: inherit;
-
-  font-family: inherit;
+  color: var(--text-secondary);
   font-size: 11px;
-  font-weight: 600;
-
-  opacity: 0.48;
-
-  cursor: pointer;
-
-  transition: opacity 0.2s ease;
-}
-
-.rented-back-btn:hover {
-  opacity: 1;
-}
-
-.rented-back-btn span {
-  font-size: 16px;
-}
-
-.rented-header {
-  margin-top: 23px;
-}
-
-.rented-header > div > span {
-  font-size: 10px;
   font-weight: 700;
-  letter-spacing: 0.14em;
-
-  opacity: 0.48;
 }
 
-.rented-header h2 {
-  margin: 7px 0 6px;
-
-  font-size: 26px;
-
-  letter-spacing: -0.03em;
+.rented-movies-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
-.rented-header p {
-  margin: 0;
+.rented-movie-card {
+  display: flex;
+  gap: 18px;
 
-  font-size: 13px;
+  padding: 14px;
 
-  opacity: 0.5;
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
 }
 
-.rented-empty-state {
-  min-height: 260px;
+.rented-movie-poster {
+  flex: 0 0 82px;
+  width: 82px;
+  height: 112px;
+
+  overflow: hidden;
+  border-radius: 10px;
+
+  background: var(--bg-secondary);
+}
+
+.rented-movie-poster img {
+  width: 100%;
+  height: 100%;
+  display: block;
+
+  object-fit: cover;
+}
+
+.rented-movie-poster-placeholder {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: var(--text-secondary);
+  font-size: 10px;
+}
+
+.rented-movie-content {
+  min-width: 0;
+  flex: 1;
 
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
+}
 
-  margin-top: 28px;
+.rented-movie-main {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 
-  padding: 35px;
+  margin-bottom: 10px;
+}
 
-  border: 1px dashed rgba(255, 255, 255, 0.1);
-  border-radius: 18px;
+.rented-movie-main h3 {
+  min-width: 0;
+  margin: 0;
 
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  color: var(--text-primary);
+  font-size: 16px;
+  font-weight: 750;
+}
+
+.rented-movie-status {
+  flex-shrink: 0;
+
+  padding: 4px 8px;
+  border-radius: 999px;
+
+  font-size: 10px;
+  font-weight: 750;
+  text-transform: capitalize;
+}
+
+.rented-movie-status--active {
+  background: rgba(34, 197, 94, 0.12);
+  color: #22c55e;
+}
+
+.rented-movie-status--returned {
+  background: rgba(148, 163, 184, 0.12);
+  color: var(--text-secondary);
+}
+
+.rented-movie-status--expired {
+  background: rgba(234, 179, 8, 0.12);
+  color: #eab308;
+}
+
+.rented-movie-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px 16px;
+
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+
+.rented-movie-return {
+  width: fit-content;
+
+  margin-top: 14px;
+  padding: 8px 13px;
+
+  border: 0;
+  border-radius: 8px;
+
+  background: var(--red);
+  color: #fff;
+
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 700;
+
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.rented-movie-return:hover {
+  transform: translateY(-1px);
+}
+
+.rented-movie-return:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.rented-movies-history {
+  margin-top: 38px;
+}
+
+.rented-movies-empty,
+.rented-movies-loading,
+.rented-movies-error {
+  padding: 28px;
+
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+
+  background: var(--glass-bg);
   text-align: center;
 }
 
-.rented-empty-icon {
-  width: 42px;
-  height: 42px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  margin-bottom: 12px;
-
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 12px;
-
-  background: rgba(255, 255, 255, 0.03);
-
-  font-size: 18px;
-
-  opacity: 0.5;
+.rented-movies-empty h3 {
+  margin: 0 0 6px;
+  color: var(--text-primary);
+  font-size: 16px;
 }
 
-.rented-empty-state h3 {
+.rented-movies-empty p {
   margin: 0;
-
-  font-size: 15px;
+  color: var(--text-secondary);
+  font-size: 13px;
 }
 
-.rented-empty-state p {
-  max-width: 390px;
+.rented-movies-loading {
+  color: var(--text-secondary);
+  font-size: 13px;
+}
 
-  margin: 7px 0 0;
+.rented-movies-error {
+  margin-bottom: 18px;
 
-  font-size: 12px;
-  line-height: 1.6;
+  color: #ef4444;
+  font-size: 13px;
+  text-align: left;
+}
 
-  opacity: 0.45;
+@media (max-width: 650px) {
+  .rented-movie-card {
+    gap: 12px;
+  }
+
+  .rented-movie-poster {
+    flex-basis: 68px;
+    width: 68px;
+    height: 94px;
+  }
+
+  .rented-movie-main {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .rented-movie-meta {
+    flex-direction: column;
+    gap: 5px;
+  }
 }

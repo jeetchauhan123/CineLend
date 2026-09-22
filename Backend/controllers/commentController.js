@@ -144,7 +144,36 @@ const getMovieComments = async (req, res) => {
   }
 };
 
+// GET LOGGED-IN USER'S COMMENTS
+const getMyComments = async (req, res) => {
+  try {
+    const userId = req.user.userId;
+
+    const comments = await Comment.find({
+      userId,
+    })
+      .sort({ createdAt: -1 })
+      .lean();
+
+    return res.status(200).json({
+      count: comments.length,
+      comments,
+    });
+  } catch (error) {
+    console.error(
+      "Error fetching my comments:",
+      error.message,
+    );
+
+    return res.status(500).json({
+      message: "Failed to load your comments",
+    });
+  }
+};
+
+
 module.exports = {
   createComment,
   getMovieComments,
+  getMyComments,
 };

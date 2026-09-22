@@ -168,9 +168,29 @@ const getMovieLikeCount = async (req, res) => {
   }
 };
 
+const getMyLikes = async (req, res) => {
+  try {
+    const likes = await Like.find({
+      userId: req.user.userId,
+    }).sort({ createdAt: -1 });
+
+    return res.status(200).json({
+      count: likes.length,
+      likes,
+    });
+  } catch (error) {
+    console.error("Get my likes error:", error);
+
+    return res.status(500).json({
+      message: "Failed to load liked movies",
+    });
+  }
+};
+
 module.exports = {
   likeMovie,
   unlikeMovie,
   getMovieLikeStatus,
   getMovieLikeCount,
+  getMyLikes,
 };
