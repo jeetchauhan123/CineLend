@@ -78,12 +78,22 @@ const getUserCollections = async (req, res) => {
       );
     }
 
-    const collectionsWithStatus = collections.map(
-      (collection) => ({
-        ...collection.toObject(),
-        containsMovie: movieCollectionIds.has(
-          collection._id.toString()
-        ),
+    // Get movie count for every collection
+    const collectionsWithStatus = await Promise.all(
+      collections.map(async (collection) => {
+        const movieCount = await CollectionMovie.countDocuments({
+          collectionId: collection._id,
+        });
+
+        return {
+          ...collection.toObject(),
+
+          movieCount,
+
+          containsMovie: movieCollectionIds.has(
+            collection._id.toString()
+          ),
+        };
       })
     );
 

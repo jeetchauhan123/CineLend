@@ -155,14 +155,41 @@ const getMyComments = async (req, res) => {
       .sort({ createdAt: -1 })
       .lean();
 
+    // Get all movie IDs used by this user's comments
+    const movieIds = comments.map((comment) => comment.movieId);
+
+    // Fetch the related movies from Sample DB
+    const movies = movieIds.length
+      ? await Movie.find({
+          _id: { $in: movieIds },
+        })
+          .select("_id title poster released")
+          .lean()
+      : [];
+
+    // Create quick movie lookup
+    const movieMap = new Map(
+      movies.map((movie) => [
+        movie._id.toString(),
+        movie,
+      ])
+    );
+
+    // Attach movie information to every comment
+    const commentsWithMovies = comments.map((comment) => ({
+      ...comment,
+
+      movie: movieMap.get(comment.movieId.toString()) || null,
+    }));
+
     return res.status(200).json({
-      count: comments.length,
-      comments,
+      count: commentsWithMovies.length,
+      comments: commentsWithMovies,
     });
   } catch (error) {
     console.error(
       "Error fetching my comments:",
-      error.message,
+      error.message
     );
 
     return res.status(500).json({

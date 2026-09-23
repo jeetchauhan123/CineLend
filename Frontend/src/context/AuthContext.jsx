@@ -56,6 +56,21 @@ export const AuthProvider = ({ children }) => {
     });
   };
 
+  const updateUser = (updatedUser) => {
+    const authData = {
+      user: updatedUser,
+      token: auth.token,
+    };
+
+    if (localStorage.getItem("auth")) {
+      localStorage.setItem("auth", JSON.stringify(authData));
+    } else if (sessionStorage.getItem("auth")) {
+      sessionStorage.setItem("auth", JSON.stringify(authData));
+    }
+
+    setAuth(authData);
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -63,6 +78,7 @@ export const AuthProvider = ({ children }) => {
         token: auth.token,
         login,
         logout,
+        updateUser,
       }}
     >
       {children}

@@ -2,19 +2,21 @@
   min-height: 420px;
 }
 
+/* =========================================================
+   BACK BUTTON
+========================================================= */
+
 .collections-back-btn {
   display: inline-flex;
   align-items: center;
-
   gap: 7px;
 
   padding: 0;
 
   border: none;
-
   background: transparent;
-  color: inherit;
 
+  color: inherit;
   font-family: inherit;
   font-size: 11px;
   font-weight: 600;
@@ -34,30 +36,59 @@
   font-size: 16px;
 }
 
+/* =========================================================
+   COLLECTION HEADER
+========================================================= */
+
 .collections-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
 
   gap: 25px;
-
   margin-top: 23px;
 }
 
-.collections-header > div > span {
+.collections-heading > span,
+.collection-detail-label {
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.14em;
-
   opacity: 0.48;
+}
+
+.collections-title-row {
+  display: flex;
+  align-items: center;
+  gap: 9px;
 }
 
 .collections-header h2 {
   margin: 7px 0 6px;
 
   font-size: 26px;
-
   letter-spacing: -0.03em;
+}
+
+.collections-count {
+  min-width: 23px;
+  height: 23px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-top: 2px;
+
+  border-radius: 50%;
+
+  background: rgba(236, 38, 48, 0.12);
+  border: 1px solid rgba(236, 38, 48, 0.2);
+
+  color: var(--red);
+
+  font-size: 10px;
+  font-weight: 700;
 }
 
 .collections-header p {
@@ -71,7 +102,15 @@
   opacity: 0.5;
 }
 
+/* =========================================================
+   NEW COLLECTION BUTTON
+========================================================= */
+
 .collections-primary-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
   flex-shrink: 0;
 
   padding: 10px 15px;
@@ -80,7 +119,6 @@
   border-radius: 10px;
 
   background: var(--red);
-
   color: #fff;
 
   font-family: inherit;
@@ -96,11 +134,60 @@
 
 .collections-primary-btn:hover {
   transform: translateY(-1px);
-
   opacity: 0.9;
 }
 
-.collections-empty-state {
+.collections-primary-btn span {
+  font-size: 15px;
+  line-height: 1;
+}
+
+/* =========================================================
+   ERROR
+========================================================= */
+
+.collections-error {
+  margin-top: 18px;
+  padding: 10px 13px;
+
+  border: 1px solid rgba(236, 38, 48, 0.18);
+  border-radius: 9px;
+
+  background: rgba(236, 38, 48, 0.06);
+
+  color: var(--red);
+
+  font-size: 11px;
+}
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+.collections-loading {
+  min-height: 260px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-top: 28px;
+
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 18px;
+
+  background: rgba(255, 255, 255, 0.015);
+
+  font-size: 12px;
+  opacity: 0.4;
+}
+
+/* =========================================================
+   EMPTY STATE
+========================================================= */
+
+.collections-empty-state,
+.collection-detail-empty {
   min-height: 260px;
 
   display: flex;
@@ -109,7 +196,6 @@
   justify-content: center;
 
   margin-top: 28px;
-
   padding: 35px;
 
   border: 1px dashed rgba(255, 255, 255, 0.1);
@@ -134,17 +220,18 @@
   background: rgba(255, 255, 255, 0.03);
 
   font-size: 18px;
-
   opacity: 0.5;
 }
 
-.collections-empty-state h3 {
+.collections-empty-state h3,
+.collection-detail-empty h3 {
   margin: 0;
 
   font-size: 15px;
 }
 
-.collections-empty-state p {
+.collections-empty-state p,
+.collection-detail-empty p {
   max-width: 390px;
 
   margin: 7px 0 0;
@@ -155,14 +242,449 @@
   opacity: 0.45;
 }
 
+.collections-empty-btn {
+  margin-top: 17px;
+
+  padding: 9px 13px;
+
+  border: 1px solid rgba(236, 38, 48, 0.25);
+  border-radius: 9px;
+
+  background: rgba(236, 38, 48, 0.08);
+  color: var(--red);
+
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.collections-empty-btn:hover {
+  background: rgba(236, 38, 48, 0.14);
+  border-color: rgba(236, 38, 48, 0.4);
+}
+
+/* =========================================================
+   COLLECTION GRID
+========================================================= */
+
+.collections-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 14px;
+
+  margin-top: 28px;
+}
+
+/* =========================================================
+   COLLECTION CARD
+========================================================= */
+
+.collection-card {
+  min-height: 190px;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 18px;
+
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 16px;
+
+  background: rgba(255, 255, 255, 0.025);
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+
+.collection-card:hover {
+  transform: translateY(-2px);
+
+  border-color: rgba(236, 38, 48, 0.22);
+
+  background: rgba(255, 255, 255, 0.04);
+}
+
+/* =========================================================
+   CARD TOP
+========================================================= */
+
+.collection-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.collection-icon {
+  width: 36px;
+  height: 36px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 10px;
+
+  background: rgba(236, 38, 48, 0.09);
+  border: 1px solid rgba(236, 38, 48, 0.14);
+
+  color: var(--red);
+
+  font-size: 17px;
+}
+
+.collection-menu-btn {
+  padding: 3px 5px;
+
+  border: none;
+  background: transparent;
+
+  color: inherit;
+
+  font-size: 11px;
+  letter-spacing: 2px;
+
+  opacity: 0.3;
+
+  cursor: pointer;
+
+  transition: opacity 0.2s ease;
+}
+
+.collection-menu-btn:hover {
+  opacity: 0.8;
+}
+
+/* =========================================================
+   CARD CONTENT
+========================================================= */
+
+.collection-card-content {
+  margin-top: 18px;
+}
+
+.collection-card-content h3 {
+  margin: 0;
+
+  font-size: 15px;
+  font-weight: 700;
+
+  letter-spacing: -0.01em;
+}
+
+.collection-card-content p {
+  max-width: 320px;
+
+  margin: 6px 0 0;
+
+  font-size: 11px;
+  line-height: 1.55;
+
+  opacity: 0.42;
+}
+
+/* =========================================================
+   CARD FOOTER
+========================================================= */
+
+.collection-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-top: auto;
+  padding-top: 17px;
+}
+
+.collection-card-footer > span:first-child {
+  display: inline-flex;
+  align-items: center;
+
+  min-height: 27px;
+
+  padding: 4px 9px;
+
+  border-radius: 7px;
+
+  background: rgba(236, 38, 48, 0.09);
+  border: 1px solid rgba(236, 38, 48, 0.16);
+
+  color: var(--red);
+
+  font-size: 11px;
+  font-weight: 700;
+
+  opacity: 1;
+}
+
+.collection-open {
+  color: var(--red);
+
+  font-size: 11px;
+  font-weight: 700;
+
+  opacity: 0.9;
+}
+
+/* =========================================================
+   COLLECTION DETAIL
+========================================================= */
+
+.collection-detail-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+
+  gap: 25px;
+
+  margin-top: 23px;
+  padding-bottom: 20px;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.collection-detail-header h2 {
+  margin: 7px 0 6px;
+
+  font-size: 26px;
+  letter-spacing: -0.03em;
+}
+
+.collection-detail-header p {
+  max-width: 560px;
+
+  margin: 0;
+
+  font-size: 13px;
+  line-height: 1.6;
+
+  opacity: 0.5;
+}
+
+/* =========================================================
+   COLLECTION DETAIL COUNT
+========================================================= */
+
+.collection-detail-count {
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
+
+  flex-shrink: 0;
+
+  padding: 10px 14px;
+
+  border: 1px solid rgba(236, 38, 48, 0.18);
+  border-radius: 10px;
+
+  background: rgba(236, 38, 48, 0.07);
+}
+
+.collection-detail-count strong {
+  color: var(--red);
+
+  font-size: 21px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.collection-detail-count span {
+  font-size: 11px;
+  font-weight: 600;
+
+  opacity: 0.65;
+}
+
+/* =========================================================
+   MOVIES INSIDE COLLECTION
+========================================================= */
+
+.collection-movies-grid {
+  display: grid;
+
+  /*
+    Five cards gives the posters a more compact size
+    and leaves enough room for readable movie information.
+  */
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+
+  gap: 22px 20px;
+
+  margin-top: 28px;
+}
+
+.collection-movie-card {
+  overflow: hidden;
+
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 14px;
+
+  background: rgba(255, 255, 255, 0.025);
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+
+.collection-movie-card:hover {
+  transform: translateY(-3px);
+
+  border-color: rgba(236, 38, 48, 0.2);
+
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.collection-movie-poster {
+  aspect-ratio: 2 / 3;
+
+  overflow: hidden;
+
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.collection-movie-poster img {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
+
+  transition: transform 0.3s ease;
+}
+
+.collection-movie-card:hover .collection-movie-poster img {
+  transform: scale(1.025);
+}
+
+.collection-movie-no-poster {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 10px;
+  opacity: 0.35;
+}
+
+/* =========================================================
+   MOVIE INFORMATION
+========================================================= */
+
+.collection-movie-info {
+  padding: 12px 13px 14px;
+}
+
+.collection-movie-info h3 {
+  overflow: hidden;
+
+  margin: 0;
+
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.35;
+
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.collection-movie-info span {
+  display: block;
+
+  margin-top: 5px;
+
+  font-size: 10px;
+  font-weight: 500;
+
+  opacity: 0.48;
+}
+
+/* =========================================================
+   LOADING OVERLAY
+========================================================= */
+
+.collections-loading-overlay {
+  position: fixed;
+  inset: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  z-index: 20;
+
+  background: rgba(0, 0, 0, 0.22);
+
+  backdrop-filter: blur(3px);
+
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1100px) {
+  .collection-movies-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  .collection-movies-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    gap: 20px 18px;
+  }
+}
+
 @media (max-width: 800px) {
   .collections-header {
     align-items: flex-start;
-
     flex-direction: column;
   }
 
   .collections-primary-btn {
     width: 100%;
+    justify-content: center;
+  }
+
+  .collections-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .collection-detail-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .collection-movies-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 18px;
+  }
+}
+
+@media (max-width: 500px) {
+  .collection-movies-grid {
+    grid-template-columns: 1fr;
+
+    gap: 18px;
   }
 }

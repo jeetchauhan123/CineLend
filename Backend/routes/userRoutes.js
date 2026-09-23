@@ -4,6 +4,9 @@ const {
   createUser,
   loginUser,
   getCurrentUser,
+  updateProfile,
+  changePassword,
+  deleteAccount,
 } = require("../controllers/userController");
 
 const authMiddleware = require("../middleware/authMiddleware");
@@ -15,6 +18,12 @@ router.post("/", createUser);
 router.post("/login", loginUser);
 
 router.get("/me", authMiddleware, getCurrentUser);
+
+router.put("/me", authMiddleware, updateProfile);
+
+router.put("/me/password", authMiddleware, changePassword);
+
+router.delete("/me", authMiddleware, deleteAccount);
 
 router.get("/protected", authMiddleware, (req, res) => {
   res.json({
