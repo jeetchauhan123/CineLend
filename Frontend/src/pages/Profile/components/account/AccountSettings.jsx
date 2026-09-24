@@ -96,7 +96,7 @@ function AccountSettings({ onBack }) {
       setProfileMessage("");
       setProfileError("");
 
-      const response = await fetch("http://localhost:3000/users/me", {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/users/me`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -187,7 +187,7 @@ function AccountSettings({ onBack }) {
       setPasswordMessage("");
       setPasswordError("");
 
-      const response = await fetch("http://localhost:3000/users/me/password", {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/users/me/password`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -245,7 +245,7 @@ function AccountSettings({ onBack }) {
       setDeleteLoading(true);
       setDeleteError("");
 
-      const response = await fetch("http://localhost:3000/users/me", {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/users/me`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

@@ -24,7 +24,7 @@ function HeroSlider() {
     const getMovies = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:3000/movies/recent"
+          `${import.meta.env.VITE_API_URL}/movies/recent`
         );
 
         setMovies(res.data);

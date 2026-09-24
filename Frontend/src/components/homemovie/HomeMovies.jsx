@@ -21,23 +21,23 @@ function HomeMovies() {
           trySomethingNewResponse,
         ] = await Promise.all([
           axios.get(
-            "http://localhost:3000/movies?sort=updated&limit=10&hasPoster=true"
+            `${import.meta.env.VITE_API_URL}/movies?sort=updated&limit=10&hasPoster=true`
           ),
 
           axios.get(
-            "http://localhost:3000/movies?sort=recent&limit=10&hasPoster=true"
+            `${import.meta.env.VITE_API_URL}/movies?sort=recent&limit=10&hasPoster=true`
           ),
 
           axios.get(
-            "http://localhost:3000/movies?sort=rating&limit=10&hasPoster=true"
+            `${import.meta.env.VITE_API_URL}/movies?sort=rating&limit=10&hasPoster=true`
           ),
 
           axios.get(
-            "http://localhost:3000/movies?sort=random&limit=10&hasPoster=true"
+            `${import.meta.env.VITE_API_URL}/movies?sort=random&limit=10&hasPoster=true`
           ),
 
           axios.get(
-            "http://localhost:3000/movies?sort=random&limit=10&hasPoster=true"
+            `${import.meta.env.VITE_API_URL}/movies?sort=random&limit=10&hasPoster=true`
           ),
         ]);
 

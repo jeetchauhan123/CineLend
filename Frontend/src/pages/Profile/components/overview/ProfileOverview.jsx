@@ -32,11 +32,11 @@ function ProfileOverview({ onSectionChange }) {
       };
 
       const results = await Promise.allSettled([
-        axios.get("http://localhost:3000/rentals", { headers }),
-        axios.get("http://localhost:3000/cart", { headers }),
-        axios.get("http://localhost:3000/likes", { headers }),
-        axios.get("http://localhost:3000/collections", { headers }),
-        axios.get("http://localhost:3000/comments/mine", { headers }),
+        axios.get(`${import.meta.env.VITE_API_URL}/rentals`, { headers }),
+        axios.get(`${import.meta.env.VITE_API_URL}/cart`, { headers }),
+        axios.get(`${import.meta.env.VITE_API_URL}/likes`, { headers }),
+        axios.get(`${import.meta.env.VITE_API_URL}/collections`, { headers }),
+        axios.get(`${import.meta.env.VITE_API_URL}/comments/mine`, { headers }),
       ]);
 
       /*
@@ -206,7 +206,7 @@ function ProfileOverview({ onSectionChange }) {
         previewItems.map(async (item) => {
           try {
             const response = await axios.get(
-              `http://localhost:3000/movies/${item.movieId}`,
+              `${import.meta.env.VITE_API_URL}/movies/${item.movieId}`,
             );
 
             return {

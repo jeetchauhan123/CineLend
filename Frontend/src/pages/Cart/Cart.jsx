@@ -25,7 +25,7 @@ const Cart = () => {
       }
 
       try {
-        const response = await axios.get("http://localhost:3000/cart", {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/cart`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -46,7 +46,7 @@ const Cart = () => {
     try {
       setRemovingMovieId(movieId);
 
-      await axios.delete(`http://localhost:3000/cart/${movieId}`, {
+      await axios.delete(`${import.meta.env.VITE_API_URL}/cart/${movieId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -72,7 +72,7 @@ const Cart = () => {
     try {
       setClearing(true);
 
-      await axios.delete("http://localhost:3000/cart", {
+      await axios.delete(`${import.meta.env.VITE_API_URL}/cart`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -89,8 +89,8 @@ const Cart = () => {
   const openSingleRental = async (movieId) => {
     try {
       const [movieResponse, pricingResponse] = await Promise.all([
-        axios.get(`http://localhost:3000/movies/${movieId}`),
-        axios.get(`http://localhost:3000/movies/${movieId}/pricing`),
+        axios.get(`${import.meta.env.VITE_API_URL}/movies/${movieId}`),
+        axios.get(`${import.meta.env.VITE_API_URL}/movies/${movieId}/pricing`),
       ]);
 
       setRentalTarget({
@@ -108,8 +108,8 @@ const Cart = () => {
       const rentalMovies = await Promise.all(
         cartItems.map(async (item) => {
           const [movieResponse, pricingResponse] = await Promise.all([
-            axios.get(`http://localhost:3000/movies/${item.movieId}`),
-            axios.get(`http://localhost:3000/movies/${item.movieId}/pricing`),
+            axios.get(`${import.meta.env.VITE_API_URL}/movies/${item.movieId}`),
+            axios.get(`${import.meta.env.VITE_API_URL}/movies/${item.movieId}/pricing`),
           ]);
 
           return {
@@ -248,8 +248,8 @@ const CartItem = ({ movieId, removing, onRemove, onRent }) => {
     const getMovieAndPricing = async () => {
       try {
         const [movieResponse, pricingResponse] = await Promise.all([
-          axios.get(`http://localhost:3000/movies/${movieId}`),
-          axios.get(`http://localhost:3000/movies/${movieId}/pricing`),
+          axios.get(`${import.meta.env.VITE_API_URL}/movies/${movieId}`),
+          axios.get(`${import.meta.env.VITE_API_URL}/movies/${movieId}/pricing`),
         ]);
 
         setMovie(movieResponse.data);

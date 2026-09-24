@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:3000/movies";
+const API_URL = `${import.meta.env.VITE_API_URL}/movies`;
 
 export const getDiscoverFilters = () => {
   return axios.get(`${API_URL}/filters`);

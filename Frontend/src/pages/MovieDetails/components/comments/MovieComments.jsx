@@ -39,7 +39,7 @@ const MovieComments = ({
 
       try {
         const res = await axios.get(
-          `http://localhost:3000/comments/${movieId}`
+          `${import.meta.env.VITE_API_URL}/comments/${movieId}`
         );
 
         const loadedComments = res.data;
@@ -90,7 +90,7 @@ const MovieComments = ({
       setCommentSubmitting(true);
 
       const response = await axios.post(
-        "http://localhost:3000/comments",
+        `${import.meta.env.VITE_API_URL}/comments`,
         {
           movieId,
           text: commentText.trim(),

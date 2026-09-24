@@ -19,7 +19,7 @@ function Collections({ onBack }) {
       setLoading(true);
       setError("");
 
-      const response = await fetch("http://localhost:3000/collections", {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/collections`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -55,7 +55,7 @@ function Collections({ onBack }) {
       setError("");
 
       const response = await fetch(
-        `http://localhost:3000/collections/${collectionId}`,
+        `${import.meta.env.VITE_API_URL}/collections/${collectionId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

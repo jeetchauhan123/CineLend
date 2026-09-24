@@ -19,7 +19,7 @@ const RelatedMovies = ({ movieId }) => {
 
       try {
         const res = await axios.get(
-          `http://localhost:3000/movies/related/${movieId}`
+          `${import.meta.env.VITE_API_URL}/movies/related/${movieId}`
         );
 
         setRelatedMovies(res.data);

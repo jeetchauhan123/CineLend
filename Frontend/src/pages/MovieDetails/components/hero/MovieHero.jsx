@@ -45,7 +45,7 @@ const MovieHero = ({ movie, loading, movieId, commentsCount }) => {
       }
 
       try {
-        const response = await axios.get("http://localhost:3000/cart", {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/cart`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -78,7 +78,7 @@ const MovieHero = ({ movie, loading, movieId, commentsCount }) => {
       setAddingToCart(true);
 
       await axios.post(
-        "http://localhost:3000/cart",
+        `${import.meta.env.VITE_API_URL}/cart`,
         {
           movieId,
         },
@@ -108,7 +108,7 @@ const MovieHero = ({ movie, loading, movieId, commentsCount }) => {
       try {
         if (token) {
           const response = await axios.get(
-            `http://localhost:3000/likes/${movieId}/status`,
+            `${import.meta.env.VITE_API_URL}/likes/${movieId}/status`,
             {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -122,7 +122,7 @@ const MovieHero = ({ movie, loading, movieId, commentsCount }) => {
         }
 
         const response = await axios.get(
-          `http://localhost:3000/likes/${movieId}/count`,
+          `${import.meta.env.VITE_API_URL}/likes/${movieId}/count`,
         );
 
         setMovieLiked(false);
@@ -161,7 +161,7 @@ const MovieHero = ({ movie, loading, movieId, commentsCount }) => {
     try {
       if (previousLiked) {
         const response = await axios.delete(
-          `http://localhost:3000/likes/${movieId}`,
+          `${import.meta.env.VITE_API_URL}/likes/${movieId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -173,7 +173,7 @@ const MovieHero = ({ movie, loading, movieId, commentsCount }) => {
         setMovieLikeCount(response.data.likeCount);
       } else {
         const response = await axios.post(
-          "http://localhost:3000/likes",
+          `${import.meta.env.VITE_API_URL}/likes`,
           {
             movieId,
           },
@@ -203,7 +203,7 @@ const MovieHero = ({ movie, loading, movieId, commentsCount }) => {
     const fetchPricing = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/movies/${movieId}/pricing`,
+          `${import.meta.env.VITE_API_URL}/movies/${movieId}/pricing`,
         );
 
         setPricing(response.data);

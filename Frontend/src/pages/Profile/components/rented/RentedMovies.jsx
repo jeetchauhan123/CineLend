@@ -23,7 +23,7 @@ const RentedMovies = () => {
       setLoading(true);
       setError("");
 
-      const response = await axios.get("http://localhost:3000/rentals", {
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/rentals`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -48,7 +48,7 @@ const RentedMovies = () => {
         uniqueMovieIds.map(async (movieId) => {
           try {
             const response = await axios.get(
-              `http://localhost:3000/movies/${movieId}`,
+              `${import.meta.env.VITE_API_URL}/movies/${movieId}`,
             );
 
             return {
@@ -94,7 +94,7 @@ const RentedMovies = () => {
       setError("");
 
       await axios.patch(
-        `http://localhost:3000/rentals/${rentalId}/items/${itemId}/return`,
+        `${import.meta.env.VITE_API_URL}/rentals/${rentalId}/items/${itemId}/return`,
         {},
         {
           headers: {

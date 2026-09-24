@@ -59,7 +59,7 @@ const Payment = () => {
       setError("");
 
       const response = await axios.post(
-        "http://localhost:3000/rentals",
+        `${import.meta.env.VITE_API_URL}/rentals`,
         {
           items: rentals.map(({ movie, duration }) => ({
             movieId: movie._id,

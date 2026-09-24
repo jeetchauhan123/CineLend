@@ -25,7 +25,7 @@ function OnboardingModal({ onClose }) {
   useEffect(() => {
     const fetchGenres = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/movies/genres");
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/movies/genres`);
 
         setGenres(res.data);
       } catch (error) {

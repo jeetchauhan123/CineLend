@@ -42,7 +42,7 @@ const CollectionModal = ({ movieId, isOpen, onClose }) => {
         setCollectionError("");
 
         const response = await axios.get(
-          `http://localhost:3000/collections?movieId=${movieId}`,
+          `${import.meta.env.VITE_API_URL}/collections?movieId=${movieId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -108,7 +108,7 @@ const CollectionModal = ({ movieId, isOpen, onClose }) => {
       if (alreadyAdded) {
         // REMOVE
         await axios.delete(
-          `http://localhost:3000/collections/${collectionId}/movies/${movieId}`,
+          `${import.meta.env.VITE_API_URL}/collections/${collectionId}/movies/${movieId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -118,7 +118,7 @@ const CollectionModal = ({ movieId, isOpen, onClose }) => {
       } else {
         // ADD
         await axios.post(
-          `http://localhost:3000/collections/${collectionId}/movies`,
+          `${import.meta.env.VITE_API_URL}/collections/${collectionId}/movies`,
           {
             movieId,
           },
@@ -170,7 +170,7 @@ const CollectionModal = ({ movieId, isOpen, onClose }) => {
       setCollectionError("");
 
       const response = await axios.post(
-        "http://localhost:3000/collections",
+        `${import.meta.env.VITE_API_URL}/collections`,
         {
           name: newCollectionName.trim(),
           description: newCollectionDescription.trim(),
@@ -202,7 +202,7 @@ const CollectionModal = ({ movieId, isOpen, onClose }) => {
 
       try {
         await axios.post(
-          `http://localhost:3000/collections/${newCollection._id}/movies`,
+          `${import.meta.env.VITE_API_URL}/collections/${newCollection._id}/movies`,
           {
             movieId,
           },

@@ -14,7 +14,7 @@ function MyComments({ onBack }) {
       setLoading(true);
       setError("");
 
-      const response = await fetch("http://localhost:3000/comments/mine", {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/comments/mine`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
