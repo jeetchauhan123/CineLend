@@ -10,18 +10,10 @@ const MovieCastCrew = ({ movie, loading }) => {
       [param]: value,
     }).toString()}`;
 
-  const renderPeople = (
-    people,
-    param,
-    skeletonWidth = "180px"
-  ) => {
+  const renderPeople = (people, param, skeletonWidth = "180px") => {
     if (loading) {
       return (
-        <Skeleton
-          width={skeletonWidth}
-          height="38px"
-          borderRadius="999px"
-        />
+        <Skeleton width={skeletonWidth} height="38px" borderRadius="999px" />
       );
     }
 
@@ -29,14 +21,19 @@ const MovieCastCrew = ({ movie, loading }) => {
       return <span>N/A</span>;
     }
 
-    return people.map((person) => (
-      <Link
-        className="movie-person movie-discover-link"
-        key={person}
-        to={discoverLink(param, person)}
-      >
-        {person}
-      </Link>
+    return people.map((person, index) => (
+      <span className="movie-person-wrapper" key={person}>
+        <Link
+          className="movie-person movie-discover-link"
+          to={discoverLink(param, person)}
+        >
+          {person}
+        </Link>
+
+        {index < people.length - 1 && (
+          <span className="movie-person-separator">•</span>
+        )}
+      </span>
     ));
   };
 
@@ -50,9 +47,7 @@ const MovieCastCrew = ({ movie, loading }) => {
       />
 
       <div className="movie-section__heading">
-        <span className="movie-section__eyebrow">
-          THE PEOPLE
-        </span>
+        <span className="movie-section__eyebrow">THE PEOPLE</span>
 
         <h2>Cast & Crew</h2>
       </div>
@@ -62,16 +57,14 @@ const MovieCastCrew = ({ movie, loading }) => {
 
         <div className="movie-cast-crew__list">
           {loading
-            ? Array.from({ length: 5 }).map(
-                (_, index) => (
-                  <Skeleton
-                    key={index}
-                    width="120px"
-                    height="38px"
-                    borderRadius="999px"
-                  />
-                )
-              )
+            ? Array.from({ length: 5 }).map((_, index) => (
+                <Skeleton
+                  key={index}
+                  width="120px"
+                  height="38px"
+                  borderRadius="999px"
+                />
+              ))
             : renderPeople(movie?.cast, "cast")}
         </div>
       </div>
@@ -80,10 +73,7 @@ const MovieCastCrew = ({ movie, loading }) => {
         <h3>Directors</h3>
 
         <div className="movie-cast-crew__list">
-          {renderPeople(
-            movie?.directors,
-            "director"
-          )}
+          {renderPeople(movie?.directors, "director")}
         </div>
       </div>
 
@@ -91,10 +81,7 @@ const MovieCastCrew = ({ movie, loading }) => {
         <h3>Writers</h3>
 
         <div className="movie-cast-crew__list">
-          {renderPeople(
-            movie?.writers,
-            "writer"
-          )}
+          {renderPeople(movie?.writers, "writer")}
         </div>
       </div>
     </section>

@@ -31,7 +31,7 @@ function App() {
       <Navbar
         darkMode={darkMode}
         setDarkMode={setDarkMode}
-        onClose={() => setShowOnboarding(true)}
+        onOpenPreferences={() => setShowOnboarding(true)}
       />
 
       <Outlet />

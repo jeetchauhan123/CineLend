@@ -1,10 +1,6 @@
 import { Swiper, SwiperSlide } from "swiper/react";
-import {
-  Autoplay,
-  Pagination,
-  Navigation,
-  EffectFade,
-} from "swiper/modules";
+
+import { Autoplay, Pagination, Navigation, EffectFade } from "swiper/modules";
 
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -19,12 +15,13 @@ import "./HeroSlider.css";
 
 function HeroSlider() {
   const [movies, setMovies] = useState([]);
+  const [posterUrls, setPosterUrls] = useState({});
 
   useEffect(() => {
     const getMovies = async () => {
       try {
         const res = await axios.get(
-          `${import.meta.env.VITE_API_URL}/movies/recent`
+          `${import.meta.env.VITE_API_URL}/movies/recent`,
         );
 
         setMovies(res.data);
@@ -36,6 +33,39 @@ function HeroSlider() {
     getMovies();
   }, []);
 
+  useEffect(() => {
+    movies.forEach((movie) => {
+      const imageUrl = movie.poster;
+
+      if (!imageUrl) {
+        setPosterUrls((previous) => ({
+          ...previous,
+          [movie._id]: "/movie-placeholder.gif",
+        }));
+
+        return;
+      }
+
+      const image = new Image();
+
+      image.onload = () => {
+        setPosterUrls((previous) => ({
+          ...previous,
+          [movie._id]: imageUrl,
+        }));
+      };
+
+      image.onerror = () => {
+        setPosterUrls((previous) => ({
+          ...previous,
+          [movie._id]: "/movie-placeholder.gif",
+        }));
+      };
+
+      image.src = imageUrl;
+    });
+  }, [movies]);
+
   if (movies.length === 0) {
     return null;
   }
@@ -44,12 +74,7 @@ function HeroSlider() {
     <section className="hero-slider">
       <Swiper
         className="movie-swiper"
-        modules={[
-          Autoplay,
-          Pagination,
-          Navigation,
-          EffectFade,
-        ]}
+        modules={[Autoplay, Pagination, Navigation, EffectFade]}
         effect="fade"
         fadeEffect={{
           crossFade: true,
@@ -72,7 +97,6 @@ function HeroSlider() {
         {movies.map((movie) => (
           <SwiperSlide key={movie._id}>
             <div className="slide">
-
               <div
                 className="slide-bg"
                 style={{
@@ -81,7 +105,7 @@ function HeroSlider() {
                       rgba(0, 0, 0, 0.45),
                       rgba(0, 0, 0, 0.8)
                     ),
-                    url(${movie.poster})
+                    url(${posterUrls[movie._id] || "/movie-placeholder.gif"})
                   `,
                 }}
               />
@@ -95,15 +119,11 @@ function HeroSlider() {
 
                   <div className="button-group">
                     <button className="play-btn">
-                      <Link to={`/movie/${movie._id}`}>
-                        ▶ Rent
-                      </Link>
+                      <Link to={`/movie/${movie._id}`}>▶ Rent</Link>
                     </button>
 
                     <button className="info-btn">
-                      <Link to={`/movie/${movie._id}`}>
-                        ⓘ More Info
-                      </Link>
+                      <Link to={`/movie/${movie._id}`}>ⓘ More Info</Link>
                     </button>
                   </div>
                 </div>
@@ -111,11 +131,14 @@ function HeroSlider() {
                 {/* right side */}
                 <div className="slider-movie-poster">
                   <img
-                    src={movie.poster}
+                    src={posterUrls[movie._id] || "/movie-placeholder.gif"}
                     alt={movie.title}
+                    onError={(event) => {
+                      event.currentTarget.onerror = null;
+                      event.currentTarget.src = "/movie-placeholder.gif";
+                    }}
                   />
                 </div>
-
               </div>
             </div>
           </SwiperSlide>

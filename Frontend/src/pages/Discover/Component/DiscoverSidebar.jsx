@@ -13,6 +13,7 @@ function DiscoverSidebar({
   setFilterState,
   onFilterChange,
   onClear,
+  clearSignal,
 }) {
   const [openGroup, setOpenGroup] = useState("categories");
 
@@ -82,7 +83,6 @@ function DiscoverSidebar({
             setOpenGroup((prev) => (prev === "range" ? null : "range"))
           }
         >
-          
           <RatingSlider
             filterState={filterState}
             setFilterState={setFilterState}
@@ -126,6 +126,7 @@ function DiscoverSidebar({
             filterKey="cast"
             filterState={filterState}
             setFilterState={setFilterState}
+            clearSignal={clearSignal}
           />
 
           <PersonSearch
@@ -134,6 +135,7 @@ function DiscoverSidebar({
             filterKey="director"
             filterState={filterState}
             setFilterState={setFilterState}
+            clearSignal={clearSignal}
           />
 
           <PersonSearch
@@ -142,6 +144,7 @@ function DiscoverSidebar({
             filterKey="writer"
             filterState={filterState}
             setFilterState={setFilterState}
+            clearSignal={clearSignal}
           />
         </FilterGroup>
       </div>

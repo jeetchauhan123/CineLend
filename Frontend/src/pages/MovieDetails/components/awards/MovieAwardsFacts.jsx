@@ -17,33 +17,23 @@ const MovieAwardsFacts = ({ movie, loading }) => {
   return (
     <section className="movie-section movie-awards-facts">
       <div className="movie-section__heading">
-        <span className="movie-section__eyebrow">
-          MORE TO KNOW
-        </span>
+        <span className="movie-section__eyebrow">MORE TO KNOW</span>
 
         <h2>Awards & Facts</h2>
       </div>
 
       <div className="movie-awards">
         <div className="movie-awards__main">
-          <span className="movie-awards__icon">
-            🏆
-          </span>
+          <span className="movie-awards__icon">🏆</span>
 
           <div>
-            <span className="movie-awards__label">
-              Awards
-            </span>
+            <span className="movie-awards__label">Awards</span>
 
             <strong>
               {loading ? (
-                <Skeleton
-                  width="300px"
-                  height="20px"
-                />
+                <Skeleton width="300px" height="20px" />
               ) : (
-                movie?.awards?.text ||
-                "No awards information available."
+                movie?.awards?.text || "No awards information available."
               )}
             </strong>
           </div>
@@ -53,12 +43,9 @@ const MovieAwardsFacts = ({ movie, loading }) => {
           <div>
             <strong>
               {loading ? (
-                <Skeleton
-                  width="35px"
-                  height="25px"
-                />
+                <Skeleton width="35px" height="25px" />
               ) : (
-                movie?.awards?.wins ?? 0
+                (movie?.awards?.wins ?? 0)
               )}
             </strong>
 
@@ -68,12 +55,9 @@ const MovieAwardsFacts = ({ movie, loading }) => {
           <div>
             <strong>
               {loading ? (
-                <Skeleton
-                  width="35px"
-                  height="25px"
-                />
+                <Skeleton width="35px" height="25px" />
               ) : (
-                movie?.awards?.nominations ?? 0
+                (movie?.awards?.nominations ?? 0)
               )}
             </strong>
 
@@ -86,18 +70,14 @@ const MovieAwardsFacts = ({ movie, loading }) => {
         <div className="movie-fact">
           <span>Release Year</span>
 
-          <strong>
+          <strong className="movie-fact-value">
+            <i className="movie-fact-dot"></i>
+
             {loading ? (
-              <Skeleton
-                width="55px"
-                height="20px"
-              />
+              <Skeleton width="55px" height="20px" />
             ) : releaseYear !== "N/A" ? (
               <Link
-                to={discoverLink(
-                  "year",
-                  releaseYear
-                )}
+                to={discoverLink("year", releaseYear)}
                 className="movie-discover-link"
               >
                 {releaseYear}
@@ -111,22 +91,16 @@ const MovieAwardsFacts = ({ movie, loading }) => {
         <div className="movie-fact">
           <span>Genres</span>
 
-          <strong>
+          <strong className="movie-genre-list">
             {loading ? (
-              <Skeleton
-                width="130px"
-                height="20px"
-              />
+              <Skeleton width="130px" height="20px" />
             ) : movie?.genres?.length ? (
-              movie.genres.map((genre, index) => (
-                <span key={genre}>
-                  {index > 0 && ", "}
+              movie.genres.map((genre) => (
+                <span key={genre} className="movie-genre-item">
+                  <i className="movie-fact-dot"></i>
 
                   <Link
-                    to={discoverLink(
-                      "genres",
-                      genre
-                    )}
+                    to={discoverLink("genres", genre)}
                     className="movie-discover-link"
                   >
                     {genre}
@@ -134,7 +108,10 @@ const MovieAwardsFacts = ({ movie, loading }) => {
                 </span>
               ))
             ) : (
-              "N/A"
+              <>
+                <i className="movie-fact-dot"></i>
+                N/A
+              </>
             )}
           </strong>
         </div>
@@ -142,12 +119,11 @@ const MovieAwardsFacts = ({ movie, loading }) => {
         <div className="movie-fact">
           <span>Production</span>
 
-          <strong>
+          <strong className="movie-fact-value">
+            <i className="movie-fact-dot"></i>
+
             {loading ? (
-              <Skeleton
-                width="130px"
-                height="20px"
-              />
+              <Skeleton width="130px" height="20px" />
             ) : (
               movie?.tomatoes?.production || "N/A"
             )}
@@ -157,12 +133,11 @@ const MovieAwardsFacts = ({ movie, loading }) => {
         <div className="movie-fact">
           <span>Movie Type</span>
 
-          <strong>
+          <strong className="movie-fact-value">
+            <i className="movie-fact-dot"></i>
+
             {loading ? (
-              <Skeleton
-                width="80px"
-                height="20px"
-              />
+              <Skeleton width="80px" height="20px" />
             ) : (
               movie?.type || "N/A"
             )}

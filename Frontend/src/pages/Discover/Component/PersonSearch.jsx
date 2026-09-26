@@ -12,6 +12,7 @@ function PersonSearch({
   filterKey,
   filterState,
   setFilterState,
+  clearSignal,
 }) {
   const [results, setResults] = useState([]);
   const [open, setOpen] = useState(false);
@@ -23,8 +24,18 @@ function PersonSearch({
   const debouncedInput = useDebounce(input, 300);
 
   useEffect(() => {
-    setInput(filterState[filterKey] || "");
+    if (!filterState[filterKey]) {
+      setInput("");
+      setResults([]);
+      setOpen(false);
+    }
   }, [filterState, filterKey]);
+
+  useEffect(() => {
+    setInput("");
+    setResults([]);
+    setOpen(false);
+  }, [clearSignal]);
 
   useEffect(() => {
     const close = (event) => {
@@ -70,30 +81,47 @@ function PersonSearch({
   }, [debouncedInput, filterKey]);
 
   const choose = (person) => {
-    setInput(person);
-
     setFilterState((previous) => ({
       ...previous,
       [filterKey]: person,
     }));
 
+    // Clear the input after applying
+    setInput("");
+
+    setResults([]);
     setOpen(false);
   };
 
   const handleInputChange = (event) => {
     const value = event.target.value;
 
+    // Only change the text being typed.
+    // The actual movie filter is not changed here.
     setInput(value);
 
     if (!value.trim()) {
       setResults([]);
       setOpen(false);
-
-      setFilterState((previous) => ({
-        ...previous,
-        [filterKey]: "",
-      }));
     }
+  };
+
+  const handleKeyDown = (event) => {
+    if (event.key !== "Enter") return;
+
+    const value = input.trim();
+
+    // Apply the typed person only when Enter is pressed.
+    setFilterState((previous) => ({
+      ...previous,
+      [filterKey]: value,
+    }));
+
+    // Clear the input after applying the filter
+    setInput("");
+
+    setResults([]);
+    setOpen(false);
   };
 
   return (
@@ -107,6 +135,7 @@ function PersonSearch({
           placeholder={placeholder}
           value={input}
           onChange={handleInputChange}
+          onKeyDown={handleKeyDown}
           onFocus={() => {
             if (results.length) {
               setOpen(true);
@@ -116,16 +145,18 @@ function PersonSearch({
 
         {open && results.length > 0 && (
           <div className="person-dropdown">
-            {results.map((person) => (
-              <button
-                key={person}
-                type="button"
-                className="person-option"
-                onClick={() => choose(person)}
-              >
-                {person}
-              </button>
-            ))}
+            <div className="person-dropdown-scroll">
+              {results.map((person) => (
+                <button
+                  key={person}
+                  type="button"
+                  className="person-option"
+                  onClick={() => choose(person)}
+                >
+                  {person}
+                </button>
+              ))}
+            </div>
           </div>
         )}
       </div>

@@ -100,6 +100,8 @@ function Discover() {
     getFiltersFromURL(searchParams),
   );
 
+  const [clearSignal, setClearSignal] = useState(0);
+
   const debouncedSearch = useDebounce(search, 400);
   const debouncedFilters = useDebounce(filterState, 300);
 
@@ -264,6 +266,8 @@ function Discover() {
     setSort("default");
     setPage(1);
     setSearchParams({}, { replace: true });
+
+    setClearSignal((previous) => previous + 1);
   };
 
   const totalPages = Math.ceil(totalMovies / LIMIT);
@@ -331,6 +335,7 @@ function Discover() {
           setFilterState={setFilterState}
           onFilterChange={handleFilterChange}
           onClear={clearFilters}
+          clearSignal={clearSignal}
         />
 
         <div className="discover-results">

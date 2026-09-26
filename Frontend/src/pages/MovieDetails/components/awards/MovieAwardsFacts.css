@@ -141,7 +141,6 @@
 }
 
 /* Individual Film Frame */
-
 .movie-fact {
   position: relative;
   min-height: 105px;
@@ -152,7 +151,9 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  transition: transform 0.2s ease, border-color 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease;
 }
 
 .movie-fact:hover {
@@ -164,9 +165,9 @@
   border-left: 1px solid var(--glass-border);
 }
 
-.movie-fact span {
+.movie-fact > span {
   display: block;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
   color: var(--text-secondary);
   font-size: 0.63rem;
   font-weight: 800;
@@ -179,6 +180,37 @@
   font-size: 0.82rem;
   font-weight: 650;
   line-height: 1.5;
+}
+
+.movie-fact-value {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+
+.movie-genre-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.movie-genre-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-primary);
+  font-size: 0.82rem;
+  font-weight: 650;
+  line-height: 1.4;
+}
+
+.movie-fact-dot {
+  width: 4px;
+  height: 4px;
+  flex: 0 0 4px;
+  border-radius: 50%;
+  background: var(--red);
 }
 
 @media (max-width: 768px) {

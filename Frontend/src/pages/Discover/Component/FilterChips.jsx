@@ -19,33 +19,102 @@ function FilterChips({ filterState, setFilterState }) {
     });
   };
 
-  ["genres", "languages", "countries", "rated"].forEach((key) => {
-    filterState[key].forEach((item) =>
+  // Array-based filters
+  const arrayFilters = [
+    { key: "genres", label: "Genre" },
+    { key: "languages", label: "Language" },
+    { key: "countries", label: "Country" },
+    { key: "rated", label: "Rated" },
+  ];
+
+  arrayFilters.forEach(({ key, label }) => {
+    filterState[key].forEach((item) => {
       chips.push({
-        label: item,
+        label: `${label}: ${item}`,
         key,
         value: item,
-      }),
-    );
+      });
+    });
   });
 
-  if (filterState.cast)
+  // People filters
+  if (filterState.cast) {
     chips.push({
-      label: filterState.cast,
+      label: `Actor: ${filterState.cast}`,
       key: "cast",
     });
+  }
 
-  if (filterState.director)
+  if (filterState.director) {
     chips.push({
-      label: filterState.director,
+      label: `Director: ${filterState.director}`,
       key: "director",
     });
+  }
 
-  if (filterState.writer)
+  if (filterState.writer) {
     chips.push({
-      label: filterState.writer,
+      label: `Writer: ${filterState.writer}`,
       key: "writer",
     });
+  }
+
+  // Rating
+  if (filterState.minRating && filterState.maxRating) {
+    chips.push({
+      label: `Rating: ${filterState.minRating}–${filterState.maxRating}`,
+      key: "rating",
+      removeKeys: ["minRating", "maxRating"],
+    });
+  } else if (filterState.minRating) {
+    chips.push({
+      label: `Rating: ${filterState.minRating}+`,
+      key: "minRating",
+    });
+  } else if (filterState.maxRating) {
+    chips.push({
+      label: `Rating: ${filterState.maxRating} or less`,
+      key: "maxRating",
+    });
+  }
+
+  // Year
+  if (filterState.yearFrom && filterState.yearTo) {
+    chips.push({
+      label: `Year: ${filterState.yearFrom}–${filterState.yearTo}`,
+      key: "year",
+      removeKeys: ["yearFrom", "yearTo"],
+    });
+  } else if (filterState.yearFrom) {
+    chips.push({
+      label: `Year: ${filterState.yearFrom}+`,
+      key: "yearFrom",
+    });
+  } else if (filterState.yearTo) {
+    chips.push({
+      label: `Year: ${filterState.yearTo} or earlier`,
+      key: "yearTo",
+    });
+  }
+
+  // Runtime
+  if (filterState.runtimeMin && filterState.runtimeMax) {
+    chips.push({
+      label: `Runtime: ${filterState.runtimeMin}–${filterState.runtimeMax} min`,
+      key: "runtime",
+      removeKeys: ["runtimeMin", "runtimeMax"],
+    });
+  } else if (filterState.runtimeMin) {
+    chips.push({
+      label: `Runtime: ${filterState.runtimeMin}+ min`,
+      key: "runtimeMin",
+    });
+  } else if (filterState.runtimeMax) {
+    chips.push({
+      label: `Runtime: ${filterState.runtimeMax} min or less`,
+      key: "runtimeMax",
+    });
+  }
 
   if (!chips.length) return null;
 
@@ -55,10 +124,23 @@ function FilterChips({ filterState, setFilterState }) {
         <button
           key={`${chip.key}-${chip.value ?? chip.label}`}
           className="filter-chip"
-          onClick={() => remove(chip.key, chip.value)}
+          onClick={() => {
+            if (chip.removeKeys) {
+              setFilterState((prev) => {
+                const updated = { ...prev };
+
+                chip.removeKeys.forEach((key) => {
+                  updated[key] = "";
+                });
+
+                return updated;
+              });
+            } else {
+              remove(chip.key, chip.value);
+            }
+          }}
         >
           {chip.label}
-
           <span>✕</span>
         </button>
       ))}

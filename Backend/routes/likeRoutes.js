@@ -11,21 +11,19 @@ const {
 
 const router = express.Router();
 
-router.use(authMiddleware);
-
-// Like a movie
-router.post("/", likeMovie);
-
-// Logged-in user's liked movies
-router.get("/", getMyLikes);
-
-// Unlike a movie
-router.delete("/:movieId", unlikeMovie);
-
-// Logged-in user's like status + total count
-router.get("/:movieId/status", getMovieLikeStatus);
-
 // Public total like count
 router.get("/:movieId/count", getMovieLikeCount);
+
+// Like a movie — authentication required
+router.post("/", authMiddleware, likeMovie);
+
+// Logged-in user's liked movies — authentication required
+router.get("/", authMiddleware, getMyLikes);
+
+// Unlike a movie — authentication required
+router.delete("/:movieId", authMiddleware, unlikeMovie);
+
+// Logged-in user's like status + total count — authentication required
+router.get("/:movieId/status", authMiddleware, getMovieLikeStatus);
 
 module.exports = router;

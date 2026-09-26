@@ -24,6 +24,7 @@ const MovieHero = ({ movie, loading, movieId, commentsCount }) => {
   const [collectionModalOpen, setCollectionModalOpen] = useState(false);
 
   const [pricing, setPricing] = useState(null);
+  const [posterUrl, setPosterUrl] = useState("/movie-placeholder.gif");
 
   const discoverLink = (param, value) =>
     `/discover?${new URLSearchParams({
@@ -36,6 +37,32 @@ const MovieHero = ({ movie, loading, movieId, commentsCount }) => {
       yearTo: year,
     }).toString()}`;
 
+  useEffect(() => {
+    const imageUrl = movie?.poster;
+
+    if (!imageUrl) {
+      setPosterUrl("/movie-placeholder.gif");
+      return;
+    }
+
+    const image = new Image();
+
+    image.onload = () => {
+      setPosterUrl(imageUrl);
+    };
+
+    image.onerror = () => {
+      setPosterUrl("/movie-placeholder.gif");
+    };
+
+    image.src = imageUrl;
+
+    return () => {
+      image.onload = null;
+      image.onerror = null;
+    };
+  }, [movie?.poster]);
+
   // Cart Logic
   useEffect(() => {
     const checkCart = async () => {
@@ -45,11 +72,14 @@ const MovieHero = ({ movie, loading, movieId, commentsCount }) => {
       }
 
       try {
-        const response = await axios.get(`${import.meta.env.VITE_API_URL}/cart`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_URL}/cart`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
           },
-        });
+        );
 
         const exists = response.data.items?.some(
           (item) => item.movieId === movieId,
@@ -215,9 +245,7 @@ const MovieHero = ({ movie, loading, movieId, commentsCount }) => {
     fetchPricing();
   }, [movieId]);
 
-  const poster =
-    movie?.poster ||
-    "https://placehold.co/350x520/2c2c2c/ffffff?text=No+Poster";
+  const poster = posterUrl;
 
   const releaseYear = movie?.released
     ? new Date(movie.released).getFullYear()

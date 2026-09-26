@@ -7,7 +7,7 @@ import Icon from "../Icon";
 
 import { useAuth } from "../../context/AuthContext";
 
-function Navbar({ darkMode, setDarkMode, onClose }) {
+function Navbar({ darkMode, setDarkMode, onOpenPreferences }) {
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -45,7 +45,7 @@ function Navbar({ darkMode, setDarkMode, onClose }) {
       }`}
     >
       <div className="navbar-logo">
-        <img src="./Logo2_WB.PNG" alt="CineLend Logo" />
+        <img src="/Logo2_WB.PNG" alt="CineLend Logo" />
       </div>
 
       <ul className="navbar-links">
@@ -58,7 +58,13 @@ function Navbar({ darkMode, setDarkMode, onClose }) {
         </li>
 
         <li>
-          <Link onClick={onClose}>Preference</Link>
+          <button
+            type="button"
+            className="navbar-preference"
+            onClick={onOpenPreferences}
+          >
+            Preference
+          </button>
         </li>
 
         <li>

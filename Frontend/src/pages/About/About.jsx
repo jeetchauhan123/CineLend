@@ -4,7 +4,7 @@ const About = () => {
   return (
     <section className="about-page">
       <div className="about-header">
-        <img src="./Logo1_WB.png" alt="Logo" />
+        <img src="/Logo1_WB.png" alt="Logo" />
       </div>
 
       <div className="about-grid">

@@ -1,4 +1,5 @@
 import "./MovieCard.css";
+
 import { Link } from "react-router-dom";
 
 function MovieCard({ movie }) {
@@ -22,21 +23,20 @@ function MovieCard({ movie }) {
               alt={movie.title}
               className="movie-poster"
               draggable="false"
+              onError={(event) => {
+                event.currentTarget.onerror = null;
+                event.currentTarget.src = "/movie-placeholder.gif";
+              }}
             />
           ) : (
-            <div className="movie-poster-placeholder">
-              No Poster
-            </div>
+            <div className="movie-poster-placeholder">No Poster</div>
           )}
 
-          <div className="rating-badge">
-            ⭐ {rating}
-          </div>
+          <div className="rating-badge">⭐ {rating}</div>
         </div>
 
         <div className="movie-info">
           <h3>{movie.title}</h3>
-
           <p>{releaseYear}</p>
         </div>
       </div>

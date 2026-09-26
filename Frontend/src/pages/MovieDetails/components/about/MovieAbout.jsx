@@ -11,21 +11,48 @@ const MovieAbout = ({ movie, loading }) => {
     }).toString()}`;
 
   const releaseDate = movie?.released
-    ? new Date(movie.released).toLocaleDateString(
-        "en-US",
-        {
-          day: "numeric",
-          month: "long",
-          year: "numeric",
-        }
-      )
+    ? new Date(movie.released).toLocaleDateString("en-US", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      })
     : "N/A";
 
   const rating = movie?.imdb?.rating ?? "N/A";
 
-  const runtime = movie?.runtime
-    ? `${movie.runtime} min`
-    : "N/A";
+  const runtime = movie?.runtime ? `${movie.runtime} min` : "N/A";
+
+  const renderLinkedValues = (values, param) => {
+    if (!values?.length) {
+      return (
+        <>
+          <i className="movie-detail-dot"></i>
+          <span>N/A</span>
+        </>
+      );
+    }
+
+    return (
+      <>
+        <i className="movie-detail-dot"></i>
+
+        {values.map((value, index) => (
+          <span className="movie-detail-value-item" key={value}>
+            <Link
+              to={discoverLink(param, value)}
+              className="movie-discover-link"
+            >
+              {value}
+            </Link>
+
+            {index < values.length - 1 && (
+              <i className="movie-detail-separator">•</i>
+            )}
+          </span>
+        ))}
+      </>
+    );
+  };
 
   return (
     <section className="movie-section movie-about">
@@ -37,9 +64,7 @@ const MovieAbout = ({ movie, loading }) => {
       />
 
       <div className="movie-section__heading">
-        <span className="movie-section__eyebrow">
-          THE FILM
-        </span>
+        <span className="movie-section__eyebrow">THE FILM</span>
 
         <h2>About the Film</h2>
       </div>
@@ -47,201 +72,120 @@ const MovieAbout = ({ movie, loading }) => {
       <div className="movie-about__layout">
         <div className="movie-about__details">
           <div className="movie-detail-item">
-            <span>Director</span>
+            <span className="movie-detail-label">Director</span>
 
-            <strong>
+            <strong className="movie-detail-value">
               {loading ? (
-                <Skeleton
-                  width="180px"
-                  height="18px"
-                />
-              ) : movie?.directors?.length ? (
-                movie.directors.map(
-                  (director, index) => (
-                    <span key={director}>
-                      {index > 0 && ", "}
-
-                      <Link
-                        to={discoverLink(
-                          "director",
-                          director
-                        )}
-                        className="movie-discover-link"
-                      >
-                        {director}
-                      </Link>
-                    </span>
-                  )
-                )
+                <Skeleton width="180px" height="18px" />
               ) : (
-                "N/A"
+                renderLinkedValues(movie?.directors, "director")
               )}
             </strong>
           </div>
 
           <div className="movie-detail-item">
-            <span>Writers</span>
+            <span className="movie-detail-label">Writers</span>
 
-            <strong>
+            <strong className="movie-detail-value">
               {loading ? (
-                <Skeleton
-                  width="220px"
-                  height="18px"
-                />
-              ) : movie?.writers?.length ? (
-                movie.writers.map((writer, index) => (
-                  <span key={writer}>
-                    {index > 0 && ", "}
-
-                    <Link
-                      to={discoverLink(
-                        "writer",
-                        writer
-                      )}
-                      className="movie-discover-link"
-                    >
-                      {writer}
-                    </Link>
-                  </span>
-                ))
+                <Skeleton width="220px" height="18px" />
               ) : (
-                "N/A"
+                renderLinkedValues(movie?.writers, "writer")
               )}
             </strong>
           </div>
 
           <div className="movie-detail-item">
-            <span>Released</span>
+            <span className="movie-detail-label">Released</span>
 
-            <strong>
+            <strong className="movie-detail-value">
               {loading ? (
-                <Skeleton
-                  width="140px"
-                  height="18px"
-                />
+                <Skeleton width="140px" height="18px" />
               ) : (
-                releaseDate
+                <>
+                  <i className="movie-detail-dot"></i>
+                  <span>{releaseDate}</span>
+                </>
               )}
             </strong>
           </div>
 
           <div className="movie-detail-item">
-            <span>Languages</span>
+            <span className="movie-detail-label">Languages</span>
 
-            <strong>
+            <strong className="movie-detail-value">
               {loading ? (
-                <Skeleton
-                  width="130px"
-                  height="18px"
-                />
-              ) : movie?.languages?.length ? (
-                movie.languages.map(
-                  (language, index) => (
-                    <span key={language}>
-                      {index > 0 && ", "}
-
-                      <Link
-                        to={discoverLink(
-                          "languages",
-                          language
-                        )}
-                        className="movie-discover-link"
-                      >
-                        {language}
-                      </Link>
-                    </span>
-                  )
-                )
+                <Skeleton width="130px" height="18px" />
               ) : (
-                "N/A"
+                renderLinkedValues(movie?.languages, "languages")
               )}
             </strong>
           </div>
 
           <div className="movie-detail-item">
-            <span>Country</span>
+            <span className="movie-detail-label">Country</span>
 
-            <strong>
+            <strong className="movie-detail-value">
               {loading ? (
-                <Skeleton
-                  width="120px"
-                  height="18px"
-                />
-              ) : movie?.countries?.length ? (
-                movie.countries.map(
-                  (country, index) => (
-                    <span key={country}>
-                      {index > 0 && ", "}
-
-                      <Link
-                        to={discoverLink(
-                          "countries",
-                          country
-                        )}
-                        className="movie-discover-link"
-                      >
-                        {country}
-                      </Link>
-                    </span>
-                  )
-                )
+                <Skeleton width="120px" height="18px" />
               ) : (
-                "N/A"
+                renderLinkedValues(movie?.countries, "countries")
               )}
             </strong>
           </div>
 
           <div className="movie-detail-item">
-            <span>Runtime</span>
+            <span className="movie-detail-label">Runtime</span>
 
-            <strong>
+            <strong className="movie-detail-value">
               {loading ? (
-                <Skeleton
-                  width="80px"
-                  height="18px"
-                />
+                <Skeleton width="80px" height="18px" />
               ) : (
-                runtime
+                <>
+                  <i className="movie-detail-dot"></i>
+                  <span>{runtime}</span>
+                </>
               )}
             </strong>
           </div>
 
           <div className="movie-detail-item">
-            <span>Rated</span>
+            <span className="movie-detail-label">Rated</span>
 
-            <strong>
+            <strong className="movie-detail-value">
               {loading ? (
-                <Skeleton
-                  width="60px"
-                  height="18px"
-                />
+                <Skeleton width="60px" height="18px" />
               ) : movie?.rated ? (
-                <Link
-                  to={discoverLink(
-                    "rated",
-                    movie.rated
-                  )}
-                  className="movie-discover-link"
-                >
-                  {movie.rated}
-                </Link>
+                <>
+                  <i className="movie-detail-dot"></i>
+
+                  <Link
+                    to={discoverLink("rated", movie.rated)}
+                    className="movie-discover-link"
+                  >
+                    {movie.rated}
+                  </Link>
+                </>
               ) : (
-                "N/A"
+                <>
+                  <i className="movie-detail-dot"></i>
+                  <span>N/A</span>
+                </>
               )}
             </strong>
           </div>
 
           <div className="movie-detail-item">
-            <span>Type</span>
+            <span className="movie-detail-label">Type</span>
 
-            <strong>
+            <strong className="movie-detail-value">
               {loading ? (
-                <Skeleton
-                  width="80px"
-                  height="18px"
-                />
+                <Skeleton width="80px" height="18px" />
               ) : (
-                movie?.type || "N/A"
+                <>
+                  <i className="movie-detail-dot"></i>
+                  <span>{movie?.type || "N/A"}</span>
+                </>
               )}
             </strong>
           </div>
@@ -249,27 +193,15 @@ const MovieAbout = ({ movie, loading }) => {
 
         <div className="movie-about__ratings">
           <div className="movie-rating-main">
-            <span className="movie-rating-main__label">
-              IMDb
-            </span>
+            <span className="movie-rating-main__label">IMDb</span>
 
             <strong>
-              {loading ? (
-                <Skeleton
-                  width="65px"
-                  height="40px"
-                />
-              ) : (
-                rating
-              )}
+              {loading ? <Skeleton width="65px" height="40px" /> : rating}
             </strong>
 
             <small>
               {loading ? (
-                <Skeleton
-                  width="100px"
-                  height="16px"
-                />
+                <Skeleton width="100px" height="16px" />
               ) : movie?.imdb?.votes ? (
                 `${movie.imdb.votes.toLocaleString()} votes`
               ) : (
@@ -283,10 +215,7 @@ const MovieAbout = ({ movie, loading }) => {
 
             <strong>
               {loading ? (
-                <Skeleton
-                  width="50px"
-                  height="22px"
-                />
+                <Skeleton width="50px" height="22px" />
               ) : movie?.tomatoes?.critic?.rating ? (
                 movie.tomatoes.critic.rating
               ) : movie?.tomatoes?.critic?.meter ? (
@@ -302,10 +231,7 @@ const MovieAbout = ({ movie, loading }) => {
 
             <strong>
               {loading ? (
-                <Skeleton
-                  width="50px"
-                  height="22px"
-                />
+                <Skeleton width="50px" height="22px" />
               ) : movie?.tomatoes?.viewer?.rating ? (
                 movie.tomatoes.viewer.rating
               ) : movie?.tomatoes?.viewer?.meter ? (

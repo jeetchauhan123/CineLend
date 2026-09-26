@@ -109,6 +109,15 @@
   color: inherit;
 }
 
+.navbar-preference {
+  padding: 0;
+  border: none;
+  background: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
 .navbar-actions {
   display: flex;
   align-items: center;

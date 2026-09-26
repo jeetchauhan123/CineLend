@@ -43,11 +43,19 @@
 .movie-cast-crew__list {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: 10px 25px;
 }
 
+.movie-person-wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: 25px;
+  white-space: nowrap;
+}
+
+
 .movie-person {
-  position: relative;
   color: var(--text-primary);
   font-size: 0.9rem;
   font-weight: 600;
@@ -57,4 +65,19 @@
 
 .movie-person:hover {
   color: var(--red);
+}
+
+.movie-person-separator {
+  color: var(--red);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.movie-person + .movie-person::before {
+  content: "•";
+  position: absolute;
+  left: -15px;
+  color: var(--red);
+  font-size: 0.7rem;
+  pointer-events: none;
 }
