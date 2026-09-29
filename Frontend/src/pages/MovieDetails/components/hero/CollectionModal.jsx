@@ -32,7 +32,6 @@ const CollectionModal = ({ movieId, isOpen, onClose }) => {
 
     if (!token) {
       onClose();
-      navigate("/login");
       return;
     }
 

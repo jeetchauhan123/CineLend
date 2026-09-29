@@ -1,5 +1,6 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 import axios from "axios";
 
 import "./Register.css";
@@ -7,6 +8,8 @@ import "../Auth.css";
 
 const Register = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const { user } = useAuth();
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -20,6 +23,14 @@ const Register = () => {
 
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (user) {
+      navigate("/", { replace: true });
+    }
+  }, [user, navigate]);
+
+  const from = location.state?.from || "/";
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -62,7 +73,10 @@ const Register = () => {
       });
 
       // Registration successful
-      navigate("/login");
+      navigate("/login", {
+        replace: true,
+        state: { from },
+      });
     } catch (error) {
       const message =
         error.response?.data?.message ||
@@ -231,7 +245,9 @@ const Register = () => {
           {/* Login */}
           <p className="auth-switch">
             Already have an account?
-            <Link to="/login">Sign in</Link>
+            <Link to="/login" state={{ from }}>
+              Sign in
+            </Link>
           </p>
         </div>
       </div>

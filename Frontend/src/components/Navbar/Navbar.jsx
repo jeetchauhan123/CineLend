@@ -103,7 +103,16 @@ function Navbar({ darkMode, setDarkMode, onOpenPreferences }) {
             )}
           </div>
         ) : (
-          <button className="login-btn" onClick={() => navigate("/login")}>
+          <button
+            className="login-btn"
+            onClick={() =>
+              navigate("/login", {
+                state: {
+                  from: location.pathname + location.search + location.hash,
+                },
+              })
+            }
+          >
             Login
           </button>
         )}

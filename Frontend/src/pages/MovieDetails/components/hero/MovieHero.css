@@ -78,6 +78,7 @@
 
 .movie-hero__info {
   max-width: 650px;
+  position: relative;
 }
 
 .movie-hero__heading h1 {
@@ -145,6 +146,36 @@
   color: #fff;
   font-size: 20px;
   font-weight: 800;
+}
+
+.movie-hero__action-warning {
+  position: absolute;
+  left: 0;
+  bottom: -46px;
+
+  display: flex;
+  align-items: center;
+  gap: 9px;
+
+  padding: 10px 14px;
+
+  border: 1px solid rgba(236, 38, 48, 0.28);
+  border-radius: 10px;
+
+  background: rgba(236, 38, 48, 0.1);
+
+  color: #ffe6e6;
+
+  font-size: 13px;
+  line-height: 1.4;
+
+  z-index: 10;
+}
+
+.movie-hero__action-warning span:first-child {
+  color: var(--red);
+  font-size: 14px;
+  flex-shrink: 0;
 }
 
 .movie-hero__actions {

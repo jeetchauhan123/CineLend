@@ -39,7 +39,8 @@ If you are developing a production application, we recommend using TypeScript wi
 20. If the user is alrady logged in then he cant go to login page again 
 21. When i scroll down and click on any link then the page that opens has been scrolled down to the same length i had scrolled on the previous page 
 22. The Checkout and Payment page still follows the main website theme and styling we need to remove it and make it totally different from the rest of the website
-23. 
+23. User can not go checkout or payment page by any means other than normal flow of interaction even if somehow the user did then close the page with 5 second timer
+24. 
 
 
 ##BUGS
@@ -56,141 +57,134 @@ If you are developing a production application, we recommend using TypeScript wi
 11. ⏸️HOLD When the movie detail is open and we then open another movie detail by writing its id in the url and then click back button in browser, now every time you scroll it gerenates error in the browser cosole
 12. ✅DONE The image url sometimes give 404 not found due to which the image breaks to load an alternate text displays
 13. ✅DONE Like Count API returns 401 Unauthorized when the user visits the moviedetail page when he is not logged in 
-14. 
+14. In Movie detail page in facts section release year value does not have their respective discover page url in them on clicking the year we do not get directed to the discover page
+15. 
 
 
 
 
+Future Improvements — Small → Large
+🟢 Phase 1 — Very small / quick fixes
+#20 — Prevent logged-in users from accessing Login page
+#3 — Fix Home slider buttons/links
+#6 — Make Home "View All" functional
+#21 — Reset scroll position when navigating
+#7 — Add navbar search functionality
+#2 — Navbar links optimisation and redirect links
+#1 — Home movie slider skeleton
 
+These are mostly isolated frontend/navigation changes.
 
-What we're building first
+🟢 Phase 2 — Small UI improvements
+#5 — Add genre box to Home (optional)
+#10 — Preference panel shows existing selected preferences
+#11 — Update About page
+#12 — Add IMDb rating bar to Movie Details
+#15 — Comment button when logged out shows a login-required message
 
-I suggest we proceed in this order:
+These are still primarily frontend work, with relatively limited backend impact.
 
-Phase 1 — Profile shell
+🟡 Phase 3 — Small-to-medium functionality
+#13 — Fix comment links/model storage
+#16 — Pending comment visual state until backend succeeds
+#14 — Track visited movies in localStorage → Continue Exploring
+#17 — Authentication across multiple tabs
 
-Persistent Profile Header
-Profile navigation
-Overview
-In-page section switching
-Back navigation
+These involve more application logic, state handling and/or backend changes.
 
-Phase 2 — Overview
-6. Real rental/collection/comment counts
-7. Continue Exploring
-8. Recently Rented
+🟡 Phase 4 — Profile improvements
+Profile account editing
+Change password
+Profile image
+Any remaining Profile/Overview polish
 
-Phase 3 — Rented Movies
-9. Rental cards
-10. Rental details
-11. Return
-12. Cancel where applicable
+These aren't huge individually, but they involve authentication/user data and therefore deserve to come after the simpler UI work.
 
-Phase 4 — Collections
-13. Collection list
-14. Create
-15. Rename
-16. Delete
-17. Open collection
-18. Add/remove movies
-
-Phase 5 — Comments
-19. User's comments
-20. Edit/delete
-
-Phase 6 — Account
-21. Edit profile
-22. Change password
-23. Profile image
-
-
-
-
-
-
-
-
-
-
-
-We're ready to execute
-
-I suggest we build it in this exact order:
-
-Phase 1 — Pricing foundation
-Movie release year
-       ↓
-Pricing tier
-       ↓
-Base daily price
-       ↓
+🟠 Phase 5 — Pricing foundation
+Movie release year → pricing tier → base daily price
 Rental duration
-       ↓
 Package discount
-       ↓
 Final rental price
+#18 — Enforce maximum rental duration
 
-We'll first decide and implement the pricing configuration.
+This is where we start entering the larger rental system.
 
+🟠 Phase 6 — Cart
+Cart model
+Cart controller
+Cart routes
+Thunder Client testing
+Movie Details → Add to Cart
+Added confirmation + View Cart
+Cart page
+Remove from cart
+Clear cart
+Profile → Cart integration
+🔴 Phase 7 — Rental system
+Rental model
+Rental creation
+Duration selection
+Individual Rent
+Rent All
+Price calculation
+Tax
+Checkout
+Dummy payment
+Payment success
+Cart cleanup after rental
 
+This is deliberately kept as one of the later sections because it touches a lot of existing functionality.
 
-Phase 2 — Cart
-Cart Model
-→ Controller
-→ Routes
-→ Thunder Client testing
-→ Movie Details "Add to Cart"
-→ Added confirmation + View Cart
-→ Cart page
-→ Remove
-→ Clear Cart
-→ Cart access from profile dropdown
+🔴 Phase 8 — Checkout security + design
+#19 — Prevent direct checkout/payment access
+#22 — Completely redesign Checkout/Payment separately from the main website theme
 
+These should happen around the checkout implementation rather than much earlier.
 
+🔴 Phase 9 — Rental lifecycle
+Active rental state
+Expiration
+Early return
+Rental history
+Profile → Rented Movies
+Rental cards
+Rental details
+Return
+Cancel where applicable
 
+This is probably the largest functional section.
 
-Phase 3 — Rental
-Rental Model
-→ Rental creation
-→ Duration selection
-→ Individual Rent
-→ Rent All
-→ Price calculation
-→ Tax
-→ Checkout
-→ Dummy payment
-→ Success
-→ Cart cleanup
-
-
-
-
-Phase 4 — Rental lifecycle
-Active rental
-→ Expiration
-→ Early return
-→ Rental history
-→ Profile → Rented
-
-
-
-
-Phase 5 — Final integration
-
-We'll connect everything so the Movie Details button correctly reflects:
+Final integration
+Connect the entire rental state flow:
 
 Available
-   ↓
+
+↓
+
 Add to Cart
+
+↓
 
 In Cart
-   ↓
+
+↓
+
 Added / View Cart
 
-Rented
-   ↓
+↓
+
 Rented
 
+↓
+
+Rented
+
+↓
+
 Expired / Returned
-   ↓
+
+↓
+
 Add to Cart
+
+And then do the final cross-feature testing.

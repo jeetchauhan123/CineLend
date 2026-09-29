@@ -25,6 +25,7 @@ const MovieHero = ({ movie, loading, movieId, commentsCount }) => {
 
   const [pricing, setPricing] = useState(null);
   const [posterUrl, setPosterUrl] = useState("/movie-placeholder.gif");
+  const [actionWarning, setActionWarning] = useState("");
 
   const discoverLink = (param, value) =>
     `/discover?${new URLSearchParams({
@@ -36,6 +37,14 @@ const MovieHero = ({ movie, loading, movieId, commentsCount }) => {
       yearFrom: year,
       yearTo: year,
     }).toString()}`;
+
+  const showLoginWarning = (message) => {
+    setActionWarning(message);
+
+    setTimeout(() => {
+      setActionWarning("");
+    }, 3500);
+  };
 
   useEffect(() => {
     const imageUrl = movie?.poster;
@@ -96,7 +105,7 @@ const MovieHero = ({ movie, loading, movieId, commentsCount }) => {
 
   const handleAddToCart = async () => {
     if (!token) {
-      navigate("/login");
+      showLoginWarning("Please log in to add this movie to your cart.");
       return;
     }
 
@@ -167,7 +176,7 @@ const MovieHero = ({ movie, loading, movieId, commentsCount }) => {
 
   const handleMovieLike = async () => {
     if (!token) {
-      navigate("/login");
+      showLoginWarning("Please log in to like this movie.");
       return;
     }
 
@@ -364,6 +373,7 @@ const MovieHero = ({ movie, loading, movieId, commentsCount }) => {
                 <strong>₹{pricing.baseDailyPrice}/day</strong>
               </div>
             )}
+
             <div className="movie-hero__actions">
               {movieInCart ? (
                 <button
@@ -389,7 +399,9 @@ const MovieHero = ({ movie, loading, movieId, commentsCount }) => {
                 className="movie-hero__wishlist"
                 onClick={() => {
                   if (!token) {
-                    navigate("/login");
+                    showLoginWarning(
+                      "Please log in to add this movie to a collection.",
+                    );
                     return;
                   }
 
@@ -452,6 +464,13 @@ const MovieHero = ({ movie, loading, movieId, commentsCount }) => {
                 </span>
               </button>
             </div>
+
+            {actionWarning && (
+              <div className="movie-hero__action-warning">
+                <span>⚠</span>
+                <span>{actionWarning}</span>
+              </div>
+            )}
           </div>
         </div>
       </section>

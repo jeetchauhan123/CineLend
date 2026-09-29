@@ -1,16 +1,15 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
-
 import { useAuth } from "../../context/AuthContext";
-
 import "./Login.css";
 import "../Auth.css";
 
 const Login = () => {
   const navigate = useNavigate();
+  const location = useLocation();
 
-  const { login } = useAuth();
+  const { user, login } = useAuth();
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -22,6 +21,14 @@ const Login = () => {
   const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (user) {
+      navigate("/", { replace: true });
+    }
+  }, [user, navigate]);
+
+  const from = location.state?.from || "/";
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -51,28 +58,31 @@ const Login = () => {
       setIsLoading(true);
       setError("");
 
-      const response = await axios.post(`${import.meta.env.VITE_API_URL}/users/login`, {
-        email,
-        password,
-      });
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/users/login`,
+        {
+          email,
+          password,
+        },
+      );
 
       const { user, token } = response.data;
 
       // Update authentication state
       login(user, token, rememberMe);
 
-      // Go to home page
-      navigate("/");
+      // Return to the page where login was opened
+      navigate(from, { replace: true });
     } catch (error) {
       console.error("Login error:", error);
-  console.error("Login response:", error.response);
-  console.error("Login request:", error.request);
+      console.error("Login response:", error.response);
+      console.error("Login request:", error.request);
 
-  const message =
-    error.response?.data?.message ||
-    "Something went wrong. Please try again.";
+      const message =
+        error.response?.data?.message ||
+        "Something went wrong. Please try again.";
 
-  setError(message);
+      setError(message);
     } finally {
       setIsLoading(false);
     }
@@ -203,7 +213,7 @@ const Login = () => {
           {/* Register */}
           <p className="auth-switch">
             Don't have an account?
-            <Link to="/register">Create account</Link>
+            <Link to="/register" state={{ from }}>Create account</Link>
           </p>
         </div>
       </div>
