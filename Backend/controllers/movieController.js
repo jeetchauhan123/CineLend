@@ -235,6 +235,8 @@ const getMovies = async (req, res) => {
       search,
 
       genres,
+      genreMatch,
+
       languages,
       countries,
       rated,
@@ -297,7 +299,7 @@ const getMovies = async (req, res) => {
 
       if (genreList.length > 0) {
         query.genres = {
-          $all: genreList,
+          [genreMatch === "any" ? "$in" : "$all"]: genreList,
         };
       }
     }

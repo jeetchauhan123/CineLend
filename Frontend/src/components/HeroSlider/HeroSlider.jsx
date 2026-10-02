@@ -1,7 +1,5 @@
 import { Swiper, SwiperSlide } from "swiper/react";
-
 import { Autoplay, Pagination, Navigation, EffectFade } from "swiper/modules";
-
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
@@ -118,13 +116,13 @@ function HeroSlider() {
                   <p>{movie.plot}</p>
 
                   <div className="button-group">
-                    <button className="play-btn">
-                      <Link to={`/movie/${movie._id}`}>▶ Rent</Link>
-                    </button>
+                    <Link to={`/movie/${movie._id}`} className="play-btn">
+                      ▶ View Movie
+                    </Link>
 
-                    <button className="info-btn">
-                      <Link to={`/movie/${movie._id}`}>ⓘ More Info</Link>
-                    </button>
+                    {/* <Link to={`/movie/${movie._id}`} className="info-btn">
+                      ⓘ More Info
+                    </Link> */}
                   </div>
                 </div>
 

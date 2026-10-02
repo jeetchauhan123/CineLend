@@ -35,11 +35,11 @@ If you are developing a production application, we recommend using TypeScript wi
 16. When the comment is posted it directly appears in the comment section as it is rather than that the comment should appear in comment section as pale until the backend succesfully uploads the comment to the database and then the comment should return to normal
 17. The user can only seems to interact form one tab, if the looged in user opens another tab or clicks open in another tab then that tab will not have the user token and the user needs to login again 
 18. Putting a limit on how much days a user can rent, and not some infinitly long number
-19. No one should go to checkout or payment page without redirecting from the rent button e.g. by url, or clicking back button
+19. No one should go to checkout or payment page without redirecting from the rent button e.g. by url, or clicking back button, even if somehow the user did then close the page with 5 second timer
 20. If the user is alrady logged in then he cant go to login page again 
 21. When i scroll down and click on any link then the page that opens has been scrolled down to the same length i had scrolled on the previous page 
 22. The Checkout and Payment page still follows the main website theme and styling we need to remove it and make it totally different from the rest of the website
-23. User can not go checkout or payment page by any means other than normal flow of interaction even if somehow the user did then close the page with 5 second timer
+23. 
 24. 
 
 
@@ -58,7 +58,7 @@ If you are developing a production application, we recommend using TypeScript wi
 12. ✅DONE The image url sometimes give 404 not found due to which the image breaks to load an alternate text displays
 13. ✅DONE Like Count API returns 401 Unauthorized when the user visits the moviedetail page when he is not logged in 
 14. In Movie detail page in facts section release year value does not have their respective discover page url in them on clicking the year we do not get directed to the discover page
-15. 
+15. Everytime opening the onboarding model it asks for the choice, it should show already selected choice after selecting it once
 
 
 

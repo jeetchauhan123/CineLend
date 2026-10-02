@@ -25,7 +25,9 @@ function OnboardingModal({ onClose }) {
   useEffect(() => {
     const fetchGenres = async () => {
       try {
-        const res = await axios.get(`${import.meta.env.VITE_API_URL}/movies/genres`);
+        const res = await axios.get(
+          `${import.meta.env.VITE_API_URL}/movies/genres`,
+        );
 
         setGenres(res.data);
       } catch (error) {
@@ -56,7 +58,7 @@ function OnboardingModal({ onClose }) {
         updatedPrefs = { ...storage, age: selectedAge };
         setStorage(updatedPrefs);
         localStorage.setItem("pref", JSON.stringify(updatedPrefs));
-        setStep(3)
+        setStep(3);
         break;
       case 3:
         updatedPrefs = { ...storage, genres: selectedGenres };
@@ -98,6 +100,12 @@ function OnboardingModal({ onClose }) {
               not just what's trending.
             </p>
 
+            <p className="note">
+              Note: Backend is Hosted on Free Service <br />
+              So web services automatically spin down after 15 minutes of idle traffic <br />
+              Please wait Patiently
+            </p>
+
             <button className="primary-btn" onClick={() => setStep(2)}>
               Get Started
             </button>
@@ -106,7 +114,7 @@ function OnboardingModal({ onClose }) {
 
         {step === 2 && (
           <div className="step-content">
-            {showError && <p style={{ color: 'red' }}>Please select age</p>}
+            {showError && <p style={{ color: "red" }}>Please select age</p>}
             <h2>Choose Your Age Group</h2>
 
             <p>This helps us recommend movies that match your interests.</p>

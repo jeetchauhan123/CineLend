@@ -121,10 +121,23 @@
   gap: 1rem;
 }
 
-.play-btn a,
-.info-btn a {
-  color: inherit;
+.play-btn {
+  padding: 10px 22px;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  background: white;
+  color: var(--red2);
   text-decoration: none;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.play-btn:hover {
+  background: #e8e8e8;
+  color: var(--red);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
 .play-btn {

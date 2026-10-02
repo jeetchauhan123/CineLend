@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import "./MovieRow.css";
 import MovieCard from "./MovieCard";
 
-function MovieRow({ title, movies, subtitle }) {
+function MovieRow({ title, movies, subtitle, viewAllTo = "/discover" }) {
   const rowRef = useRef(null);
 
   const [isDragging, setIsDragging] = useState(false);
@@ -44,8 +45,7 @@ function MovieRow({ title, movies, subtitle }) {
           ? 2 * progress * progress
           : 1 - Math.pow(-2 * progress + 2, 2) / 2;
 
-      container.scrollLeft =
-        start + (target - start) * ease;
+      container.scrollLeft = start + (target - start) * ease;
 
       if (progress < 1) {
         requestAnimationFrame(animate);
@@ -93,8 +93,7 @@ function MovieRow({ title, movies, subtitle }) {
 
     const walk = distance * 1.5;
 
-    container.scrollLeft =
-      scrollLeftRef.current - walk;
+    container.scrollLeft = scrollLeftRef.current - walk;
   };
 
   const stopDragging = () => {
@@ -121,14 +120,11 @@ function MovieRow({ title, movies, subtitle }) {
 
     if (!container) return;
 
-    const maxScroll =
-      container.scrollWidth - container.clientWidth;
+    const maxScroll = container.scrollWidth - container.clientWidth;
 
     setShowLeftFade(container.scrollLeft > 5);
 
-    setShowRightFade(
-      container.scrollLeft < maxScroll - 5
-    );
+    setShowRightFade(container.scrollLeft < maxScroll - 5);
   };
 
   useEffect(() => {
@@ -136,16 +132,10 @@ function MovieRow({ title, movies, subtitle }) {
 
     // Stops dragging even when the mouse is released
     // outside the movie row
-    window.addEventListener(
-      "mouseup",
-      stopDragging
-    );
+    window.addEventListener("mouseup", stopDragging);
 
     return () => {
-      window.removeEventListener(
-        "mouseup",
-        stopDragging
-      );
+      window.removeEventListener("mouseup", stopDragging);
     };
   }, []);
 
@@ -153,18 +143,18 @@ function MovieRow({ title, movies, subtitle }) {
     <section className="movie-row">
       <div className="movie-row-header">
         <div>
-          <span className="section-tag">
-            Collection
-          </span>
+          <span className="section-tag">Collection</span>
 
           <h2>{title}</h2>
 
           <p>{subtitle}</p>
         </div>
 
-        <button className="view-all-btn">
-          View All →
-        </button>
+        {viewAllTo && (
+          <Link to={viewAllTo} className="view-all-btn">
+            View All →
+          </Link>
+        )}
       </div>
 
       <div
@@ -173,40 +163,27 @@ function MovieRow({ title, movies, subtitle }) {
           ${showRightFade ? "show-right-fade" : ""}
         `}
       >
-        <button
-          className="nav-btn left"
-          onClick={scrollLeft}
-        >
+        <button className="nav-btn left" onClick={scrollLeft}>
           ❮
         </button>
 
         <div
           ref={rowRef}
-          className={`movie-row-container ${
-            isDragging ? "dragging" : ""
-          }`}
+          className={`movie-row-container ${isDragging ? "dragging" : ""}`}
           onScroll={updateFades}
           onMouseDown={handleMouseDown}
           onMouseMove={handleMouseMove}
           onMouseUp={stopDragging}
           onMouseLeave={stopDragging}
           onClickCapture={handleClickCapture}
-          onDragStart={(e) =>
-            e.preventDefault()
-          }
+          onDragStart={(e) => e.preventDefault()}
         >
           {movies.map((movie) => (
-            <MovieCard
-              key={movie._id}
-              movie={movie}
-            />
+            <MovieCard key={movie._id} movie={movie} />
           ))}
         </div>
 
-        <button
-          className="nav-btn right"
-          onClick={scrollRight}
-        >
+        <button className="nav-btn right" onClick={scrollRight}>
           ❯
         </button>
       </div>

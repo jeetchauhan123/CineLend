@@ -12,6 +12,7 @@ export const fetchDiscoverResults = ({
   sort = "default",
   page = 1,
   limit = 24,
+  genreMatch,
 }) => {
   return axios.get(API_URL, {
     params: {
@@ -39,6 +40,7 @@ export const fetchDiscoverResults = ({
       sort,
       page,
       limit,
+      genreMatch,
     },
   });
 };

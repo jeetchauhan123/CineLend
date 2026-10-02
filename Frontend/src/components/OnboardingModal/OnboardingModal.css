@@ -240,3 +240,7 @@
   cursor: pointer;
 }
 
+.note {
+  color: #e50914 !important;
+  font-size: 12px;
+}

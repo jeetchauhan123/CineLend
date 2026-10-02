@@ -83,6 +83,10 @@ function Discover() {
 
   const [sort, setSort] = useState(searchParams.get("sort") || "default");
 
+  const [isRecommendation, setIsRecommendation] = useState(
+    searchParams.get("genreMatch") === "any",
+  );
+
   const [isSortOpen, setIsSortOpen] = useState(false);
   const sortRef = useRef(null);
 
@@ -157,6 +161,7 @@ function Discover() {
           sort,
           page,
           limit: LIMIT,
+          genreMatch: isRecommendation ? "any" : undefined,
         });
 
         setMovies(response.data.movies);
@@ -237,12 +242,16 @@ function Discover() {
       params.sort = sort;
     }
 
+    if (isRecommendation) {
+      params.genreMatch = "any";
+    }
+
     if (page > 1) {
       params.page = page;
     }
 
     setSearchParams(params, { replace: true });
-  }, [debouncedSearch, debouncedFilters, sort, page, setSearchParams]);
+  }, [debouncedSearch, debouncedFilters, sort, page, isRecommendation, setSearchParams]);
 
   const handleFilterChange = (category, value) => {
     setPage(1);
