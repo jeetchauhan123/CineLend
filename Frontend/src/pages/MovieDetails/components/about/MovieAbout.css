@@ -132,6 +132,34 @@
   font-size: 0.7rem;
 }
 
+.movie-rating-bar {
+  width: 100%;
+  max-width: 210px;
+  height: 5px;
+  margin-top: 13px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--glass-border);
+}
+
+.movie-rating-bar__fill {
+  height: 100%;
+  border-radius: inherit;
+  background: var(--red);
+  transition: width 0.4s ease;
+}
+
+.movie-rating-scale {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 210px;
+  margin-top: 5px;
+  color: var(--text-secondary);
+  font-size: 0.62rem;
+  font-weight: 600;
+}
+
 .movie-rating-row {
   display: flex;
   align-items: center;

@@ -39,6 +39,8 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem("auth");
     sessionStorage.removeItem("auth");
 
+    // Remember Me ON → localStorage
+    // Remember Me OFF → sessionStorage
     const storage = rememberMe ? localStorage : sessionStorage;
 
     storage.setItem("auth", JSON.stringify(authData));

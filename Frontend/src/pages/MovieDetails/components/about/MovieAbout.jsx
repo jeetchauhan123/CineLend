@@ -20,6 +20,11 @@ const MovieAbout = ({ movie, loading }) => {
 
   const rating = movie?.imdb?.rating ?? "N/A";
 
+  const numericRating = Number(rating);
+  const ratingPercentage = Number.isFinite(numericRating)
+    ? `${Math.min(Math.max(numericRating, 0), 10) * 10}%`
+    : "0%";
+
   const runtime = movie?.runtime ? `${movie.runtime} min` : "N/A";
 
   const renderLinkedValues = (values, param) => {
@@ -198,6 +203,18 @@ const MovieAbout = ({ movie, loading }) => {
             <strong>
               {loading ? <Skeleton width="65px" height="40px" /> : rating}
             </strong>
+
+            <div className="movie-rating-bar">
+              <div
+                className="movie-rating-bar__fill"
+                style={{ width: loading ? "0%" : ratingPercentage }}
+              />
+            </div>
+
+            <div className="movie-rating-scale">
+              <span>0</span>
+              <span>10</span>
+            </div>
 
             <small>
               {loading ? (

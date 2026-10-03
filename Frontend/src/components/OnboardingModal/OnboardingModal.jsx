@@ -22,6 +22,28 @@ function OnboardingModal({ onClose }) {
   });
   const [showError, setShowError] = useState(false);
 
+  useLayoutEffect(() => {
+    try {
+      const savedPreferences = localStorage.getItem("pref");
+
+      if (!savedPreferences) return;
+
+      const preferences = JSON.parse(savedPreferences);
+
+      setSelectedAge(preferences.age || "");
+      setSelectedGenres(
+        Array.isArray(preferences.genres) ? preferences.genres : [],
+      );
+
+      setStorage({
+        age: preferences.age || "",
+        genres: Array.isArray(preferences.genres) ? preferences.genres : [],
+      });
+    } catch (error) {
+      console.error("Error loading saved preferences:", error);
+    }
+  }, []);
+
   useEffect(() => {
     const fetchGenres = async () => {
       try {
@@ -102,7 +124,8 @@ function OnboardingModal({ onClose }) {
 
             <p className="note">
               Note: Backend is Hosted on Free Service <br />
-              So web services automatically spin down after 15 minutes of idle traffic <br />
+              So web services automatically spin down after 15 minutes of idle
+              traffic <br />
               Please wait Patiently
             </p>
 

@@ -319,6 +319,46 @@
   outline-offset: 3px;
 }
 
+.movie-comment--highlighted {
+  animation: comment-highlight 6s ease-in-out forwards;
+}
+
+@keyframes comment-highlight {
+  0% {
+    background: rgba(236, 38, 48, 0.16);
+    box-shadow: 0 0 8px rgba(236, 38, 48, 0.08);
+  }
+  16% {
+    background: rgba(236, 38, 48, 0.07);
+    box-shadow: none;
+  }
+  32% {
+    background: rgba(236, 38, 48, 0.16);
+    box-shadow: 0 0 8px rgba(236, 38, 48, 0.07);
+  }
+  48% {
+    background: rgba(236, 38, 48, 0.07);
+    box-shadow: none;
+  }
+  64% {
+    background: rgba(236, 38, 48, 0.16);
+    box-shadow: 0 0 6px rgba(236, 38, 48, 0.06);
+  }
+  78% {
+    background: rgba(236, 38, 48, 0.07);
+    box-shadow: none;
+  }
+  90% {
+    background: rgba(236, 38, 48, 0.16);
+    box-shadow: 0 0 6px rgba(236, 38, 48, 0.06);
+  }
+  100% {
+    background: transparent;
+    box-shadow: none;
+  }
+}
+
+
 /* =========================================================
    RESPONSIVE — COMMENTS
 ========================================================= */

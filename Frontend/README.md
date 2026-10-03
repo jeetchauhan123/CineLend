@@ -39,7 +39,7 @@ If you are developing a production application, we recommend using TypeScript wi
 20. If the user is alrady logged in then he cant go to login page again 
 21. When i scroll down and click on any link then the page that opens has been scrolled down to the same length i had scrolled on the previous page 
 22. The Checkout and Payment page still follows the main website theme and styling we need to remove it and make it totally different from the rest of the website
-23. 
+23. In profil page in collecton when we click on movie card it does not redirect to the movie detail page, same in rented panel, same in comments panel
 24. 
 
 
