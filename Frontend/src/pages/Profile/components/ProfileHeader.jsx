@@ -1,6 +1,6 @@
 import "./ProfileHeader.css";
 
-function ProfileHeader({ user }) {
+function ProfileHeader({ user, onEditAccount }) {
   const initial = user?.name?.trim()?.charAt(0).toUpperCase() || "U";
 
   return (
@@ -29,7 +29,7 @@ function ProfileHeader({ user }) {
         </div>
       </div>
 
-      <button type="button" className="profile-edit-btn">
+      <button type="button" className="profile-edit-btn" onClick={onEditAccount}>
         Edit Account
       </button>
     </section>

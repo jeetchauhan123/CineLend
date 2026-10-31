@@ -84,7 +84,11 @@ function Navbar({ darkMode, setDarkMode, onOpenPreferences }) {
       </ul>
 
       <div className="navbar-actions">
-        <button className="icon-btn" onClick={() => setDarkMode(!darkMode)}>
+        <button
+          className="icon-btn"
+          onClick={() => setDarkMode(!darkMode)}
+          aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"}
+        >
           {darkMode ? <Icon name="moon-icon" /> : <Icon name="sun-icon" />}
         </button>
 

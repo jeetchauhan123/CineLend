@@ -3,6 +3,7 @@ import { Autoplay, Pagination, Navigation, EffectFade } from "swiper/modules";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import Skeleton from "../Skeleton/Skeleton";
 
 import "swiper/css";
 import "swiper/css/pagination";
@@ -65,7 +66,11 @@ function HeroSlider() {
   }, [movies]);
 
   if (movies.length === 0) {
-    return null;
+    return (
+      <section className="hero-slider">
+        <Skeleton width="100%" height="100%" borderRadius="0" />
+      </section>
+    );
   }
 
   return (

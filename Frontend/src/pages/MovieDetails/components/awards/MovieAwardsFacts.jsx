@@ -77,7 +77,7 @@ const MovieAwardsFacts = ({ movie, loading }) => {
               <Skeleton width="55px" height="20px" />
             ) : releaseYear !== "N/A" ? (
               <Link
-                to={discoverLink("year", releaseYear)}
+                to={`/discover?yearFrom=${releaseYear}&yearTo=${releaseYear}`}
                 className="movie-discover-link"
               >
                 {releaseYear}

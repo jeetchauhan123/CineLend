@@ -1,4 +1,4 @@
-export const movies = [
+const movies = [
   {
     id: 1,
     title: "Stranger Things",
@@ -116,3 +116,5 @@ export const movies = [
     runtime: "60m",
   },
 ];
+
+module.exports = { movies };

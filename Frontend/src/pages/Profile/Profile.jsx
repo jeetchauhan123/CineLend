@@ -90,7 +90,10 @@ function Profile() {
 
       <section className="profile-hero-section">
         <div className="profile-hero-inner">
-          <ProfileHeader user={profileUser} />
+          <ProfileHeader
+            user={profileUser}
+            onEditAccount={() => setActiveSection("account")}
+          />
         </div>
       </section>
 

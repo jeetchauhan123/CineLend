@@ -54,7 +54,7 @@
   --panel-bg: rgba(255, 255, 255, 0.20);
 
   /* Login/register */
-  --authh-bg: rgba(255, 255, 255, 0.75);
+  --auth-bg: rgba(255, 255, 255, 0.75);
 }
 
 body.dark {
@@ -99,7 +99,7 @@ body.dark {
   --panel-bg: rgba(255, 255, 255, .04);
   
   /* Login/register */
-  --authf-bg: rgba(32, 24, 24, 0.85);
+  --auth-bg: rgba(32, 24, 24, 0.85);
 }
 
 

@@ -13,17 +13,15 @@ const About = () => {
           <h2>Project Overview</h2>
 
           <p>
-            CineLend is a React-based movie platform
-            focused on discovering movies through
-            immersive browsing experiences,
-            categorized collections, and intuitive
+            CineLend is a modern movie discovery and rental platform
+            focused on exploring films through immersive browsing experiences,
+            custom-curated collections, dynamic tiered pricing, and intuitive
             navigation.
           </p>
 
           <p>
-            The project is being developed as a
-            modern single-page application using
-            React and React Router.
+            The project is developed as a full-stack single-page application
+            using React 19, Vite, Express, and a dual-database MongoDB architecture.
           </p>
         </div>
 
@@ -31,12 +29,13 @@ const About = () => {
           <h2>Technology Stack</h2>
 
           <ul>
-            <li>React 19</li>
-            <li>React Router DOM</li>
-            <li>Vite</li>
-            <li>Vanilla CSS</li>
-            <li>Glassmorphism UI Design</li>
-            <li>ESLint</li>
+            <li>React 19 & Vite 8</li>
+            <li>React Router v7</li>
+            <li>Node.js & Express 5</li>
+            <li>Dual MongoDB (sampleDB + cineLendDB)</li>
+            <li>JWT Stateless Authentication</li>
+            <li>Vanilla CSS Glassmorphic Design</li>
+            <li>Swiper Carousel Integration</li>
           </ul>
         </div>
 
@@ -44,44 +43,49 @@ const About = () => {
           <h2>Implemented Features</h2>
 
           <ul>
-            <li>Dark / Light Theme</li>
-            <li>Hero Movie Slider</li>
-            <li>Glass Navigation Bar</li>
-            <li>Onboarding Modal</li>
-            <li>Genre Categorization</li>
-            <li>Movie Rows</li>
-            <li>Interactive Movie Cards</li>
-            <li>Client Side Routing</li>
-            <li>Footer Section</li>
+            <li>Dark / Light Theme Toggle</li>
+            <li>Hero Movie Slider & Curated Rows</li>
+            <li>Personalized Preference Onboarding</li>
+            <li>Faceted Movie Discovery & Filters</li>
+            <li>Movie Details, Cast & Tomato Ratings</li>
+            <li>Tiered Rental Pricing Engine</li>
+            <li>Shopping Cart & Demo Checkout</li>
+            <li>Active Rental Tracking & Early Returns</li>
+            <li>Custom Collections & Bookmarks</li>
+            <li>Community Comments & Upvotes</li>
+            <li>User Profile & Account Management</li>
           </ul>
         </div>
 
         <div className="about-card">
-          <h2>Current Routes</h2>
+          <h2>Platform Routes</h2>
 
           <ul>
-            <li>/</li>
-            <li>/about</li>
+            <li>/ (Home & Hero Slider)</li>
+            <li>/discover (Faceted Search & Filters)</li>
+            <li>/movie/:id (Movie Details & Pricing)</li>
+            <li>/cart (Cart & Duration Selection)</li>
+            <li>/checkout & /payment (Demo Checkout)</li>
+            <li>/profile (Library, Rentals & Settings)</li>
+            <li>/login & /register (Authentication)</li>
+            <li>/about (Platform Architecture)</li>
           </ul>
         </div>
 
         <div className="about-card">
-          <h2>Planned Features</h2>
+          <h2>Future Roadmap</h2>
 
           <ul>
-            <li>Movie Details Page</li>
-            <li>Search System</li>
-            <li>Discover Section</li>
-            <li>Wishlist</li>
-            <li>User Authentication</li>
-            <li>Rental Workflow</li>
-            <li>Advanced Filtering</li>
+            <li>Production Payment Gateway Integration</li>
+            <li>Video Streaming & Player Preview</li>
+            <li>Social Sharing & Follower Activity</li>
+            <li>Mobile Native App (React Native)</li>
           </ul>
         </div>
 
       </div>
     </section>
   );
-}
+};
 
-export default About
+export default About;

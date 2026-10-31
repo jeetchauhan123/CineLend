@@ -19,7 +19,7 @@ function Footer() {
       <div className="footer-content">
 
         <div className="footer-brand">
-          <img src="./Logo2_WB.PNG" alt="Logo CineLend" />
+          <img src="/Logo2_WB.PNG" alt="Logo CineLend" />
 
           <p>
             Discover, rent and enjoy great movies from every genre.

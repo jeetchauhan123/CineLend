@@ -1,4 +1,4 @@
-export const genres = [
+const genres = [
   "Action",
   "Adventure",
   "Animation",
@@ -25,3 +25,5 @@ export const genres = [
   "War",
   "Western",
 ];
+
+module.exports = { genres };

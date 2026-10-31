@@ -84,9 +84,9 @@ const calculateRentalPrice = (releaseYear, duration) => {
   if (!duration || duration.type === "custom") {
     const days = Number(duration?.days);
 
-    if (!Number.isInteger(days) || days <= 0) {
+    if (!Number.isInteger(days) || days <= 0 || days > 730) {
       throw new Error(
-        "Custom rental duration must be a positive number of days",
+        "Custom rental duration must be between 1 and 730 days",
       );
     }
 
