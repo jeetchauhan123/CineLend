@@ -98,7 +98,6 @@ const Payment = () => {
     <main className="payment-page">
       <div className="payment-container">
         <div className="payment-heading">
-          <span className="payment-eyebrow">CINELEND</span>
           <h1>Demo Payment</h1>
           <p>Complete your rental with our demo payment flow.</p>
         </div>

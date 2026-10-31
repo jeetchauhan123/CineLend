@@ -1,13 +1,16 @@
-.movie-card {
-  /* width: 210px; */
+.movie-card-link {
+  display: block;
   width: 240px;
-
+  flex: 0 0 240px;
   flex-shrink: 0;
+  text-decoration: none;
+}
 
+.movie-card {
+  width: 100%;
   display: inline-flex;
   flex-direction: column;
 }
-
 .poster-wrapper {
   position: relative;
 
@@ -113,4 +116,130 @@
 .movie-info h3,
 .movie-info p {
   cursor: pointer;
+}
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 900px) {
+  .poster-wrapper {
+    height: 270px;
+    border-radius: 16px;
+  }
+
+  .rating-badge {
+    top: 10px;
+    right: 10px;
+    padding: 5px 8px;
+    font-size: 0.75rem;
+  }
+
+  .movie-info {
+    margin-top: 0.5rem;
+    padding: 0 6px;
+    gap: 8px;
+  }
+
+  .movie-info h3 {
+    font-size: 1rem;
+  }
+
+  .movie-info p {
+    font-size: 0.82rem;
+  }
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 700px) {
+  .poster-wrapper {
+    height: 240px;
+    border-radius: 15px;
+  }
+
+  .rating-badge {
+    top: 9px;
+    right: 9px;
+    padding: 5px 8px;
+    font-size: 0.72rem;
+  }
+
+  .movie-info {
+    margin-top: 0.45rem;
+    padding: 0 5px;
+    gap: 6px;
+  }
+
+  .movie-info h3 {
+    font-size: 0.9rem;
+    line-height: 1.25;
+  }
+
+  .movie-info p {
+    font-size: 0.78rem;
+  }
+}
+
+
+/* =========================
+   SMALL MOBILE
+========================= */
+
+@media (max-width: 500px) {
+  .poster-wrapper {
+    height: 210px;
+    border-radius: 14px;
+  }
+
+  .rating-badge {
+    top: 8px;
+    right: 8px;
+    padding: 4px 7px;
+    font-size: 0.68rem;
+  }
+
+  .movie-info {
+    margin-top: 0.4rem;
+    padding: 0 4px;
+    gap: 5px;
+  }
+
+  .movie-info h3 {
+    font-size: 0.82rem;
+  }
+
+  .movie-info p {
+    font-size: 0.72rem;
+  }
+}
+
+
+/* =========================
+   VERY SMALL MOBILE
+========================= */
+
+@media (max-width: 380px) {
+  .poster-wrapper {
+    height: 190px;
+    border-radius: 13px;
+  }
+
+  .rating-badge {
+    top: 7px;
+    right: 7px;
+    padding: 4px 6px;
+    font-size: 0.64rem;
+  }
+
+  .movie-info h3 {
+    font-size: 0.78rem;
+  }
+
+  .movie-info p {
+    font-size: 0.68rem;
+  }
 }

@@ -112,16 +112,18 @@
 
 .discover-content {
   display: grid;
-
-  grid-template-columns: 330px minmax(0, 1fr);
-
+  grid-template-columns: minmax(280px, 330px) minmax(0, 1fr);
   align-items: start;
-
   gap: 35px;
-
   max-width: 1500px;
-
   margin: 0 auto;
+
+  min-width: 0;
+}
+
+.discover-results {
+  min-width: 0;
+  width: 100%;
 }
 
 /* =========================
@@ -400,13 +402,23 @@ MOVIE GRID SKELETON
 .discover-grid {
   display: grid;
 
-  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(
+      min(160px, calc((100% - 18px) / 2 - 1px)),
+      1fr
+    )
+  );
 
-  column-gap: 28px;
-
-  row-gap: 38px;
+  gap: 18px;
 
   align-items: start;
+}
+
+.discover-grid > .movie-card-link {
+  width: 100%;
+  min-width: 0;
+  flex: none;
 }
 
 /* =========================
@@ -578,14 +590,6 @@ MOVIE GRID SKELETON
 @media (max-width: 600px) {
   .discover-page {
     padding: 100px 16px 50px;
-  }
-
-  .discover-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-
-    column-gap: 14px;
-
-    row-gap: 28px;
   }
 
   .results-header {

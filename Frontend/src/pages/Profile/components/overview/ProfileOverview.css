@@ -7,7 +7,6 @@
   min-width: 0;
 }
 
-
 /* =========================================================
    INTRO
 ========================================================= */
@@ -49,7 +48,6 @@
   opacity: 0.55;
 }
 
-
 /* =========================================================
    SHARED CARD
 ========================================================= */
@@ -69,7 +67,6 @@
 
   font-family: inherit;
   text-align: left;
-
   text-decoration: none;
 
   box-sizing: border-box;
@@ -97,7 +94,6 @@
 .profile-overview-card:hover::before {
   opacity: 1;
 }
-
 
 /* =========================================================
    CARD HEADING
@@ -150,7 +146,6 @@
   line-height: 1.4;
 
   text-decoration: none;
-
   white-space: nowrap;
 
   opacity: 0.45;
@@ -164,7 +159,6 @@
 .profile-card-heading > a:hover {
   opacity: 1;
 }
-
 
 /* =========================================================
    MAIN GRID
@@ -181,7 +175,6 @@
 
   align-items: stretch;
 }
-
 
 /* =========================================================
    RENTED CARD
@@ -307,7 +300,6 @@
   opacity: 0.65;
 }
 
-
 /* =========================================================
    RENTAL DATA
 ========================================================= */
@@ -374,7 +366,6 @@
   opacity: 1;
 }
 
-
 /* =========================================================
    EMPTY RENTALS
 ========================================================= */
@@ -431,7 +422,6 @@
 .profile-rented-empty a:hover {
   opacity: 1;
 }
-
 
 /* =========================================================
    STAT CARDS
@@ -534,7 +524,6 @@
   opacity: 1;
 }
 
-
 /* =========================================================
    ACTIVITY LABEL
 ========================================================= */
@@ -543,7 +532,6 @@
   margin-top: 24px;
   margin-bottom: 11px;
 }
-
 
 /* =========================================================
    ACTIVITY GRID
@@ -558,7 +546,6 @@
   gap: 14px;
 }
 
-
 /* =========================================================
    ACTIVITY CARDS
 ========================================================= */
@@ -566,7 +553,6 @@
 .profile-overview-activity-grid .profile-stat-card {
   min-height: 220px;
 }
-
 
 /* =========================================================
    EXPLORE
@@ -660,7 +646,6 @@
   opacity: 1;
 }
 
-
 /* =========================================================
    RESPONSIVE
 ========================================================= */
@@ -685,75 +670,272 @@
   }
 }
 
-
-@media (max-width: 700px) {
+@media (max-width: 800px) {
   .profile-rented-layout {
-    grid-template-columns: 1fr;
+    grid-template-columns:
+      minmax(0, 1fr)
+      120px;
+
+    gap: 16px;
   }
 
   .profile-rented-data {
-    min-height: 110px;
-
-    padding: 18px 0 0;
-
-    border-top:
-      1px solid rgba(255, 255, 255, 0.07);
-
-    border-left: none;
+    padding-left: 15px;
   }
 
-  .profile-rented-data button {
-    margin-top: 14px;
-  }
-
-  .profile-overview-activity-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .profile-overview-activity-grid
-    .profile-stat-card:last-child {
-    grid-column: auto;
-  }
-
-  .profile-explore-content {
-    align-items: flex-start;
-
-    flex-wrap: wrap;
-  }
-
-  .profile-explore-button {
-    margin-left: 54px;
-  }
-}
-
-
-@media (max-width: 480px) {
-  .profile-rented-posters {
-    grid-template-columns: 1fr;
-  }
-
-  .profile-rented-poster {
-    height: 130px;
-  }
-
-  .profile-card-heading {
-    gap: 10px;
-  }
-
-  .profile-card-heading > button,
-  .profile-card-heading > a {
-    font-size: 9px;
+  .profile-rented-count {
+    font-size: 44px;
   }
 
   .profile-stat-body strong {
-    font-size: 50px;
+    font-size: 54px;
   }
+}
 
+@media (max-width: 700px) {
+  /* remove the tall min-heights */
+  .profile-rented-card,
+  .profile-stat-card,
+  .profile-overview-activity-grid .profile-stat-card,
+  .profile-explore-card {
+    min-height: 0;
+  }
+ 
+  .profile-overview-library-grid,
+  .profile-overview-activity-grid {
+    gap: 10px;
+  }
+ 
+  .profile-overview-section-label {
+    margin-top: 18px;
+    margin-bottom: 9px;
+  }
+ 
+  /* activity: 2 columns, last card fills the full row */
+  .profile-overview-activity-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+ 
+  .profile-overview-activity-grid .profile-stat-card:last-child {
+    grid-column: 1 / -1;
+  }
+ 
+  /* stat cards: tighter body */
+  .profile-stat-body {
+    padding-top: 14px;
+    padding-bottom: 12px;
+  }
+ 
+  .profile-stat-body strong {
+    font-size: 44px;
+  }
+ 
+  .profile-stat-body span {
+    margin-top: 8px;
+  }
+ 
+  /* rented card */
+  .profile-rented-layout {
+    min-height: 0;
+    margin-top: 16px;
+    gap: 14px;
+  }
+ 
+  .profile-rented-posters {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+ 
+  .profile-rented-poster {
+    height: auto;
+    aspect-ratio: 4 / 3;
+  }
+ 
+  .profile-rented-poster img {
+    position: absolute;
+    inset: 0;
+  }
+ 
+  /* odd poster out (1 or 3 rentals) fills the whole row */
+  .profile-rented-poster:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    aspect-ratio: 2 / 1;
+  }
+ 
+  .profile-rented-empty {
+    min-height: 150px;
+    padding: 16px;
+  }
+ 
+  /* rental data: count on the left, expiry + button on the right */
+  .profile-rented-data {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    column-gap: 18px;
+    row-gap: 2px;
+    align-items: center;
+ 
+    min-height: 0;
+    padding: 14px 0 0;
+  }
+ 
+  .profile-rented-data .profile-live-label {
+    grid-column: 1 / -1;
+    margin-bottom: 6px;
+  }
+ 
+  .profile-rented-count {
+    grid-column: 1;
+    grid-row: 2 / span 2;
+    align-self: center;
+    margin-top: 0;
+  }
+ 
+  .profile-expiry {
+    grid-column: 2;
+    grid-row: 2;
+    align-self: end;
+    margin-top: 0;
+  }
+ 
+  .profile-rented-data button {
+    grid-column: 2;
+    grid-row: 3;
+    align-self: start;
+    margin-top: 0;
+  }
+ 
+  /* explore card: compact, button becomes a full-width pill */
+  .profile-explore-card {
+    margin-top: 10px;
+    padding: 18px;
+  }
+ 
   .profile-explore-content {
-    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    margin-top: 14px;
+    padding: 14px;
   }
-
+ 
   .profile-explore-button {
+    flex: 1 1 100%;
     margin-left: 0;
+    padding: 10px 14px;
+ 
+    border-radius: 10px;
+    background: rgba(236, 38, 48, 0.1);
+ 
+    text-align: center;
+    opacity: 0.85;
+  }
+}
+ 
+/* ---------------------------------------------------------
+   ≤ 520px
+   - stat cards become compact horizontal rows:
+     title + action on the left, big number on the right
+--------------------------------------------------------- */
+@media (max-width: 520px) {
+  .profile-rented-card,
+  .profile-stat-card,
+  .profile-explore-card {
+    padding: 16px;
+  }
+ 
+  .profile-overview-activity-grid {
+    grid-template-columns: 1fr;
+  }
+ 
+  .profile-overview-activity-grid .profile-stat-card:last-child {
+    grid-column: auto;
+  }
+ 
+  .profile-stat-card {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "heading body"
+      "action  body";
+    align-items: center;
+    column-gap: 12px;
+    row-gap: 14px;
+  }
+ 
+  .profile-stat-card .profile-card-heading {
+    grid-area: heading;
+    align-self: start;
+  }
+ 
+  .profile-stat-card .profile-card-icon {
+    display: none;
+  }
+ 
+  .profile-stat-card .profile-stat-body {
+    grid-area: body;
+ 
+    margin: 0;
+    padding: 0;
+ 
+    align-items: flex-end;
+    text-align: right;
+  }
+ 
+  .profile-stat-card .profile-stat-body strong {
+    font-size: 38px;
+  }
+ 
+  .profile-stat-card .profile-card-action {
+    grid-area: action;
+    align-self: end;
+    margin-top: 0;
+  }
+ 
+  /* posters: keep 2-across instead of one tall column */
+  .profile-rented-posters {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+ 
+  .profile-rented-poster {
+    height: auto;
+  }
+ 
+  .profile-rented-count {
+    font-size: 40px;
+  }
+ 
+  /* explore: keep icon + copy side by side, button below */
+  .profile-explore-content {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+ 
+  .profile-explore-button {
+    flex: 1 1 100%;
+    margin-left: 0;
+  }
+}
+ 
+/* ---------------------------------------------------------
+   ≤ 380px
+--------------------------------------------------------- */
+@media (max-width: 380px) {
+  .profile-rented-card,
+  .profile-stat-card,
+  .profile-explore-card {
+    padding: 14px;
+  }
+ 
+  .profile-stat-card .profile-stat-body strong {
+    font-size: 34px;
+  }
+ 
+  .profile-rented-count {
+    font-size: 36px;
+  }
+ 
+  .profile-explore-content {
+    padding: 12px;
   }
 }

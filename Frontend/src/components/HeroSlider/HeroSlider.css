@@ -58,7 +58,7 @@
 
   left: 0;
   right: 0;
-  bottom: 0;
+  bottom: -1px;
 
   height: 180px;
 
@@ -267,4 +267,292 @@
   background: #e50914 !important;
 
   opacity: 1;
+}
+
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 1100px) {
+  .hero-slider {
+    height: 78vh;
+    min-height: 560px;
+  }
+
+  .slide-content {
+    padding: 0 70px;
+  }
+
+  .slider-movie-info {
+    max-width: 390px;
+  }
+
+  .slider-movie-info h1 {
+    font-size: 2.4rem;
+  }
+
+  .slider-movie-info p {
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  .slider-movie-poster img {
+    width: 240px;
+    height: 350px;
+  }
+
+  .custom-prev {
+    left: 18px;
+  }
+
+  .custom-next {
+    right: 18px;
+  }
+}
+
+
+/* =========================
+   SMALL TABLET
+========================= */
+
+@media (max-width: 900px) {
+  .hero-slider {
+    height: 72vh;
+    min-height: 520px;
+  }
+
+  .slide-content {
+    padding: 0 50px;
+  }
+
+  .slider-movie-info {
+    max-width: 340px;
+  }
+
+  .slider-movie-info h1 {
+    font-size: 2.1rem;
+  }
+
+  .slider-movie-info p {
+    font-size: 0.85rem;
+    line-height: 1.5;
+  }
+
+  .slider-movie-poster img {
+    width: 210px;
+    height: 310px;
+  }
+
+  .play-btn {
+    padding: 9px 18px;
+    font-size: 0.88rem;
+  }
+
+  .custom-prev,
+  .custom-next {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
+
+  .custom-prev {
+    left: 12px;
+  }
+
+  .custom-next {
+    right: 12px;
+  }
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 700px) {
+  .hero-slider {
+    height: auto;
+    min-height: 620px;
+    max-height: none;
+  }
+
+  .slide {
+    min-height: 620px;
+    align-items: center;
+  }
+
+  .slide-content {
+    min-height: 620px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 80px 40px 70px;
+    text-align: center;
+  }
+
+  /* Hide poster completely */
+  .slider-movie-poster {
+    display: none;
+  }
+
+  /* Text becomes the main focus */
+  .slider-movie-info {
+    width: 100%;
+    max-width: 450px;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .slider-movie-info h1 {
+    font-size: clamp(2.8rem, 9vw, 5rem);
+    font-weight: 800;
+    line-height: 1.05;
+    margin-bottom: 0.8rem;
+    color: red;
+    text-shadow: 0 0 12px rgba(255, 0, 0, 0.25);
+  }
+
+  .slider-movie-info p {
+    max-width: 600px;
+    font-size: 0.9rem;
+    line-height: 1.55;
+    margin-bottom: 1.3rem;
+
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+    overflow: hidden;
+  }
+
+  .button-group {
+    justify-content: center;
+  }
+
+  .play-btn {
+    padding: 10px 20px;
+    font-size: 0.85rem;
+  }
+
+  .custom-prev,
+  .custom-next {
+    width: 36px;
+    height: 36px;
+    font-size: 0.9rem;
+  }
+
+  .custom-prev {
+    left: 10px;
+  }
+
+  .custom-next {
+    right: 10px;
+  }
+
+  .custom-pagination {
+    bottom: 18px;
+  }
+}
+
+
+/* =========================
+   SMALL MOBILE
+========================= */
+
+@media (max-width: 500px) {
+  .hero-slider {
+    min-height: 560px;
+  }
+
+  .slide {
+    min-height: 560px;
+  }
+
+  .slide-content {
+    min-height: 560px;
+    padding: 75px 35px 60px;
+  }
+
+  .slider-movie-info {
+    width: 100%;
+    max-width: 280px;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .slider-movie-info h1 {
+    font-size: clamp(2.4rem, 11vw, 3.8rem);
+  }
+
+  .slider-movie-info p {
+    font-size: 0.8rem;
+    line-height: 1.5;
+    -webkit-line-clamp: 3;
+  }
+
+  .play-btn {
+    padding: 9px 18px;
+    font-size: 0.8rem;
+  }
+
+  .custom-prev,
+  .custom-next {
+    width: 32px;
+    height: 32px;
+    font-size: 0.8rem;
+  }
+
+  .custom-prev {
+    left: 8px;
+  }
+
+  .custom-next {
+    right: 8px;
+  }
+
+  .custom-pagination {
+    bottom: 14px;
+  }
+}
+
+
+/* =========================
+   VERY SMALL MOBILE
+========================= */
+
+@media (max-width: 380px) {
+  .hero-slider {
+    min-height: 520px;
+  }
+
+  .slide {
+    min-height: 520px;
+  }
+
+  .slide-content {
+    min-height: 520px;
+    padding: 70px 30px 55px;
+  }
+
+  .slider-movie-info {
+    width: 100%;
+    max-width: 220px;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .slider-movie-info h1 {
+    font-size: 2.2rem;
+  }
+
+  .slider-movie-info p {
+    font-size: 0.74rem;
+    line-height: 1.45;
+  }
+
+  .custom-prev,
+  .custom-next {
+    width: 30px;
+    height: 30px;
+  }
 }

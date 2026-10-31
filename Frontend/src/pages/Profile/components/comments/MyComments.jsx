@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { useAuth } from "../../../../context/AuthContext";
+
 import "./MyComments.css";
 
 function MyComments({ onBack }) {
@@ -14,11 +16,14 @@ function MyComments({ onBack }) {
       setLoading(true);
       setError("");
 
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/comments/mine`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/comments/mine`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         },
-      });
+      );
 
       if (!response.ok) {
         throw new Error("Failed to fetch comments");
@@ -29,7 +34,6 @@ function MyComments({ onBack }) {
       setComments(data.comments || []);
     } catch (error) {
       console.error("Error loading comments:", error);
-
       setError("Unable to load your comments.");
       setComments([]);
     } finally {
@@ -43,6 +47,7 @@ function MyComments({ onBack }) {
     fetchMyComments();
   }, [token]);
 
+  // OPEN THE SPECIFIC COMMENT ON THE MOVIE DETAILS PAGE
   const openComment = (movieId, commentId) => {
     window.location.href = `/movie/${movieId}?comment=${commentId}`;
   };
@@ -99,21 +104,49 @@ function MyComments({ onBack }) {
                 })
               : "";
 
+            const moviePath = movie?._id ? `/movie/${movie._id}` : null;
+
             return (
               <article className="my-comment-card" key={comment._id}>
                 <div className="my-comment-movie">
-                  <div className="my-comment-poster">
-                    {movie?.poster ? (
-                      <img src={movie.poster} alt={movie.title} />
-                    ) : (
-                      <div className="my-comment-no-poster">No Poster</div>
-                    )}
-                  </div>
+                  {moviePath ? (
+                    <Link
+                      to={moviePath}
+                      className="my-comment-poster"
+                      aria-label={`View ${movie?.title || "movie"}`}
+                    >
+                      {movie?.poster ? (
+                        <img
+                          src={movie.poster}
+                          alt={movie.title || "Movie poster"}
+                        />
+                      ) : (
+                        <div className="my-comment-no-poster">No Poster</div>
+                      )}
+                    </Link>
+                  ) : (
+                    <div className="my-comment-poster">
+                      {movie?.poster ? (
+                        <img
+                          src={movie.poster}
+                          alt={movie.title || "Movie poster"}
+                        />
+                      ) : (
+                        <div className="my-comment-no-poster">No Poster</div>
+                      )}
+                    </div>
+                  )}
 
                   <div className="my-comment-movie-info">
                     <span className="my-comment-label">COMMENTED ON</span>
 
-                    <h3>{movie?.title || "Unknown Movie"}</h3>
+                    {moviePath ? (
+                      <Link to={moviePath} className="my-comment-movie-title">
+                        {movie?.title || "Unknown Movie"}
+                      </Link>
+                    ) : (
+                      <h3>{movie?.title || "Unknown Movie"}</h3>
+                    )}
 
                     {year && <span className="my-comment-year">{year}</span>}
                   </div>

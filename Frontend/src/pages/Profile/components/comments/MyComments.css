@@ -1,5 +1,16 @@
 .my-comments {
   min-height: 420px;
+
+  /* Comment card colors */
+  --comment-card-bg: rgba(255, 255, 255, 0.24);
+  --comment-card-bg-hover: rgba(255, 255, 255, 0.29);
+  --comment-card-border: rgba(255, 255, 255, 0.12);
+}
+
+body.dark .my-comments {
+  --comment-card-bg: rgba(255, 255, 255, 0.055);
+  --comment-card-bg-hover: rgba(255, 255, 255, 0.075);
+  --comment-card-border: rgba(255, 255, 255, 0.09);
 }
 
 /* =========================================================
@@ -10,21 +21,15 @@
   display: inline-flex;
   align-items: center;
   gap: 7px;
-
   padding: 0;
-
   border: none;
   background: transparent;
-
   color: inherit;
   font-family: inherit;
   font-size: 11px;
   font-weight: 600;
-
   opacity: 0.48;
-
   cursor: pointer;
-
   transition: opacity 0.2s ease;
 }
 
@@ -59,7 +64,6 @@
 
 .comments-header h2 {
   margin: 7px 0 6px;
-
   font-size: 26px;
   letter-spacing: -0.03em;
 }
@@ -75,10 +79,8 @@
   margin-top: 2px;
 
   border-radius: 50%;
-
   background: rgba(236, 38, 48, 0.12);
   border: 1px solid rgba(236, 38, 48, 0.2);
-
   color: var(--red);
 
   font-size: 10px;
@@ -87,10 +89,8 @@
 
 .comments-header p {
   margin: 0;
-
   font-size: 13px;
   line-height: 1.6;
-
   opacity: 0.5;
 }
 
@@ -106,7 +106,6 @@
   border-radius: 9px;
 
   background: rgba(236, 38, 48, 0.06);
-
   color: var(--red);
 
   font-size: 11px;
@@ -125,13 +124,13 @@
 
   margin-top: 28px;
 
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--comment-card-border);
   border-radius: 18px;
 
-  background: rgba(255, 255, 255, 0.015);
+  background: var(--comment-card-bg);
+  box-shadow: var(--comment-card-shadow);
 
   font-size: 12px;
-
   opacity: 0.4;
 }
 
@@ -150,8 +149,10 @@
   margin-top: 28px;
   padding: 35px;
 
-  border: 1px dashed rgba(255, 255, 255, 0.1);
+  border: 1px dashed var(--comment-card-border);
   border-radius: 18px;
+
+  background: var(--comment-card-bg);
 
   text-align: center;
 }
@@ -166,30 +167,26 @@
 
   margin-bottom: 12px;
 
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--comment-card-border);
   border-radius: 12px;
 
-  background: rgba(255, 255, 255, 0.03);
+  background: var(--comment-card-bg-hover);
 
   font-size: 18px;
-
   opacity: 0.5;
 }
 
 .comments-empty-state h3 {
   margin: 0;
-
   font-size: 15px;
 }
 
 .comments-empty-state p {
   max-width: 390px;
-
   margin: 7px 0 0;
 
   font-size: 12px;
   line-height: 1.6;
-
   opacity: 0.45;
 }
 
@@ -198,10 +195,13 @@
 ========================================================= */
 
 .comments-list {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+  container-type: inline-size;
+  container-name: comments-list;
 
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 14px;
   margin-top: 28px;
 }
 
@@ -210,30 +210,33 @@
 ========================================================= */
 
 .my-comment-card {
+  container-type: inline-size;
+
   display: grid;
-  grid-template-columns: minmax(220px, 0.7fr) minmax(0, 1.3fr);
+  grid-template-columns: minmax(150px, 0.7fr) minmax(0, 1.3fr);
 
-  gap: 24px;
+  gap: clamp(16px, 2.5cqi, 24px);
+  min-width: 0;
 
-  padding: 17px;
+  padding: clamp(15px, 2.5cqi, 19px);
 
-  border: 1px solid rgba(255, 255, 255, 0.07);
+  border: 1px solid var(--comment-card-border);
   border-radius: 16px;
 
-  background: rgba(255, 255, 255, 0.025);
+  background: var(--comment-card-bg);
+  box-shadow: var(--comment-card-shadow);
 
   transition:
+    transform 0.2s ease,
     border-color 0.2s ease,
-    background 0.2s ease,
-    transform 0.2s ease;
+    background 0.2s ease;
 }
 
 .my-comment-card:hover {
-  transform: translateY(-1px);
+  transform: translateY(-2px);
 
-  border-color: rgba(236, 38, 48, 0.18);
-
-  background: rgba(255, 255, 255, 0.035);
+  border-color: rgba(236, 38, 48, 0.2);
+  background: var(--comment-card-bg-hover);
 }
 
 /* =========================================================
@@ -241,23 +244,31 @@
 ========================================================= */
 
 .my-comment-movie {
+  min-width: 0;
+
   display: flex;
   align-items: center;
-  gap: 14px;
 
-  min-width: 0;
+  gap: clamp(11px, 2.2cqi, 14px);
 }
 
 .my-comment-poster {
-  width: 66px;
-  height: 92px;
+  width: clamp(58px, 10cqi, 70px);
+  height: clamp(82px, 14cqi, 98px);
 
+  display: block;
   flex-shrink: 0;
 
   overflow: hidden;
 
   border-radius: 9px;
 
+  background: rgba(0, 0, 0, 0.06);
+
+  text-decoration: none;
+}
+
+body.dark .my-comment-poster {
   background: rgba(255, 255, 255, 0.04);
 }
 
@@ -268,6 +279,17 @@
   display: block;
 
   object-fit: cover;
+
+  transition: transform 0.3s ease;
+}
+
+.my-comment-poster:hover img {
+  transform: scale(1.035);
+}
+
+.my-comment-poster:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 3px;
 }
 
 .my-comment-no-poster {
@@ -283,7 +305,6 @@
   text-align: center;
 
   font-size: 9px;
-
   opacity: 0.35;
 }
 
@@ -299,20 +320,36 @@
   font-size: 9px;
   font-weight: 700;
   letter-spacing: 0.12em;
-
   opacity: 0.4;
 }
 
-.my-comment-movie-info h3 {
+.my-comment-movie-info h3,
+.my-comment-movie-title {
+  display: block;
+
   overflow: hidden;
 
   margin: 0;
 
+  color: var(--text-primary);
   font-size: 15px;
   font-weight: 700;
   line-height: 1.35;
 
+  text-decoration: none;
   text-overflow: ellipsis;
+}
+
+.my-comment-movie-title:hover {
+  color: var(--red);
+}
+
+.my-comment-movie-title:visited {
+  color: var(--text-primary);
+}
+
+.my-comment-movie-title:focus {
+  color: var(--text-primary);
 }
 
 .my-comment-year {
@@ -321,7 +358,6 @@
   margin-top: 5px;
 
   font-size: 11px;
-
   opacity: 0.45;
 }
 
@@ -341,18 +377,17 @@
 .my-comment-meta {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
+
   gap: 12px;
 
   font-size: 10px;
-
   opacity: 0.45;
 }
 
 .my-comment-rating {
   color: var(--red);
-
   font-weight: 700;
-
   opacity: 1;
 }
 
@@ -361,8 +396,9 @@
 
   font-size: 13px;
   line-height: 1.65;
-
   opacity: 0.72;
+
+  overflow-wrap: anywhere;
 }
 
 .my-comment-link {
@@ -400,14 +436,78 @@
 }
 
 /* =========================================================
-   RESPONSIVE
+   SINGLE-COLUMN COMMENT CARDS
+   Similar responsive behavior to Collections
+========================================================= */
+
+/* When the comments list becomes one column but still has
+   enough width, turn each card into a horizontal layout. */
+
+@container comments-list (min-width: 520px) and (max-width: 733.98px) {
+  .my-comment-card {
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: clamp(18px, 3cqi, 28px);
+
+    padding: clamp(18px, 4cqi, 26px);
+  }
+
+  .my-comment-movie {
+    align-self: center;
+  }
+
+  .my-comment-poster {
+    width: clamp(64px, 11cqi, 78px);
+    height: clamp(90px, 15.5cqi, 108px);
+  }
+
+  .my-comment-content {
+    align-self: stretch;
+    padding: 2px 0;
+  }
+}
+
+/* Wide single-column state */
+
+@container comments-list (min-width: 734px) {
+  .my-comment-card {
+    grid-template-columns: minmax(190px, 0.7fr) minmax(0, 1.3fr);
+
+    gap: 22px;
+    padding: 17px;
+  }
+
+  .my-comment-poster {
+    width: 66px;
+    height: 92px;
+  }
+
+  .my-comment-movie-info h3,
+  .my-comment-movie-title {
+    font-size: 15px;
+  }
+
+  .my-comment-text {
+    font-size: 13px;
+  }
+}
+
+/* =========================================================
+   NARROW SCREENS
 ========================================================= */
 
 @media (max-width: 800px) {
+  .comments-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 519px) {
   .my-comment-card {
     grid-template-columns: 1fr;
 
     gap: 17px;
+
+    padding: 15px;
   }
 
   .my-comment-content {
@@ -420,20 +520,46 @@
 }
 
 @media (max-width: 500px) {
-  .my-comment-card {
-    padding: 14px;
-  }
-
   .my-comment-poster {
     width: 58px;
     height: 82px;
   }
 
-  .my-comment-movie-info h3 {
+  .my-comment-movie-info h3,
+  .my-comment-movie-title {
     font-size: 14px;
   }
 
   .my-comment-text {
     font-size: 12px;
+  }
+}
+
+@media (max-width: 380px) {
+  .my-comment-card {
+    padding: 13px;
+    border-radius: 14px;
+  }
+
+  .my-comment-movie {
+    gap: 10px;
+  }
+
+  .my-comment-poster {
+    width: 54px;
+    height: 76px;
+  }
+
+  .my-comment-label {
+    font-size: 8px;
+  }
+
+  .my-comment-movie-info h3,
+  .my-comment-movie-title {
+    font-size: 13px;
+  }
+
+  .my-comment-text {
+    font-size: 11.5px;
   }
 }

@@ -12,7 +12,7 @@
   z-index: 0;
   width: 650px;
   height: auto;
-  right: -245px;
+  right: -215px;
   top: 20px;
   opacity: 0.1;
   pointer-events: none;
@@ -80,4 +80,64 @@
   color: var(--red);
   font-size: 0.7rem;
   pointer-events: none;
+}
+
+@media (max-width: 760px) {
+  .movie-cast-crew__decoration {
+    width: 460px;
+    right: -130px;
+    top: 35px;
+  }
+
+  .movie-cast-crew__list {
+    gap: 10px 20px;
+  }
+
+  .movie-person-wrapper {
+    gap: 20px;
+  }
+}
+
+@media (max-width: 520px) {
+  .movie-cast-crew__decoration {
+    width: 400px;
+    right: -135px;
+    top: 45px;
+  }
+
+  .movie-cast-crew__list {
+    gap: 9px 16px;
+  }
+
+  .movie-person-wrapper {
+    gap: 16px;
+  }
+
+  .movie-person {
+    font-size: 0.82rem;
+  }
+
+  .movie-person-separator {
+    font-size: 0.78rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .movie-cast-crew__decoration {
+    width: 340px;
+    right: -145px;
+    top: 55px;
+  }
+
+  .movie-cast-crew__list {
+    gap: 9px 13px;
+  }
+
+  .movie-person-wrapper {
+    gap: 13px;
+  }
+
+  .movie-person {
+    font-size: 0.78rem;
+  }
 }

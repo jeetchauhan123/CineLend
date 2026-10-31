@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
+
 import { useAuth } from "../../../../context/AuthContext";
+
 import "./RentedMovies.css";
 
 const RentedMovies = () => {
@@ -23,16 +26,19 @@ const RentedMovies = () => {
       setLoading(true);
       setError("");
 
-      const response = await axios.get(`${import.meta.env.VITE_API_URL}/rentals`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}/rentals`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         },
-      });
+      );
 
       const rentalDocuments = response.data || [];
 
       const flattenedRentals = rentalDocuments.flatMap((rental) =>
-        rental.items.map((item) => ({
+        (rental.items || []).map((item) => ({
           ...item,
           rentalId: rental._id,
         })),
@@ -134,19 +140,27 @@ const RentedMovies = () => {
   const RentalCard = ({ item }) => {
     const movie = getMovie(item.movieId);
 
+    const moviePath = `/movie/${item.movieId}`;
+
     return (
       <article className="rented-movie-card">
-        <div className="rented-movie-poster">
+        <Link
+          to={moviePath}
+          className="rented-movie-poster"
+          aria-label={`View ${movie?.title || item.title}`}
+        >
           {movie?.poster ? (
             <img src={movie.poster} alt={movie.title || item.title} />
           ) : (
             <div className="rented-movie-poster-placeholder">No Poster</div>
           )}
-        </div>
+        </Link>
 
         <div className="rented-movie-content">
           <div className="rented-movie-main">
-            <h3>{movie?.title || item.title}</h3>
+            <Link to={moviePath} className="rented-movie-title">
+              {movie?.title || item.title}
+            </Link>
 
             <span
               className={`rented-movie-status rented-movie-status--${item.status}`}

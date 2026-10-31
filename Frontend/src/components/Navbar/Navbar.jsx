@@ -45,7 +45,18 @@ function Navbar({ darkMode, setDarkMode, onOpenPreferences }) {
       }`}
     >
       <div className="navbar-logo">
-        <img src="/Logo2_WB.PNG" alt="CineLend Logo" />
+        <Link to="/">
+          <img
+            className="navbar-logo-full"
+            src="/Logo2_WB.PNG"
+            alt="CineLend"
+          />
+          <img
+            className="navbar-logo-symbol"
+            src="/Logo3_WB.png"
+            alt="CineLend"
+          />
+        </Link>
       </div>
 
       <ul className="navbar-links">
@@ -73,10 +84,6 @@ function Navbar({ darkMode, setDarkMode, onOpenPreferences }) {
       </ul>
 
       <div className="navbar-actions">
-        <button className="icon-btn">
-          <Icon name="search-icon" />
-        </button>
-
         <button className="icon-btn" onClick={() => setDarkMode(!darkMode)}>
           {darkMode ? <Icon name="moon-icon" /> : <Icon name="sun-icon" />}
         </button>

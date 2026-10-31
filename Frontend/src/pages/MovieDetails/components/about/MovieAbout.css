@@ -178,3 +178,50 @@
   color: var(--text-primary);
   font-size: 0.95rem;
 }
+
+@media (max-width: 1000px) {
+  .movie-about__layout {
+    gap: 40px;
+  }
+
+  .movie-about__details {
+    column-gap: 25px;
+  }
+}
+
+@media (max-width: 760px) {
+  .movie-about__decoration {
+    width: 300px;
+    left: -70px;
+    top: -80px;
+  }
+}
+
+@media (max-width: 520px) {
+  .movie-about__decoration {
+    width: 250px;
+    left: -60px;
+    top: -55px;
+  }
+
+  .movie-rating-main strong {
+    font-size: 3rem;
+  }
+
+  .movie-rating-bar,
+  .movie-rating-scale {
+    max-width: 190px;
+  }
+}
+
+@media (max-width: 360px) {
+  .movie-about__decoration {
+    width: 200px;
+    left: -50px;
+    top: -40px;
+  }
+
+  .movie-rating-main strong {
+    font-size: 2.8rem;
+  }
+}

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { useAuth } from "../../../../context/AuthContext";
 import "./Collections.css";
 
@@ -19,11 +20,14 @@ function Collections({ onBack }) {
       setLoading(true);
       setError("");
 
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/collections`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/collections`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         },
-      });
+      );
 
       if (!response.ok) {
         throw new Error("Failed to fetch collections");
@@ -131,23 +135,31 @@ function Collections({ onBack }) {
         ) : (
           <div className="collection-movies-grid">
             {movies.map((movie) => (
-              <article className="collection-movie-card" key={movie._id}>
-                <div className="collection-movie-poster">
-                  {movie.poster ? (
-                    <img src={movie.poster} alt={movie.title} />
-                  ) : (
-                    <div className="collection-movie-no-poster">No Poster</div>
-                  )}
-                </div>
+              <Link
+                to={`/movie/${movie._id}`}
+                className="collection-movie-link"
+                key={movie._id}
+              >
+                <article className="collection-movie-card">
+                  <div className="collection-movie-poster">
+                    {movie.poster ? (
+                      <img src={movie.poster} alt={movie.title} />
+                    ) : (
+                      <div className="collection-movie-no-poster">
+                        No Poster
+                      </div>
+                    )}
+                  </div>
 
-                <div className="collection-movie-info">
-                  <h3>{movie.title}</h3>
+                  <div className="collection-movie-info">
+                    <h3>{movie.title}</h3>
 
-                  {movie.released && (
-                    <span>{new Date(movie.released).getFullYear()}</span>
-                  )}
-                </div>
-              </article>
+                    {movie.released && (
+                      <span>{new Date(movie.released).getFullYear()}</span>
+                    )}
+                  </div>
+                </article>
+              </Link>
             ))}
           </div>
         )}

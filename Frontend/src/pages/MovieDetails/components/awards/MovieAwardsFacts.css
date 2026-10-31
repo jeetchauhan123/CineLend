@@ -213,8 +213,119 @@
   background: var(--red);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1000px) {
+  .movie-awards__stats {
+    min-width: 220px;
+  }
+}
+
+@media (max-width: 760px) {
+  .movie-awards {
+    flex-direction: column;
+  }
+
+  .movie-awards__main {
+    padding: 26px 24px;
+  }
+
+  .movie-awards__stats {
+    min-width: 100%;
+    border-top: 1px solid var(--glass-border);
+    border-left: 0;
+  }
+
+  .movie-awards__stats > div {
+    padding: 20px 16px;
+  }
+
   .movie-facts {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .movie-fact + .movie-fact {
+    border-left: 0;
+  }
+
+  .movie-fact:nth-child(2),
+  .movie-fact:nth-child(4) {
+    border-left: 1px solid var(--glass-border);
+  }
+
+  .movie-fact:nth-child(n + 3) {
+    border-top: 1px solid var(--glass-border);
+  }
+}
+
+@media (max-width: 520px) {
+  .movie-awards__main {
+    gap: 15px;
+    padding: 24px 20px;
+  }
+
+  .movie-awards__icon {
+    flex-basis: 42px;
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    font-size: 1.15rem;
+  }
+
+  .movie-awards__main strong {
+    font-size: 0.82rem;
+  }
+
+  .movie-awards__stats > div {
+    padding: 15px 16px;
+  }
+
+  .movie-awards__stats strong {
+    font-size: 1.5rem;
+  }
+
+  .movie-facts {
+    grid-template-columns: 1fr;
+    gap: 0;
+    padding: 22px 16px;
+  }
+
+  .movie-fact {
+    min-height: 90px;
+    padding: 14px 15px;
+  }
+
+  .movie-fact:nth-child(2),
+  .movie-fact:nth-child(4) {
+    border-left: 0;
+  }
+
+  .movie-fact:nth-child(n + 2) {
+    border-top: 1px solid var(--glass-border);
+  }
+}
+
+@media (max-width: 360px) {
+  .movie-awards__main {
+    gap: 12px;
+    padding: 22px 17px;
+  }
+
+  .movie-awards__icon {
+    flex-basis: 38px;
+    width: 38px;
+    height: 38px;
+    font-size: 1rem;
+  }
+
+  .movie-awards__main strong {
+    font-size: 0.78rem;
+  }
+
+  .movie-awards__stats > div {
+    padding: 15px 12px;
+  }
+
+  .movie-fact {
+    min-height: 84px;
+    padding: 13px 14px;
   }
 }

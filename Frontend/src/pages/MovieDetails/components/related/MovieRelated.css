@@ -29,6 +29,36 @@
   background: var(--glass-border);
 }
 
-.movie-related__slider > * {
+.movie-related__slider > .movie-card-link {
   flex: 0 0 240px;
+  width: 240px;
+}
+
+@media (max-width: 760px) {
+  .movie-related__slider {
+    gap: 18px;
+  }
+
+  .movie-related__slider > .movie-card-link {
+    flex-basis: 180px;
+    width: 180px;
+  }
+}
+
+@media (max-width: 520px) {
+  .movie-related__slider {
+    gap: 15px;
+  }
+
+  .movie-related__slider > .movie-card-link {
+    flex-basis: 155px;
+    width: 155px;
+  }
+}
+
+@media (max-width: 380px) {
+  .movie-related__slider > .movie-card-link {
+    flex-basis: 140px;
+    width: 140px;
+  }
 }

@@ -1,7 +1,26 @@
+/* =========================================================
+   COLLECTIONS
+   Card colours live in these variables, so the light-mode
+   card background is tuned in ONE place.
+========================================================= */
+
 .collections {
   min-height: 420px;
+
+  /* Light mode */
+  --c-card-bg: rgba(255, 255, 255, 0.24);
+  --c-card-bg-hover: rgba(255, 255, 255, 0.29);
+  --c-card-border: rgba(255, 255, 255, 0.12);
+  --c-card-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
 }
 
+/* Dark mode */
+body.dark .collections {
+  --c-card-bg: rgba(255, 255, 255, 0.055);
+  --c-card-bg-hover: rgba(255, 255, 255, 0.075);
+  --c-card-border: rgba(255, 255, 255, 0.09);
+  --c-card-shadow: none;
+}
 /* =========================================================
    BACK BUTTON
 ========================================================= */
@@ -10,21 +29,15 @@
   display: inline-flex;
   align-items: center;
   gap: 7px;
-
   padding: 0;
-
   border: none;
   background: transparent;
-
   color: inherit;
   font-family: inherit;
   font-size: 11px;
   font-weight: 600;
-
   opacity: 0.48;
-
   cursor: pointer;
-
   transition: opacity 0.2s ease;
 }
 
@@ -44,7 +57,6 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-
   gap: 25px;
   margin-top: 23px;
 }
@@ -65,7 +77,6 @@
 
 .collections-header h2 {
   margin: 7px 0 6px;
-
   font-size: 26px;
   letter-spacing: -0.03em;
 }
@@ -73,32 +84,23 @@
 .collections-count {
   min-width: 23px;
   height: 23px;
-
   display: inline-flex;
   align-items: center;
   justify-content: center;
-
   margin-top: 2px;
-
   border-radius: 50%;
-
   background: rgba(236, 38, 48, 0.12);
   border: 1px solid rgba(236, 38, 48, 0.2);
-
   color: var(--red);
-
   font-size: 10px;
   font-weight: 700;
 }
 
 .collections-header p {
   max-width: 560px;
-
   margin: 0;
-
   font-size: 13px;
   line-height: 1.6;
-
   opacity: 0.5;
 }
 
@@ -110,23 +112,16 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-
   flex-shrink: 0;
-
   padding: 10px 15px;
-
   border: none;
   border-radius: 10px;
-
   background: var(--red);
   color: #fff;
-
   font-family: inherit;
   font-size: 12px;
   font-weight: 700;
-
   cursor: pointer;
-
   transition:
     transform 0.2s ease,
     opacity 0.2s ease;
@@ -149,14 +144,10 @@
 .collections-error {
   margin-top: 18px;
   padding: 10px 13px;
-
   border: 1px solid rgba(236, 38, 48, 0.18);
   border-radius: 9px;
-
   background: rgba(236, 38, 48, 0.06);
-
   color: var(--red);
-
   font-size: 11px;
 }
 
@@ -166,18 +157,13 @@
 
 .collections-loading {
   min-height: 260px;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   margin-top: 28px;
-
   border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 18px;
-
   background: rgba(255, 255, 255, 0.015);
-
   font-size: 12px;
   opacity: 0.4;
 }
@@ -189,36 +175,27 @@
 .collections-empty-state,
 .collection-detail-empty {
   min-height: 260px;
-
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
   margin-top: 28px;
   padding: 35px;
-
   border: 1px dashed rgba(255, 255, 255, 0.1);
   border-radius: 18px;
-
   text-align: center;
 }
 
 .collections-empty-icon {
   width: 42px;
   height: 42px;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   margin-bottom: 12px;
-
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 12px;
-
   background: rgba(255, 255, 255, 0.03);
-
   font-size: 18px;
   opacity: 0.5;
 }
@@ -226,39 +203,29 @@
 .collections-empty-state h3,
 .collection-detail-empty h3 {
   margin: 0;
-
   font-size: 15px;
 }
 
 .collections-empty-state p,
 .collection-detail-empty p {
   max-width: 390px;
-
   margin: 7px 0 0;
-
   font-size: 12px;
   line-height: 1.6;
-
   opacity: 0.45;
 }
 
 .collections-empty-btn {
   margin-top: 17px;
-
   padding: 9px 13px;
-
   border: 1px solid rgba(236, 38, 48, 0.25);
   border-radius: 9px;
-
   background: rgba(236, 38, 48, 0.08);
   color: var(--red);
-
   font-family: inherit;
   font-size: 11px;
   font-weight: 700;
-
   cursor: pointer;
-
   transition:
     background 0.2s ease,
     border-color 0.2s ease;
@@ -271,12 +238,27 @@
 
 /* =========================================================
    COLLECTION GRID
+
+   2 cards per row while each card can be at least 360px
+   wide, otherwise 1 per row. This follows the real width of
+   the content area (not the screen), so it stays correct
+   with a sidebar.
+
+   The grid is also a "container" so cards can restyle
+   themselves depending on its width (see the horizontal
+   card layout further down).
 ========================================================= */
 
 .collections-grid {
+  container-type: inline-size;
+  container-name: collections-grid;
+
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(min(100%, max(360px, calc((100% - 14px) / 2 - 1px))), 1fr)
+  );
   gap: 14px;
 
   margin-top: 28px;
@@ -284,20 +266,25 @@
 
 /* =========================================================
    COLLECTION CARD
+
+   Every card is its own container. All sizes inside use
+   `cqi` (1% of the CARD's width), so:
+   - 2 per row: elements shrink as the cards get narrower
+   - the moment cards go 1 per row they are wide again, so
+     everything grows back and fills the card
+   - then they shrink gradually again as the width drops
 ========================================================= */
 
 .collection-card {
-  min-height: 190px;
+  container-type: inline-size;
 
   display: flex;
   flex-direction: column;
 
-  padding: 18px;
-
-  border: 1px solid rgba(255, 255, 255, 0.07);
+  border: 1px solid var(--c-card-border);
   border-radius: 16px;
-
-  background: rgba(255, 255, 255, 0.025);
+  background: var(--c-card-bg);
+  box-shadow: var(--c-card-shadow);
 
   cursor: pointer;
 
@@ -309,131 +296,246 @@
 
 .collection-card:hover {
   transform: translateY(-2px);
-
-  border-color: rgba(236, 38, 48, 0.22);
-
-  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(236, 38, 48, 0.28);
+  background: var(--c-card-bg-hover);
 }
 
-/* =========================================================
-   CARD TOP
-========================================================= */
+/* ---------------------------------------------------------
+   CARD TOP  (icon + menu)
+--------------------------------------------------------- */
 
 .collection-card-top {
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  padding: 20px 20px 0;
+  padding: clamp(15px, 4.5cqi, 24px)
+           clamp(16px, 4.5cqi, 24px) 0;
 }
 
 .collection-icon {
-  width: 36px;
-  height: 36px;
+  flex-shrink: 0;
+
+  width: 44px;
+  height: 44px;
+  width: clamp(40px, 9cqi, 50px);
+  height: clamp(40px, 9cqi, 50px);
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  border-radius: 10px;
-
+  border-radius: 12px;
+  border-radius: clamp(10px, 2.5cqi, 13px);
   background: rgba(236, 38, 48, 0.09);
   border: 1px solid rgba(236, 38, 48, 0.14);
-
   color: var(--red);
 
-  font-size: 17px;
+  font-size: 20px;
+  font-size: clamp(17px, 4cqi, 22px);
 }
 
 .collection-menu-btn {
-  padding: 3px 5px;
-
+  padding: 6px 8px;
   border: none;
   background: transparent;
-
   color: inherit;
 
-  font-size: 11px;
+  font-size: 14px;
+  font-size: clamp(13px, 3.8cqi, 18px);
   letter-spacing: 2px;
 
-  opacity: 0.3;
-
+  opacity: 0.4;
   cursor: pointer;
-
   transition: opacity 0.2s ease;
 }
 
 .collection-menu-btn:hover {
-  opacity: 0.8;
+  opacity: 0.85;
 }
 
-/* =========================================================
+/* ---------------------------------------------------------
    CARD CONTENT
-========================================================= */
+--------------------------------------------------------- */
 
 .collection-card-content {
-  margin-top: 18px;
+  padding: 18px 20px 0;
+  padding: clamp(13px, 3.5cqi, 20px)
+           clamp(16px, 4.5cqi, 24px) 0;
 }
 
 .collection-card-content h3 {
   margin: 0;
 
-  font-size: 15px;
-  font-weight: 700;
+  font-size: 20px;
+  font-size: clamp(17px, 4.5cqi, 26px);
+  font-weight: 750;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
 
-  letter-spacing: -0.01em;
+  overflow-wrap: anywhere;
 }
 
 .collection-card-content p {
-  max-width: 320px;
+  margin: 8px 0 0;
+  margin: clamp(6px, 1.5cqi, 9px) 0 0;
 
-  margin: 6px 0 0;
+  font-size: 13px;
+  font-size: clamp(11px, 2.8cqi, 14px);
+  line-height: 1.6;
 
-  font-size: 11px;
-  line-height: 1.55;
+  opacity: 0.58;
 
-  opacity: 0.42;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  overflow: hidden;
 }
 
-/* =========================================================
+/* ---------------------------------------------------------
    CARD FOOTER
-========================================================= */
+--------------------------------------------------------- */
 
 .collection-card-footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 12px;
 
   margin-top: auto;
-  padding-top: 17px;
+
+  padding: 18px 20px 20px;
+  padding: clamp(12px, 3.5cqi, 18px)
+           clamp(16px, 4.5cqi, 24px)
+           clamp(14px, 4cqi, 20px);
 }
 
 .collection-card-footer > span:first-child {
   display: inline-flex;
   align-items: center;
 
-  min-height: 27px;
-
-  padding: 4px 9px;
-
-  border-radius: 7px;
-
+  padding: 6px 11px;
+  border-radius: 8px;
   background: rgba(236, 38, 48, 0.09);
   border: 1px solid rgba(236, 38, 48, 0.16);
-
   color: var(--red);
 
-  font-size: 11px;
+  font-size: 12px;
+  font-size: clamp(10px, 2.5cqi, 12px);
   font-weight: 700;
-
-  opacity: 1;
+  line-height: 1.2;
 }
 
 .collection-open {
   color: var(--red);
 
-  font-size: 11px;
+  font-size: 13px;
+  font-size: clamp(11px, 2.7cqi, 13px);
   font-weight: 700;
-
   opacity: 0.9;
+}
+
+/* ---------------------------------------------------------
+   HORIZONTAL CARD
+   Only when the cards are 1 per row AND wide (grid width
+   520px to 733px). Icon | title + description | menu + count.
+   Below 520px they go back to the stacked layout above.
+
+   NOTE: 733px = 2 x 360px (card minimum) + 14px gap - 1.
+   If you change the 360px minimum in .collections-grid,
+   change this number too.
+--------------------------------------------------------- */
+
+@container collections-grid (min-width: 520px) and (max-width: 733.98px) {
+  .collection-card {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-rows: auto 1fr;
+    align-items: center;
+    column-gap: 22px;
+    column-gap: clamp(16px, 3cqi, 24px);
+
+    padding: clamp(20px, 4.5cqi, 32px);
+  }
+
+  .collection-card-top {
+    display: contents;
+  }
+
+  .collection-icon {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+
+    width: clamp(48px, 7.5cqi, 60px);
+    height: clamp(48px, 7.5cqi, 60px);
+  }
+
+  .collection-card-content {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    padding: 0;
+  }
+
+  .collection-menu-btn {
+    grid-column: 3;
+    grid-row: 1;
+    justify-self: end;
+    align-self: start;
+  }
+
+  .collection-card-footer {
+    grid-column: 3;
+    grid-row: 2;
+    align-self: end;
+
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+
+    margin-top: 0;
+    padding: 0;
+  }
+}
+
+@container collections-grid (min-width: 734px) {
+  .collection-card-top {
+    padding: 18px 20px 0;
+  }
+
+  .collection-icon {
+    width: 44px;
+    height: 44px;
+
+    border-radius: 11px;
+
+    font-size: 19px;
+  }
+
+  .collection-card-content {
+    padding: 16px 20px 0;
+  }
+
+  .collection-card-content h3 {
+    font-size: 19px;
+  }
+
+  .collection-card-content p {
+    font-size: 12px;
+  }
+
+  .collection-card-footer {
+    padding: 15px 20px 18px;
+  }
+
+  .collection-card-footer > span:first-child {
+    font-size: 11px;
+  }
+
+  .collection-open {
+    font-size: 12px;
+  }
 }
 
 /* =========================================================
@@ -444,30 +546,27 @@
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
-
   gap: 25px;
-
   margin-top: 23px;
   padding-bottom: 20px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
 
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+body.dark .collection-detail-header {
+  border-bottom-color: rgba(255, 255, 255, 0.06);
 }
 
 .collection-detail-header h2 {
   margin: 7px 0 6px;
-
   font-size: 26px;
   letter-spacing: -0.03em;
 }
 
 .collection-detail-header p {
   max-width: 560px;
-
   margin: 0;
-
   font-size: 13px;
   line-height: 1.6;
-
   opacity: 0.5;
 }
 
@@ -479,21 +578,16 @@
   display: flex;
   align-items: baseline;
   gap: 7px;
-
   flex-shrink: 0;
-
   padding: 10px 14px;
-
   border: 1px solid rgba(236, 38, 48, 0.18);
   border-radius: 10px;
-
   background: rgba(236, 38, 48, 0.07);
 }
 
 .collection-detail-count strong {
   color: var(--red);
-
-  font-size: 21px;
+  font-size: 23px;
   font-weight: 800;
   line-height: 1;
 }
@@ -501,36 +595,66 @@
 .collection-detail-count span {
   font-size: 11px;
   font-weight: 600;
-
   opacity: 0.65;
 }
 
 /* =========================================================
-   MOVIES INSIDE COLLECTION
+   MOVIES INSIDE A COLLECTION
+
+   Fluid grid: as many posters per row as fit (each at least
+   160px wide), but NEVER fewer than 2 per row, even on the
+   smallest phone. It follows the real content width, so it
+   no longer jumps to 2 columns too early.
 ========================================================= */
 
 .collection-movies-grid {
+  --movie-gap: 18px;
+
   display: grid;
-
-  /*
-    Five cards gives the posters a more compact size
-    and leaves enough room for readable movie information.
-  */
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-
-  gap: 22px 20px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(min(160px, calc((100% - var(--movie-gap)) / 2 - 1px)), 1fr)
+  );
+  gap: var(--movie-gap);
 
   margin-top: 28px;
 }
 
-.collection-movie-card {
-  overflow: hidden;
+.collection-movie-link {
+  display: block;
+  min-width: 0;
+  color: inherit;
+  text-decoration: none;
+}
 
-  border: 1px solid rgba(255, 255, 255, 0.07);
+.collection-movie-link:visited {
+  color: inherit;
+}
+
+.collection-movie-link:hover {
+  color: inherit;
+}
+
+.collection-movie-link:focus {
+  color: inherit;
+  outline: none;
+}
+
+.collection-movie-link:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 3px;
   border-radius: 14px;
+}
 
-  background: rgba(255, 255, 255, 0.025);
+.collection-movie-card {
+  container-type: inline-size;
 
+  overflow: hidden;
+  border: 1px solid var(--c-card-border);
+  border-radius: 14px;
+  background: var(--c-card-bg);
+  box-shadow: var(--c-card-shadow);
   cursor: pointer;
 
   transition:
@@ -541,28 +665,21 @@
 
 .collection-movie-card:hover {
   transform: translateY(-3px);
-
-  border-color: rgba(236, 38, 48, 0.2);
-
-  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(236, 38, 48, 0.25);
+  background: var(--c-card-bg-hover);
 }
 
 .collection-movie-poster {
   aspect-ratio: 2 / 3;
-
   overflow: hidden;
-
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(0, 0, 0, 0.04);
 }
 
 .collection-movie-poster img {
   width: 100%;
   height: 100%;
-
   display: block;
-
   object-fit: cover;
-
   transition: transform 0.3s ease;
 }
 
@@ -573,29 +690,29 @@
 .collection-movie-no-poster {
   width: 100%;
   height: 100%;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   font-size: 10px;
   opacity: 0.35;
 }
 
-/* =========================================================
-   MOVIE INFORMATION
-========================================================= */
+/* ---------------------------------------------------------
+   MOVIE INFORMATION  (scales with the movie card's width)
+--------------------------------------------------------- */
 
 .collection-movie-info {
   padding: 12px 13px 14px;
+  padding: clamp(9px, 6cqi, 14px) clamp(10px, 6.5cqi, 15px)
+    clamp(11px, 7cqi, 16px);
 }
 
 .collection-movie-info h3 {
   overflow: hidden;
-
   margin: 0;
 
   font-size: 13px;
+  font-size: clamp(12px, 8cqi, 15px);
   font-weight: 700;
   line-height: 1.35;
 
@@ -605,13 +722,12 @@
 
 .collection-movie-info span {
   display: block;
-
   margin-top: 5px;
 
   font-size: 10px;
+  font-size: clamp(10px, 6.2cqi, 12.5px);
   font-weight: 500;
-
-  opacity: 0.48;
+  opacity: 0.5;
 }
 
 /* =========================================================
@@ -621,38 +737,22 @@
 .collections-loading-overlay {
   position: fixed;
   inset: 0;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   z-index: 20;
-
   background: rgba(0, 0, 0, 0.22);
-
   backdrop-filter: blur(3px);
-
   font-size: 12px;
   font-weight: 600;
 }
 
 /* =========================================================
    RESPONSIVE
+   Collection cards and movie grids need no media queries:
+   they respond to their own width (see above). Only the
+   page headers still use screen-width breakpoints.
 ========================================================= */
-
-@media (max-width: 1100px) {
-  .collection-movies-grid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 900px) {
-  .collection-movies-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-
-    gap: 20px 18px;
-  }
-}
 
 @media (max-width: 800px) {
   .collections-header {
@@ -661,30 +761,29 @@
   }
 
   .collections-primary-btn {
-    width: 100%;
+    width: auto;
     justify-content: center;
-  }
-
-  .collections-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .collection-detail-header {
-    align-items: flex-start;
-    flex-direction: column;
-  }
-
-  .collection-movies-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-
-    gap: 18px;
   }
 }
 
-@media (max-width: 500px) {
-  .collection-movies-grid {
-    grid-template-columns: 1fr;
+@media (max-width: 600px) {
+  .collection-detail-header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 15px;
+  }
 
-    gap: 18px;
+  .collection-detail-count {
+    padding: 9px 12px;
+  }
+
+  .collection-movies-grid {
+    --movie-gap: 12px;
+  }
+}
+
+@media (max-width: 400px) {
+  .collection-movies-grid {
+    --movie-gap: 10px;
   }
 }

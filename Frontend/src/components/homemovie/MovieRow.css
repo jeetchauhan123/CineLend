@@ -150,6 +150,11 @@
   user-select: none;
 }
 
+.movie-row-container > .movie-card-link {
+  flex: 0 0 240px;
+  width: 240px;
+}
+
 .movie-row-container.dragging {
   cursor: grabbing;
 }
@@ -201,4 +206,245 @@
 
 .show-right-fade::after {
   opacity: 1;
+}
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 900px) {
+  .movie-row {
+    padding: 1.5rem 1.5rem;
+  }
+
+  .movie-row h2 {
+    font-size: 1.6rem;
+  }
+
+  .movie-row-header p {
+    font-size: 0.85rem;
+  }
+
+  .movie-row-container {
+    gap: 1rem;
+  }
+
+  .movie-row-container > .movie-card-link {
+    flex-basis: 210px;
+    width: 210px;
+  }
+
+  .nav-btn {
+    top: 120px;
+    width: 40px;
+    height: 40px;
+    font-size: 0.9rem;
+  }
+
+  .nav-btn.left {
+    left: -20px;
+  }
+
+  .nav-btn.right {
+    right: -20px;
+  }
+
+  .movie-row-wrapper::before,
+  .movie-row-wrapper::after {
+    width: 90px;
+  }
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 700px) {
+  .movie-row {
+    padding: 1.25rem 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .movie-row:first-child {
+    margin-top: 2rem;
+  }
+
+  .movie-row-header {
+    margin-bottom: 0.7rem;
+  }
+
+  .section-tag {
+    font-size: 0.68rem;
+    margin-bottom: 4px;
+  }
+
+  .movie-row h2 {
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .movie-row h2::before {
+    width: 3px;
+    height: 20px;
+    margin-right: 9px;
+  }
+
+  .movie-row-header p {
+    font-size: 0.78rem;
+    line-height: 1.4;
+    margin-top: 2px;
+  }
+
+  .view-all-btn {
+    font-size: 0.8rem;
+    white-space: nowrap;
+  }
+
+  .movie-row-container {
+    gap: 0.85rem;
+    padding-bottom: 0.4rem;
+  }
+
+  .movie-row-container > .movie-card-link {
+    flex-basis: 180px;
+    width: 180px;
+  }
+
+  .nav-btn {
+    top: 110px;
+    width: 36px;
+    height: 36px;
+    font-size: 0.8rem;
+  }
+
+  .nav-btn.left {
+    left: -12px;
+  }
+
+  .nav-btn.right {
+    right: -12px;
+  }
+
+  .movie-row-wrapper::before,
+  .movie-row-wrapper::after {
+    width: 60px;
+  }
+}
+
+
+/* =========================
+   SMALL MOBILE
+========================= */
+
+@media (max-width: 500px) {
+  .movie-row {
+    padding: 1rem 0.8rem;
+  }
+
+  .movie-row h2 {
+    font-size: 1.25rem;
+  }
+
+  .movie-row h2::before {
+    height: 18px;
+    margin-right: 8px;
+  }
+
+  .movie-row-header p {
+    font-size: 0.72rem;
+  }
+
+  .section-tag {
+    font-size: 0.63rem;
+  }
+
+  .view-all-btn {
+    font-size: 0.75rem;
+  }
+
+  .movie-row-container {
+    gap: 0.75rem;
+  }
+
+  .movie-row-container > .movie-card-link {
+    flex-basis: 155px;
+    width: 155px;
+  }
+
+  .nav-btn {
+    top: 100px;
+    width: 32px;
+    height: 32px;
+    font-size: 0.7rem;
+  }
+
+  .nav-btn.left {
+    left: -8px;
+  }
+
+  .nav-btn.right {
+    right: -8px;
+  }
+
+  .movie-row-wrapper::before,
+  .movie-row-wrapper::after {
+    width: 45px;
+  }
+}
+
+
+/* =========================
+   VERY SMALL MOBILE
+========================= */
+
+@media (max-width: 380px) {
+  .movie-row {
+    padding: 0.9rem 0.65rem;
+  }
+
+  .movie-row h2 {
+    font-size: 1.15rem;
+  }
+
+  .movie-row h2::before {
+    width: 3px;
+    height: 17px;
+    margin-right: 7px;
+  }
+
+  .movie-row-header p {
+    font-size: 0.68rem;
+  }
+
+  .view-all-btn {
+    font-size: 0.7rem;
+  }
+
+  .movie-row-container {
+    gap: 0.65rem;
+  }
+
+  .movie-row-container > .movie-card-link {
+    flex-basis: 140px;
+    width: 140px;
+  }
+
+  .nav-btn {
+    width: 30px;
+    height: 30px;
+  }
+
+  .nav-btn.left {
+    left: -6px;
+  }
+
+  .nav-btn.right {
+    right: -6px;
+  }
+
+  .movie-row-wrapper::before,
+  .movie-row-wrapper::after {
+    width: 35px;
+  }
 }

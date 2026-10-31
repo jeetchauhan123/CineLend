@@ -1,129 +1,285 @@
-/* 1. Base Layout & Structural Containers */
-.footer { 
-  margin-top: 6rem; 
-  padding: 0 3rem 2rem; 
-  border-top: 1px solid rgba(255,255,255,.08); 
-  position: relative; 
-  overflow: hidden; 
+/* =========================================
+   1. Base Layout
+========================================= */
+
+.footer {
+  position: relative;
+  margin-top: 6rem;
+  padding: 0 3rem 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(184, 26, 26, 0.16) 100%
+  );
 }
 
-.footer-content { 
-  display: grid; 
-  grid-template-columns: 2fr 1fr 1fr 1fr; 
-  gap: 3rem; 
+.footer-content {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 3rem;
 }
 
-.footer-divider { 
-  height: 1px; 
-  background: rgba(255,255,255,.08); 
-  margin-bottom: 3rem; 
+.footer-divider {
+  height: 1px;
+  margin-bottom: 3rem;
+  background: rgba(255, 255, 255, 0.08);
 }
 
-.footer-bottom { 
-  margin-top: 4rem; 
-  padding-top: 2rem; 
-  border-top: 1px solid rgba(255,255,255,.08); 
-  text-align: center; 
-  color: var(--text-secondary); 
-  font-size: 0.9rem; 
+.footer-bottom {
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
 }
 
-/* 2. Brand & Columns */
+/* =========================================
+   2. Brand
+========================================= */
+
 .footer-brand img {
   height: 60px;
+  max-width: 100%;
+  object-fit: contain;
 }
 
-.footer-brand h2 { 
-  color: var(--text-primary); 
-  margin-bottom: 1rem; 
+.footer-brand h2 {
+  margin-bottom: 1rem;
+  color: var(--text-primary);
 }
 
-.footer-brand p { 
-  color: var(--text-secondary); 
-  max-width: 320px; 
-  line-height: 1.7; 
+.footer-brand p {
+  max-width: 320px;
+  color: var(--text-secondary);
+  line-height: 1.7;
 }
 
-.footer-column { 
-  display: flex; 
-  flex-direction: column; 
+/* =========================================
+   3. Footer Columns
+========================================= */
+
+.footer-column {
+  display: flex;
+  flex-direction: column;
 }
 
-.footer-column h3 { 
-  color: var(--text-primary); 
-  margin-bottom: 1rem; 
-  font-size: 1rem; 
+.footer-column h3 {
+  margin-bottom: 1rem;
+  color: var(--text-primary);
+  font-size: 1rem;
 }
 
-.footer-column a { 
-  color: var(--text-secondary); 
-  text-decoration: none; 
-  margin-bottom: 0.8rem; 
-  transition: color .25s ease; 
+.footer-column a {
+  margin-bottom: 0.8rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color 0.25s ease;
 }
 
-.footer-column a:hover { 
-  color: var(--red2); 
+.footer-column a:hover {
+  color: var(--red2);
 }
 
-/* 3. Call To Action (CTA) Section */
-.footer-cta { 
-  text-align: center; 
-  padding: 5rem 0; 
+/* =========================================
+   4. CTA
+========================================= */
+
+.footer-cta {
+  padding: 5rem 0;
+  text-align: center;
 }
 
-.footer-cta h2 { 
-  color: var(--text-primary); 
-  font-size: 2rem; 
-  font-weight: 800; 
-  margin-bottom: 1rem; 
+.footer-cta h2 {
+  margin-bottom: 1rem;
+  color: var(--text-primary);
+  font-size: 2rem;
+  font-weight: 800;
 }
 
-.footer-cta p { 
-  color: var(--text-secondary); 
-  max-width: 600px; 
-  margin: 0 auto 2rem; 
-  line-height: 1.7; 
+.footer-cta p {
+  max-width: 600px;
+  margin: 0 auto 2rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
 }
 
-.footer-cta button { 
-  border: none; 
-  padding: 0.9rem 1.6rem; 
-  border-radius: 999px; 
-  background: var(--red2); 
-  color: white; 
-  font-weight: 700; 
-  cursor: pointer; 
-  transition: all .25s ease; 
+.footer-cta button {
+  padding: 0.9rem 1.6rem;
+  border: none;
+  border-radius: 999px;
+  background: var(--red2);
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    transform 0.25s ease,
+    background 0.25s ease;
 }
 
-.footer-cta button:hover { 
-  transform: translateY(-2px); 
+.footer-cta button:hover {
+  transform: translateY(-2px);
 }
 
-/* 4. Background Effects & Themes */
-.footer { 
-  background: linear-gradient(180deg, transparent 0%, rgba(184, 26, 26, 0.16) 100%); 
+/* =========================================
+   5. Background Effects
+========================================= */
+
+.footer::before {
+  content: "";
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  left: 50%;
+  bottom: -400px;
+
+  transform: translateX(-50%);
+
+  background: rgba(184, 26, 26, 0.15);
+  filter: blur(120px);
+
+  pointer-events: none;
+  opacity: 0.35;
 }
 
-.footer::before { 
-  content: ""; 
-  position: absolute; 
-  width: 600px; 
-  height: 600px; 
-  left: 50%; 
-  bottom: -400px; 
-  transform: translateX(-50%); 
-  background: rgba(184, 26, 26, 0.15); 
-  filter: blur(120px); 
-  pointer-events: none; 
-  opacity: 0.35; 
+body.dark .footer {
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(184, 26, 26, 0.14) 100%
+  );
 }
 
-body.dark .footer { 
-  background: linear-gradient(180deg, transparent 0%, rgba(184, 26, 26, 0.14) 100%); 
+body.dark .footer::before {
+  opacity: 0.7;
 }
 
-body.dark .footer::before { 
-  opacity: 0.7; 
+/* =========================================
+   6. Tablet
+========================================= */
+
+@media (max-width: 900px) {
+  .footer {
+    padding: 0 2rem 2rem;
+  }
+
+  .footer-content {
+    grid-template-columns: 1.5fr 1fr 1fr;
+    gap: 2.5rem;
+  }
+
+  .footer-brand {
+    grid-column: 1 / -1;
+  }
+
+  .footer-brand p {
+    max-width: 450px;
+  }
+
+  .footer-cta {
+    padding: 4rem 0;
+  }
+}
+
+/* =========================================
+   7. Mobile
+========================================= */
+
+@media (max-width: 600px) {
+  .footer {
+    margin-top: 4rem;
+    padding: 0 1.25rem 1.5rem;
+  }
+
+  .footer-cta {
+    padding: 3.5rem 0;
+  }
+
+  .footer-cta h2 {
+    font-size: 1.5rem;
+    line-height: 1.3;
+  }
+
+  .footer-cta p {
+    max-width: 100%;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  .footer-cta button {
+    padding: 0.8rem 1.4rem;
+    font-size: 0.9rem;
+  }
+
+  .footer-divider {
+    margin-bottom: 2rem;
+  }
+
+  .footer-content {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem 1.5rem;
+  }
+
+  .footer-brand {
+    grid-column: 1 / -1;
+  }
+
+  .footer-brand img {
+    height: 50px;
+  }
+
+  .footer-brand p {
+    max-width: 100%;
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  .footer-column h3 {
+    margin-bottom: 0.8rem;
+    font-size: 0.9rem;
+  }
+
+  .footer-column a {
+    margin-bottom: 0.65rem;
+    font-size: 0.85rem;
+  }
+
+  .footer-bottom {
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    font-size: 0.75rem;
+  }
+
+  .footer::before {
+    width: 350px;
+    height: 350px;
+    bottom: -250px;
+  }
+}
+
+/* =========================================
+   8. Very Small Screens
+========================================= */
+
+@media (max-width: 380px) {
+  .footer {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .footer-content {
+    gap: 1.5rem 1rem;
+  }
+
+  .footer-cta h2 {
+    font-size: 1.35rem;
+  }
+
+  .footer-cta p {
+    font-size: 0.85rem;
+  }
 }

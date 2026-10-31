@@ -59,100 +59,251 @@ If you are developing a production application, we recommend using TypeScript wi
 13. ✅DONE Like Count API returns 401 Unauthorized when the user visits the moviedetail page when he is not logged in 
 14. In Movie detail page in facts section release year value does not have their respective discover page url in them on clicking the year we do not get directed to the discover page
 15. Everytime opening the onboarding model it asks for the choice, it should show already selected choice after selecting it once
-
-
+16. Restrict user to go to profile page without login
 
 
 Future Improvements — Small → Large
 🟢 Phase 1 — Very small / quick fixes
-#20 — Prevent logged-in users from accessing Login page
-#3 — Fix Home slider buttons/links
-#6 — Make Home "View All" functional
-#21 — Reset scroll position when navigating
-#7 — Add navbar search functionality
-#2 — Navbar links optimisation and redirect links
-#1 — Home movie slider skeleton
+#20 — Prevent logged-in users from accessing Login page ✅ DONE
+#3 — Fix Home slider buttons/links ✅ DONE
+The slider now uses a single Link instead of nesting a Link inside a button.
 
-These are mostly isolated frontend/navigation changes.
+#6 — Make Home "View All" functional ✅ DONE
+#21 — Reset scroll position when navigating ⏳ PENDING
+#7 — Add navbar search functionality ⏳ PENDING
+#2 — Navbar links optimisation and redirect links ⏳ PENDING
+#1 — Home movie slider skeleton ⏳ PENDING
+
+These remain mostly isolated frontend/navigation changes.
 
 🟢 Phase 2 — Small UI improvements
-#5 — Add genre box to Home (optional)
-#10 — Preference panel shows existing selected preferences
-#11 — Update About page
-#12 — Add IMDb rating bar to Movie Details
-#15 — Comment button when logged out shows a login-required message
+#5 — Add genre box to Home ⏳ PENDING / OPTIONAL
+#10 — Preference panel shows existing selected preferences ✅ DONE
+The preference panel now loads the previously saved preferences and allows them to be changed.
 
-These are still primarily frontend work, with relatively limited backend impact.
+#11 — Update About page ⏸️ POSTPONED
+We deliberately postponed this until the other major updates are finished.
+
+#12 — Add IMDb rating bar to Movie Details ✅ DONE
+The IMDb rating bar was added without replacing the existing rating UI.
+
+#15 — Comment button when logged out shows login-required message ✅ DONE
+
+It now stays on the Movie Details page and shows the login-required warning instead of redirecting.
 
 🟡 Phase 3 — Small-to-medium functionality
-#13 — Fix comment links/model storage
-#16 — Pending comment visual state until backend succeeds
-#14 — Track visited movies in localStorage → Continue Exploring
-#17 — Authentication across multiple tabs
+#13 — Fix comment links/model storage ✅ DONE
+Comments now store the authenticated user's userId and the movie's movieId, and the Profile → My Comments → View Comment flow can open the correct Movie Details page and target the exact comment.
 
-These involve more application logic, state handling and/or backend changes.
+#16 — Pending comment visual state until backend succeeds ⏳ PENDING
+The comment should initially appear pale/pending and return to its normal appearance only after successful backend storage.
+
+#14 — Track visited movies in localStorage → Continue Exploring ⏳ PENDING
+Opening a Movie Details page should record the movie so Profile can later show it under Continue Exploring.
+
+#17 — Authentication across multiple tabs ⏸️ POSTPONED
+We investigated this and decided not to implement it yet because the required shared temporary-session handling adds unnecessary complexity at this stage.
+Current behavior remains:
+Remember Me ON → localStorage
+Remember Me OFF → sessionStorage
+
+We'll revisit this later if needed.
 
 🟡 Phase 4 — Profile improvements
-Profile account editing
-Change password
-Profile image
-Any remaining Profile/Overview polish
+#23 — Profile movie cards should open Movie Details
 
-These aren't huge individually, but they involve authentication/user data and therefore deserve to come after the simpler UI work.
+⏳ PENDING
+
+This includes:
+
+Collections → Movie Details
+Rented Movies → Movie Details
+Comments → Movie Details
+Profile account editing
+
+⏳ PENDING
+
+Change password
+
+⏳ PENDING
+
+Profile image
+
+⏳ PENDING
+
+Remaining Profile/Overview polish
+
+⏳ PENDING
 
 🟠 Phase 5 — Pricing foundation
 Movie release year → pricing tier → base daily price
+
+⏳ PENDING
+
 Rental duration
+
+⏳ PENDING
+
 Package discount
+
+⏳ PENDING
+
 Final rental price
+
+⏳ PENDING
+
 #18 — Enforce maximum rental duration
 
-This is where we start entering the larger rental system.
+⏳ PENDING
+
+This is where the actual rental system starts becoming more involved.
 
 🟠 Phase 6 — Cart
 Cart model
+
+⏳ PENDING
+
 Cart controller
+
+⏳ PENDING
+
 Cart routes
+
+⏳ PENDING
+
 Thunder Client testing
+
+⏳ PENDING
+
 Movie Details → Add to Cart
+
+⏳ PENDING
+
 Added confirmation + View Cart
+
+⏳ PENDING
+
 Cart page
+
+⏳ PENDING
+
 Remove from cart
+
+⏳ PENDING
+
 Clear cart
+
+⏳ PENDING
+
 Profile → Cart integration
+
+⏳ PENDING
+
 🔴 Phase 7 — Rental system
 Rental model
+
+⏳ PENDING
+
 Rental creation
+
+⏳ PENDING
+
 Duration selection
+
+⏳ PENDING
+
 Individual Rent
+
+⏳ PENDING
+
 Rent All
+
+⏳ PENDING
+
 Price calculation
+
+⏳ PENDING
+
 Tax
+
+⏳ PENDING
+
 Checkout
+
+⏳ PENDING
+
 Dummy payment
+
+⏳ PENDING
+
 Payment success
+
+⏳ PENDING
+
 Cart cleanup after rental
 
-This is deliberately kept as one of the later sections because it touches a lot of existing functionality.
+⏳ PENDING
+
+This remains one of the larger sections because it connects several existing parts of CineLend.
 
 🔴 Phase 8 — Checkout security + design
 #19 — Prevent direct checkout/payment access
-#22 — Completely redesign Checkout/Payment separately from the main website theme
 
-These should happen around the checkout implementation rather than much earlier.
+⏳ PENDING
+
+This should protect against:
+
+Direct URL access
+Opening checkout without coming from Rent
+Going backward into invalid checkout state
+Manually entering payment URLs
+
+And include the fallback behavior/timer you described.
+
+#22 — Completely redesign Checkout/Payment
+
+⏳ PENDING
+
+Checkout and Payment should have their own visual identity, separate from the main CineLend theme.
 
 🔴 Phase 9 — Rental lifecycle
 Active rental state
+
+⏳ PENDING
+
 Expiration
+
+⏳ PENDING
+
 Early return
+
+⏳ PENDING
+
 Rental history
+
+⏳ PENDING
+
 Profile → Rented Movies
+
+⏳ PENDING
+
 Rental cards
+
+⏳ PENDING
+
 Rental details
+
+⏳ PENDING
+
 Return
+
+⏳ PENDING
+
 Cancel where applicable
 
-This is probably the largest functional section.
+⏳ PENDING
+
+This will be the largest functional section.
 
 Final integration
 Connect the entire rental state flow:

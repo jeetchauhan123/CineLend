@@ -29,7 +29,6 @@
   inset: 0;
   width: 100%;
   height: 100%;
-  /* A rich multi-stop gradient scaled up to allow seamless smooth panning */
   background: linear-gradient(
     120deg,
     var(--bg-primary) 0%,
@@ -40,7 +39,6 @@
   );
   background-size: 300% 300%;
   opacity: 0.15;
-  /* Pure hardware-accelerated movement with zero layout repainting blur */
   animation: smooth-gradient-flow 25s ease infinite;
   will-change: background-position;
 }
@@ -103,15 +101,44 @@
    Responsive Layouts
 -------------------------------------------------- */
 
-@media (max-width: 800px) {
+@media (max-width: 900px) {
   .profile-page {
-    margin-top: -80px;
-    padding-top: 110px;
+    margin-top: -90px;
+    padding-top: 120px;
   }
 
   .profile-hero-section,
   .profile-main {
-    width: min(100% - 32px, 1120px);
+    width: calc(100% - 40px);
+  }
+
+  .profile-main {
+    margin-top: 32px;
+  }
+}
+
+@media (max-width: 700px) {
+  .profile-page {
+    margin-top: -80px;
+    padding-top: 110px;
+    padding-bottom: 65px;
+  }
+
+  .profile-hero-section,
+  .profile-main {
+    width: calc(100% - 32px);
+  }
+
+  .profile-main {
+    margin-top: 28px;
+  }
+
+  .profile-content {
+    margin-top: 24px;
+  }
+
+  .profile-fluid-bg {
+    height: 360px;
   }
 }
 
@@ -125,5 +152,41 @@
   .profile-hero-section,
   .profile-main {
     width: calc(100% - 20px);
+  }
+
+  .profile-main {
+    margin-top: 24px;
+  }
+
+  .profile-content {
+    margin-top: 20px;
+  }
+
+  .profile-fluid-bg {
+    height: 320px;
+  }
+}
+
+@media (max-width: 380px) {
+  .profile-page {
+    margin-top: -65px;
+    padding-top: 88px;
+  }
+
+  .profile-hero-section,
+  .profile-main {
+    width: calc(100% - 16px);
+  }
+
+  .profile-main {
+    margin-top: 20px;
+  }
+
+  .profile-content {
+    margin-top: 18px;
+  }
+
+  .profile-fluid-bg {
+    height: 300px;
   }
 }

@@ -1,13 +1,11 @@
 .navbar {
   width: fit-content;
-  height: 58px;
-
+  min-height: 58px;
   z-index: 1000;
 
   display: flex;
   align-items: center;
-  justify-content: center;
-
+  justify-content: space-between;
   gap: 3.5rem;
 
   padding: 0 28px;
@@ -15,7 +13,6 @@
   border-radius: 999px;
 
   background: var(--glass-bg);
-
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
 
@@ -28,26 +25,20 @@
 
 .navbar-home {
   position: absolute;
-
   top: 20px;
   left: 50%;
-
   transform: translateX(-50%);
 }
 
 .navbar-page {
   position: sticky;
-
   top: 0;
-
   margin: 20px auto;
-
   width: fit-content;
 }
 
 .navbar-docked {
   transform: scale(0.97);
-
   padding: 0 24px;
 
   background: rgba(18, 18, 18, 0.72);
@@ -60,20 +51,43 @@
   border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
+/* =========================
+   LOGO
+========================= */
+
 .navbar-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.navbar-logo a {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .navbar-logo img {
+  display: block;
+  width: auto;
+}
+
+.navbar-logo-symbol {
+  display: none !important;
+}
+
+.navbar-logo-full {
   height: 40px;
 }
+
+/* =========================
+   LINKS
+========================= */
 
 .navbar-links {
   display: flex;
   align-items: center;
-
   gap: 1.4rem;
 
   list-style: none;
@@ -82,11 +96,12 @@
 
   font-size: 0.88rem;
   font-weight: 500;
+
+  white-space: nowrap;
 }
 
 .navbar-links li {
   cursor: pointer;
-
   transition: 0.25s ease;
 }
 
@@ -112,17 +127,25 @@
 .navbar-preference {
   padding: 0;
   border: none;
+
   background: none;
   color: inherit;
+
   font: inherit;
+
   cursor: pointer;
 }
+
+/* =========================
+   ACTIONS
+========================= */
 
 .navbar-actions {
   display: flex;
   align-items: center;
-
   gap: 10px;
+
+  flex-shrink: 0;
 }
 
 .icon-btn {
@@ -139,7 +162,6 @@
   cursor: pointer;
 
   color: white;
-
   background: var(--button-bg);
 
   transition: 0.25s ease;
@@ -149,41 +171,9 @@
   background: rgba(255, 255, 255, 0.15);
 }
 
-.profile-btn {
-  width: 40px;
-  height: 40px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  padding: 0;
-
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 50%;
-
-  background: rgba(255, 255, 255, 0.08);
-
-  color: inherit;
-
-  cursor: pointer;
-
-  transition:
-    background 0.2s ease,
-    border-color 0.2s ease,
-    transform 0.2s ease;
-}
-
-.profile-btn svg {
-  width: 21px;
-  height: 21px;
-}
-
-.profile-btn:hover {
-  background: rgba(255, 255, 255, 0.14);
-  border-color: rgba(255, 255, 255, 0.25);
-  transform: translateY(-1px);
-}
+/* =========================
+   LOGIN
+========================= */
 
 .login-btn {
   border: none;
@@ -208,6 +198,9 @@
   background: rgb(255, 0, 13);
 }
 
+/* =========================
+   PROFILE
+========================= */
 
 .profile-wrapper {
   position: relative;
@@ -230,6 +223,11 @@
   color: inherit;
 
   cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
 }
 
 .profile-btn svg {
@@ -237,8 +235,19 @@
   height: 21px;
 }
 
+.profile-btn:hover {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-1px);
+}
+
+/* =========================
+   PROFILE MENU
+========================= */
+
 .profile-menu {
   position: absolute;
+
   top: calc(100% + 10px);
   right: 0;
 
@@ -253,6 +262,7 @@
   border-radius: 12px;
 
   background: var(--panel-bg);
+
   backdrop-filter: blur(16px);
 
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
@@ -272,6 +282,7 @@
   color: inherit;
 
   text-align: left;
+
   font-family: inherit;
   font-size: 14px;
 
@@ -280,4 +291,187 @@
 
 .profile-menu button:hover {
   background: rgba(255, 255, 255, 0.08);
+}
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 1100px) {
+  .navbar {
+    gap: 2rem;
+    padding: 0 22px;
+  }
+
+  .navbar-links {
+    gap: 1rem;
+    font-size: 0.84rem;
+  }
+
+  .navbar-logo-full {
+    height: 37px;
+  }
+}
+
+/* =========================
+   SMALL TABLET
+========================= */
+
+@media (max-width: 900px) {
+  .navbar {
+    gap: 1.35rem;
+    padding: 0 18px;
+  }
+
+  .navbar-links {
+    gap: 0.75rem;
+    font-size: 0.8rem;
+  }
+
+  .navbar-actions {
+    gap: 7px;
+  }
+
+  .icon-btn {
+    width: 34px;
+    height: 34px;
+  }
+
+  .profile-btn {
+    width: 37px;
+    height: 37px;
+  }
+
+  .profile-btn svg {
+    width: 19px;
+    height: 19px;
+  }
+
+  .login-btn {
+    padding: 7px 13px;
+    font-size: 0.8rem;
+  }
+
+  .navbar-logo-full {
+    height: 34px;
+  }
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 700px) {
+  .navbar {
+    position: absolute;
+
+    width: 100%;
+    min-height: 54px;
+
+    top: 0;
+    left: 0;
+
+    transform: none;
+
+    gap: 0.8rem;
+    padding: 5px 14px;
+
+    border-radius: 0;
+  }
+
+  .navbar-home {
+    top: 0;
+    left: 0;
+    transform: none;
+  }
+
+  .navbar-page {
+    position: sticky;
+    top: 0;
+
+    width: 100%;
+    margin: 0;
+  }
+
+  .navbar-logo-full {
+    display: none !important;
+  }
+
+  .navbar-logo-symbol {
+    display: block !important;
+    height: 30px;
+  }
+
+  .navbar-links {
+    gap: 0.55rem;
+    font-size: 0.72rem;
+  }
+
+  .navbar-actions {
+    gap: 5px;
+  }
+
+  .icon-btn {
+    width: 31px;
+    height: 31px;
+  }
+
+  .profile-btn {
+    width: 34px;
+    height: 34px;
+  }
+
+  .profile-btn svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .login-btn {
+    padding: 6px 10px;
+    font-size: 0.72rem;
+  }
+}
+
+/* =========================
+   VERY SMALL MOBILE
+========================= */
+
+@media (max-width: 500px) {
+  .navbar {
+    gap: 0.4rem;
+    padding: 5px 8px;
+  }
+
+  .navbar-logo img {
+    height: 26px;
+  }
+
+  .navbar-links {
+    gap: 0.3rem;
+    font-size: 0.64rem;
+  }
+
+  .navbar-actions {
+    gap: 3px;
+  }
+
+  .icon-btn {
+    width: 28px;
+    height: 28px;
+  }
+
+  .profile-btn {
+    width: 30px;
+    height: 30px;
+  }
+
+  .profile-btn svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .login-btn {
+    padding: 5px 7px;
+    font-size: 0.64rem;
+  }
 }
